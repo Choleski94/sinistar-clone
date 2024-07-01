@@ -5,8 +5,6 @@ import { Search } from './screens';
 import { useStore } from './store';
 import { getLocale, constructLocale, SUPPORTED_LOCALES } from './locales';
 
-import './App.css';
-
 const App = () => {
 	const { state, dispatch } = useStore();
 
