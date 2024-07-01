@@ -3,6 +3,7 @@ import { IntlProvider } from 'react-intl';
 
 import { Search } from './screens';
 import { useStore } from './store';
+import { Layout } from './components';
 import { getLocale, constructLocale, SUPPORTED_LOCALES } from './locales';
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
 
 	const localeISO = constructLocale(state.locale);
 	const localeMessage = getLocale(localeISO);
-	
+
 	return (
 		<IntlProvider 
 			key={localeISO} 
@@ -18,7 +19,9 @@ const App = () => {
 			messages={localeMessage}
 			supportedLocales={SUPPORTED_LOCALES}
 		>
-			<Search />
+			<Layout>
+				<Search />
+			</Layout>
 		</IntlProvider>
 	);
 }
