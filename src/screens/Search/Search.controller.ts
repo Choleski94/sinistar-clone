@@ -5,7 +5,7 @@
  */
 export const setWrapperClassName = (isReady?: boolean = false): string => ([
 	'flex-grow', 
-	(isReady ? 'absolute' : 'w-full'), 
+	(isReady ? 'w-full' : 'absolute'), 
 	'lg:pt-10', 
 	'lg:static', 
 	'top-[57vh]', 
@@ -22,10 +22,10 @@ export const setWrapperClassName = (isReady?: boolean = false): string => ([
  * @returns {string} The computed CSS class name.
  */
 export const setListingWrapperClassName = (isReady?: boolean = false): string => ([
-	(isReady ? '' : 'py-3'),
+	(isReady ? 'py-3' : ''),
 	'flex', 
 	'flex-col',
-	(isReady ? 'max-w-full' : 'gap-5'), 
+	(isReady ? 'gap-5' : 'max-w-full'), 
 	'pb-28',
 ].join(' ').trim());
 
