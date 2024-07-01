@@ -1,5 +1,6 @@
 'use strict';
 
+import { delayRandom } from '../utils';
 import listingDB from './database.json';
 
 interface IListingItem {
@@ -42,6 +43,8 @@ const listing = {
 		try {
 			const targetListing = listingDBTyped.find(({ id }) => item.id === id);
 
+			await delayRandom();
+
 			return {
 				data: {
 					retult: targetListing || {},
@@ -58,6 +61,8 @@ const listing = {
 	},
 	search: async (): Promise<IListingListResponse> => {
 		try {
+			await delayRandom();
+
 			/* TODO: Implement search based on desired fields.
 			 * 	- Evaluate if we want to add pagination support.	
 			 */
@@ -89,6 +94,8 @@ const listing = {
 			const endIndex = startIndex + limit;
 
 			const paginatedData = listingDBTyped.slice(startIndex, endIndex);
+
+			await delayRandom();
 
 			return {
 				data: {
