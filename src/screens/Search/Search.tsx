@@ -12,17 +12,26 @@ const SearchScreen: React.FC = () => {
 	const [ title, setTilte ] = React.useState('');
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
+	const [ pagination, setPagination ] = React.useState({
+		page: 1, limit: 10
+	});
 
-	React.useEffect(() => {
+	const fetchListing = (page: number = 1) => {
 		setLoading(true);
 
-		// TODO: Need to update InfoCard.
-		// api.listing.list().then(({ data }) => {
-		// 	setOptions(data);
-		// 	setLoading(false);
-		// }).catch(() => {
-		// 	setLoading(false);
-		// });
+		api.listing.list({
+			page: pagination.page, 
+			limit: pagination.limit,
+		}).then(({ data }) => {
+			setOptions(data?.result);
+			setLoading(false);
+		}).catch(() => {
+			setLoading(false);
+		});
+	}
+
+	React.useEffect(() => {
+		fetchListing();
 	}, []);
 
 	const filteredOptions = options;
