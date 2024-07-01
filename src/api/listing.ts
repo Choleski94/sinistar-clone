@@ -19,7 +19,15 @@ interface IListingResponse {
 }
 
 interface IListingListResponse {
-	data: IListingItem[];
+	data: {
+		result: IListingItem[];
+		pagination: {
+			page: number;
+			limit: number;
+			totalPages: number;
+			totalItems: number;
+		};
+	}
 }
 
 const listingDBTyped: IListingItem[] = listingDB as IListingItem[];
@@ -35,24 +43,76 @@ const listing = {
 			const targetListing = listingDBTyped.find(({ id }) => item.id === id);
 
 			return {
-				data: targetListing || {},
+				data: {
+					retult: targetListing || {},
+				}
 			};
 		} catch (error) {
 			console.error('Error fetching listing by id:', error);
 			return {
-				data: {},
+				data: {
+					result: {},
+				},
 			};
 		}
 	},
-	list: async (): Promise<IListingListResponse> => {
+	search: async (): Promise<IListingListResponse> => {
 		try {
+			/* TODO: Implement search based on desired fields.
+			 * 	- Evaluate if we want to add pagination support.	
+			 */
 			return {
-				data: listingDB,
+				data: {
+					result: listingDBTyped || [],
+				},
 			};
 		} catch (error) {
 			console.error('Error fetching listing list:', error);
 			return {
-				data: [],
+				data: {
+					result: [],
+					pagination: {
+						page: 0,
+						limit: 0,
+						totalPages: 0,
+						totalItems: 0,
+					},
+				},
+			};	
+		}
+	},
+	list: async ({ page, limit }: { page?: number; limit?: number; }): Promise<IListingListResponse> => {
+		try {
+			const totalItems = (listingDBTyped || []).length;
+			const totalPages = Math.ceil(totalItems / limit);
+			const startIndex = (page - 1) * limit;
+			const endIndex = startIndex + limit;
+
+			const paginatedData = listingDBTyped.slice(startIndex, endIndex);
+
+			return {
+				data: {
+					result: paginatedData || [],
+					pagination: {
+						page,
+						limit,
+						totalPages,
+						totalItems,
+					},
+				},
+			};
+		} catch (error) {
+			console.error('Error fetching listing list:', error);
+			return {
+				data: {
+					result: [],
+					pagination: {
+						page: 0,
+						limit: 0,
+						totalPages: 0,
+						totalItems: 0,
+					},
+				},
 			};	
 		}
 	},
