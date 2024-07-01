@@ -9,12 +9,12 @@ import api from '../../api';
 import { InfoCard, BlankCard } from '../../components';
 
 const SearchScreen: React.FC = () => {
-	const [ title, setTilte ] = React.useState('');
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
 	const [ pagination, setPagination ] = React.useState({
 		page: 1, limit: 10
 	});
+	const [ totalOption, setTotalOption ] = React.useState(0);
 
 	const fetchListing = (page: number = 1) => {
 		setLoading(true);
@@ -23,6 +23,7 @@ const SearchScreen: React.FC = () => {
 			page: pagination.page, 
 			limit: pagination.limit,
 		}).then(({ data }) => {
+			setTotalOption(data?.pagination?.totalItems);
 			setOptions(data?.result);
 			setLoading(false);
 		}).catch(() => {
@@ -59,16 +60,12 @@ const SearchScreen: React.FC = () => {
 						</>
 					) : (
 						<>
-							<p className="text-xs overflow-hidden">
-								{filteredOptions.length} accommodations in this area
+							<h6 className="text-1xl font-[400]">
+								{totalOption}+ accommodations in this area
+							</h6>
+							<p className="text-xs overflow-hidden mt-2">
+								Explore 100% furnished and equipped accommodations.
 							</p>
-							<h1 className="text-3xl font-[400] mt-2">
-								Stays in
-								&nbsp;
-								<span className="capitalize">
-									{title}
-								</span>
-							</h1>
 							<div className="xl:py-5 lg:py-3 lg:pt-4 mt-1 py-1 flex items-center mb-5 sm:space-x-3 text-gray-800 flex-wrap max-h-[150px] overflow-hidden">
 								<p className="button shadow-md">
 									FILTERS
@@ -86,7 +83,10 @@ const SearchScreen: React.FC = () => {
 						) : (
 							(filteredOptions && filteredOptions.length) ? (
 								filteredOptions?.map((item) => (
-									<InfoCard key={item?.id} {...item} />
+									<InfoCard 
+										key={item?.id} 
+										{...item}
+									/>
 								))
 							) : (
 								<div className="mx-auto pt-20 pb-36 text-4xl text-slate-900 font-[400]">
