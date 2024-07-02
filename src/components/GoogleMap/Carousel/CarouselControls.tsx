@@ -16,16 +16,16 @@ const CarouselControls: React.FC<{
 		<CarouselIconButton
 			onClick={onPrev}
 			aria-label="previous"
-			visible={showPrevControl}
-			positionAlignement="left"
+			$visible={showPrevControl}
+			$positionAlignement="left"
 		>
 			<ChevronLeftIcon />
 		</CarouselIconButton>
 		<CarouselIconButton
 			onClick={onNext}
 			aria-label="next"
-			visible={showNextControl}
-			positionAlignement="right"
+			$visible={showNextControl}
+			$positionAlignement="right"
 		>
 			<ChevronRightIcon />
 		</CarouselIconButton>

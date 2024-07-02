@@ -2,23 +2,29 @@ import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
 
-import {
-	setWrapperClassName,
-	setListingWrapperClassName, 
-} from './Search.controller';
-
+import { 
+	MOCK_IMAGES,
+	MOCK_DESCRIPTION,
+	MOCK_DEFAULT_LOCATION,
+} from '../../mocks';
 import api from '../../api';
-import { InfoCard, BlankCard, Pagination } from '../../components';
+import { withGoogleMapServices } from '../../utils/hocs';
+import { InfoCard, BlankCard, Pagination, GoogleMap } from '../../components';
+import { setWrapperClassName, setListingWrapperClassName } from './Search.controller';
+
+const GOOGLE_MAP_API_KEY = null; // ENTER_YOUR_GOOGLE_MAP_API_KEY_HERE
 
 const SearchScreen: React.FC = () => {
+	const [ zoom, setZoom ] = React.useState(11);
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
 	const [ pagination, setPagination ] = React.useState({
-		page: 1, limit: 10, 
-		totalItems: 0, totalPages: 0,
+		page: 1, limit: 5, totalItems: 0, totalPages: 0,
 	});
+	const [ center, setCenter ] = React.useState(MOCK_DEFAULT_LOCATION);
+	const [ highlightedAccomodation, setHighlightedAccomodation ] = React.useState(null);
 
-	const fetchListing = (page: number = 1) => {
+	const listListing = (page: number = 1) => {
 		setLoading(true);
 
 		api.listing.list({
@@ -33,15 +39,27 @@ const SearchScreen: React.FC = () => {
 		});
 	}
 
-	React.useEffect(() => {
-		fetchListing(pagination?.page);
-	}, [ pagination?.page ]);
+	const getListing = (listingId?: number) => {
+		if (!listingId) return;
 
-	const filteredOptions = options;
+		setLoading(true);
+
+		api.listing.get(listingId).then(({ data }) => {
+			// setPagination(data?.pagination);
+			setOptions(data?.result);
+			setLoading(false);
+		}).catch(() => {
+			setLoading(false);
+		});
+	}
+
+	React.useEffect(() => {
+		listListing(pagination?.page);
+	}, [ pagination?.page ]);
 
 	const handlePageClick = React.useCallback((event, newPage) => {
 		setPagination((prevPagination) => {
-
+			// Prevent fetching same page.
 			if (prevPagination.page === newPage) {
 				return prevPagination;
 			}
@@ -60,11 +78,43 @@ const SearchScreen: React.FC = () => {
 		});
 	}, [ pagination ]);
 
+        const onIdle = (map = { getZoom: () => null, getCenter: () => null }) => {
+                setZoom(map?.getZoom());
+                const nextCenter = map?.getCenter();
+                if (nextCenter) {
+                        setCenter(nextCenter.toJSON());
+                }
+        };
+
+	const onMarkerClick = React.useCallback((payload) => {
+		if (highlightedAccomodation === payload) {
+			setHighlightedAccomodation(null);
+		} else {
+			setHighlightedAccomodation(payload);
+			getListing(payload?.id);
+		}
+	}, [ highlightedAccomodation ]);
+
+	const filteredOptions = options.map((data) => ({
+		...data, 
+		images: MOCK_IMAGES,
+		type: 'ACCOMMODATION', 
+		description: MOCK_DESCRIPTION,
+	}));
+
 	return (
 		<>
 			{/* Section: Mobile map */}
 			<section className="flex lg:hidden h-[65vh] vw-[100vw] fixed w-full top-0 z-[1]">
-				Mobile Map
+				<GoogleMap 
+					zoom={zoom}
+					center={center}
+					onIdle={onIdle}
+					markers={filteredOptions}
+					apiKey={GOOGLE_MAP_API_KEY}
+					onMarkerClick={onMarkerClick}
+					highlightedMarkerId={highlightedAccomodation?.id}
+				/>
 			</section>
 
 			{/* Main: Search screen */}
@@ -130,13 +180,22 @@ const SearchScreen: React.FC = () => {
 						/>
 					</div>
 				</section>
+
 				{/* Section: Desktop map */}
-				<section className="hidden lg:inline-flex height-map sticky top-[6.8rem]">
-					Desktop Map
+				<section className="hidden lg:inline-flex height-map sticky">
+					<GoogleMap 
+						zoom={zoom}
+						center={center}
+						onIdle={onIdle}
+						markers={filteredOptions}
+						apiKey={GOOGLE_MAP_API_KEY}
+						onMarkerClick={onMarkerClick}
+						highlightedMarkerId={highlightedAccomodation?.id}
+					/>
 				</section>
 			</main>
 		</>
 	);
 }
 
-export default SearchScreen;
+export default withGoogleMapServices(SearchScreen, GOOGLE_MAP_API_KEY);

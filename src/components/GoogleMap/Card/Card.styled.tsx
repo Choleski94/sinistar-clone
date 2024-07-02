@@ -7,7 +7,7 @@ export const Container = styled(Paper)({
 	borderRadius: 10,
 	overflow: 'hidden',
 	position: 'absolute',
-	transform: 'translate(-99px, -305px)',
+	transform: 'translate(-99px, -326px)',
 });
 
 export const RatingContainer = styled('div')({
