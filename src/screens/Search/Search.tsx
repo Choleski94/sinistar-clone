@@ -1,4 +1,6 @@
 import React from 'react';
+import { Stack, Typography } from '@mui/material';
+import { Tune as TuneIcon } from '@mui/icons-material';
 
 import {
 	setWrapperClassName,
@@ -68,7 +70,12 @@ const SearchScreen: React.FC = () => {
 							</p>
 							<div className="xl:py-5 lg:py-3 lg:pt-4 mt-1 py-1 flex items-center mb-5 sm:space-x-3 text-gray-800 flex-wrap max-h-[150px] overflow-hidden">
 								<p className="button shadow-md">
-									FILTERS
+									<Stack direction="row" alignItems="center" gap={1}>
+										<TuneIcon />
+										<Typography>
+											Filters
+										</Typography>
+									</Stack>
 								</p>
 							</div>
 						</>
