@@ -8,15 +8,15 @@ import {
 } from './Search.controller';
 
 import api from '../../api';
-import { InfoCard, BlankCard } from '../../components';
+import { InfoCard, BlankCard, Pagination } from '../../components';
 
 const SearchScreen: React.FC = () => {
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
 	const [ pagination, setPagination ] = React.useState({
-		page: 1, limit: 10
+		page: 1, limit: 10, 
+		totalItems: 0, totalPages: 0,
 	});
-	const [ totalOption, setTotalOption ] = React.useState(0);
 
 	const fetchListing = (page: number = 1) => {
 		setLoading(true);
@@ -25,7 +25,7 @@ const SearchScreen: React.FC = () => {
 			page: pagination.page, 
 			limit: pagination.limit,
 		}).then(({ data }) => {
-			setTotalOption(data?.pagination?.totalItems);
+			setPagination(data?.pagination);
 			setOptions(data?.result);
 			setLoading(false);
 		}).catch(() => {
@@ -34,10 +34,31 @@ const SearchScreen: React.FC = () => {
 	}
 
 	React.useEffect(() => {
-		fetchListing();
-	}, []);
+		fetchListing(pagination?.page);
+	}, [ pagination?.page ]);
 
 	const filteredOptions = options;
+
+	const handlePageClick = React.useCallback((event, newPage) => {
+		setPagination((prevPagination) => {
+
+			if (prevPagination.page === newPage) {
+				return prevPagination;
+			}
+
+			// Ensure page doesn't go below 1.
+			if (newPage < 1) {
+				return prevPagination;
+			}
+
+			// Ensure page doesn't exceed totalPages.
+			if (newPage > prevPagination.totalPages) {
+				return prevPagination;
+			}
+
+			return { ...prevPagination, page: newPage };
+		});
+	}, [ pagination ]);
 
 	return (
 		<>
@@ -63,7 +84,7 @@ const SearchScreen: React.FC = () => {
 					) : (
 						<>
 							<h6 className="text-1xl font-[400]">
-								{totalOption}+ accommodations in this area
+								{pagination?.totalItems || 0}+ accommodations in this area
 							</h6>
 							<p className="text-xs overflow-hidden mt-2">
 								Explore 100% furnished and equipped accommodations.
@@ -103,9 +124,12 @@ const SearchScreen: React.FC = () => {
 								</div>
 							)
 						)}
+						<Pagination 
+							onPageClick={handlePageClick}
+							count={pagination?.totalPages} 
+						/>
 					</div>
 				</section>
-
 				{/* Section: Desktop map */}
 				<section className="hidden lg:inline-flex height-map sticky top-[6.8rem]">
 					Desktop Map
