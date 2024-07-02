@@ -4,7 +4,8 @@ import {
 	Menu as MenuIcon, 
 	Close as CloseIcon, 
 	Group as GroupIcon, 
-	Search as SearchIcon
+	Search as SearchIcon,
+	Language as LanguageIcon,
 } from '@mui/icons-material';
 
 interface IHeaderProps {
@@ -39,6 +40,11 @@ const Header: React.FC<IHeaderProps> = ({ placeholder }) => (
 				<div className="hover:bg-[#f7f7f7] cursor-pointer lg:p-2 rounded-full md:px-2 lg:px-4">
 					<p className="hidden md:inline text-[#222222] font-[500]">
 						Try hosting
+					</p>
+				</div>
+				<div className="hover:bg-[#f7f7f7] cursor-pointer lg:p-2 rounded-full md:px-2 lg:px-4">
+					<p className="hidden md:inline text-[#222222] font-[500]">
+						<LanguageIcon className="h-6 cursor-pointer text-[#222222]" />
 					</p>
 				</div>
 				<div id="icons" className="grid grid-cols-2 gap-1 items-center justify-center border-2 p-2 rounded-full hover:shadow-md transition box-shadow duration-150">
