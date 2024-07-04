@@ -3,8 +3,6 @@
 import enUS from './lang/en/US.json';
 import frFR from './lang/fr/FR.json';
 import esES from './lang/es/ES.json';
-import zhCN from './lang/zh/CN.json';
-import ruRU from './lang/ru/RU.json';
 
 interface ILocaleObject {
 	[key: string]: {
@@ -27,12 +25,6 @@ export const localesObj: ILocaleObject = {
 	es: {
 		ES: esES
 	},
-	zh: {
-		CN: zhCN
-	},
-	ru: {
-		RU: ruRU
-	}
 };
 
 export const DEFAULT_LANG = 'en';
@@ -55,20 +47,31 @@ export const DEFAULT_LOCALE_OBJ = {
 	}
 };
 
+export const LOCALE_INFO: Record<string, IConstructLocaleObject> = {
+	'en-US': {
+		lang: 'English',
+		country: 'United States',
+	},
+	'fr-FR': {
+		lang: 'Français',
+		country: 'Canada',
+	},
+	'es-ES': {
+		lang: 'Español',
+		country: 'Espana',
+	},
+};
+
 export const SUPPORTED_LOCALES: Record<string, string> = {
 	en: 'en-US',
 	fr: 'fr-FR',
 	es: 'es-ES',
-	zh: 'zh-CN',
-	ru: 'ru-RU',
 };
 
 export const FALLBACK_LOCALES: Record<string, string> = {
 	en: 'US',
 	fr: 'FR',
 	es: 'ES',
-	zh: 'CN',
-	ru: 'RU',
 };
 
 export const constructLocale = ({ lang = '', country = '' }: IConstructLocaleObject, withUnderscore?: boolean = false) => [
@@ -117,8 +120,10 @@ export const getLocale = (locale: string = ''): Record<string, string> => {
 export default {
 	getLocale,
 	LOCALE_KEY,
+	LOCALE_INFO,
 	parseLocale,
 	LOCALE_QUERY,
 	DEFAULT_LOCALE,
 	DEFAULT_LOCALE_OBJ,
 };
+

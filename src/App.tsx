@@ -4,7 +4,10 @@ import { IntlProvider } from 'react-intl';
 import { Search } from './screens';
 import { useStore } from './store';
 import { Layout } from './components';
+import { withGoogleMapServices } from './utils/hocs';
 import { getLocale, constructLocale, SUPPORTED_LOCALES } from './locales';
+
+const GOOGLE_MAP_API_KEY = 'PUT_YOUR_API_TOKEN';
 
 const App = () => {
 	const { state, dispatch } = useStore();
@@ -26,4 +29,4 @@ const App = () => {
 	);
 }
 
-export default App
+export default withGoogleMapServices(App, GOOGLE_MAP_API_KEY);
