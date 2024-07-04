@@ -40,7 +40,11 @@ const SearchScreen: React.FC = () => {
 			limit: pagination.limit,
 		}).then(({ data }) => {
 			setPagination(data?.pagination);
-			setOptions(data?.result);
+
+			if (data?.result && data?.result.length) {
+				setOptions(data?.result.map(parseAccomodationInfo));
+			}
+
 			setLoading(false);
 		}).catch(() => {
 			setLoading(false);
@@ -54,7 +58,11 @@ const SearchScreen: React.FC = () => {
 
 		api.listing.get(listingId).then(({ data }) => {
 			// setPagination(data?.pagination);
-			setOptions(data?.result);
+
+			if (data?.result && data?.result.length) {
+				setOptions(data?.result.map(parseAccomodationInfo));
+			}
+
 			setLoading(false);
 		}).catch(() => {
 			setLoading(false);
@@ -104,7 +112,7 @@ const SearchScreen: React.FC = () => {
 	}, [ highlightedAccomodation ]);
 
 	// TODO: Add support for filtering.
-	const filteredOptions = options.map(parseAccomodationInfo);
+	const filteredOptions = options;
 
 	const memoizedMarkers = React.useMemo(() => {
 		const { longitude, latitude } = state?.claim;
