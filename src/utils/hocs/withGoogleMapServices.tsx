@@ -30,11 +30,6 @@ const withGoogleMapServices = (
 		</Wrapper>
 	);
 
-	WithGoogleMapServices.defaultProps = {
-		apiKey: GOOGLE_MAP_API_KEY,
-		libraries: GOOGLE_MAP_SERVICES,
-	};
-
 	WithGoogleMapServices.defaultName = 'WithGoogleMapServices';
 
 	return WithGoogleMapServices;

@@ -1,7 +1,7 @@
 'use strict';
 
 import { delayRandom } from '../utils';
-import listingDB from './database.json';
+import listingDB from '../mocks/database.json';
 
 interface IListingItem {
 	id: string;
