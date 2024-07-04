@@ -4,11 +4,14 @@ import { Tune as TuneIcon } from '@mui/icons-material';
 
 import { 
 	MOCK_IMAGES,
+	MAX_DISTANCE_KM,
 	MOCK_DESCRIPTION,
 	MOCK_DEFAULT_LOCATION,
+	DEFAULT_SEARCH_WEIGHTS,
 } from '../../mocks';
 import api from '../../api';
 import { useStore } from '../../store';
+import { useAccomodationFilters } from '../../utils/hooks';
 import { InfoCard, BlankCard, Pagination, GoogleMap } from '../../components';
 import { setWrapperClassName, setListingWrapperClassName } from './Search.controller';
 
@@ -31,6 +34,13 @@ const SearchScreen: React.FC = () => {
 	});
 	const [ center, setCenter ] = React.useState(MOCK_DEFAULT_LOCATION);
 	const [ highlightedAccomodation, setHighlightedAccomodation ] = React.useState(null);
+
+	const filteredOptions = useAccomodationFilters({
+		referencePoint: center, 
+		accommodations: options, 
+		maxDistance: MAX_DISTANCE_KM,
+		weights: DEFAULT_SEARCH_WEIGHTS,
+	});
 
 	const listListing = (page: number = 1) => {
 		setLoading(true);
@@ -73,6 +83,16 @@ const SearchScreen: React.FC = () => {
 		listListing(pagination?.page);
 	}, [ pagination?.page ]);
 
+	// Update center on claim search.
+	React.useEffect(() => {
+		const { longitude, latitude } = state?.claim || {};
+
+		if (center && (center.longitude !== longitude || center.latitude !== latitude)) {
+			// Update center state with the new coordinates
+			setCenter({ longitude, latitude });
+		}
+	}, [ state?.claim, center ]);
+
 	const handlePageClick = React.useCallback((event, newPage) => {
 		setPagination((prevPagination) => {
 			// Prevent fetching same page.
@@ -110,9 +130,6 @@ const SearchScreen: React.FC = () => {
 			getListing(payload?.id);
 		}
 	}, [ highlightedAccomodation ]);
-
-	// TODO: Add support for filtering.
-	const filteredOptions = options;
 
 	const memoizedMarkers = React.useMemo(() => {
 		const { longitude, latitude } = state?.claim;
