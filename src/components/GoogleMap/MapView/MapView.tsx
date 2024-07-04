@@ -8,10 +8,12 @@ interface IMapViewProps {
 	[key: string]: any;
 	children?: React.ReactNode;
 	onIdle?: (map: google.maps.Map) => void;
+	center?: { latitude: number; longitude: number };
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 
 const MapView: React.FC<IMapViewProps> = ({
+	center,
 	className = '', 
 	children = null, 
 	onIdle = () => null, 
@@ -24,13 +26,17 @@ const MapView: React.FC<IMapViewProps> = ({
 
 	React.useEffect(() => {
 		if (ref.current && !mapView) {
+			const { longitude, latitude } = center || {};
+			const initialCenter = { lat: latitude || 0, lng: longitude || 0 };
+
 			const googleMap = new window.google.maps.Map(ref.current, {
+				center: initialCenter,
 				styles: configMapView,
 			});
 
 			setMapView(googleMap);
 		}
-	}, [ ref, mapView ]);
+	}, [ ref, mapView, center ]);
 
 	useDeepCompareEffectForMaps(() => {
 		if (mapView) {
