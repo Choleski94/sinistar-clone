@@ -20,10 +20,10 @@ export default function locale (
 	switch (action.type) {
 		case types.LOCALE_SET:
 			return {
-			...state,
-			lang: action.lang,
-			country: action.country,
-		};
+				...state,
+				lang: action.lang,
+				country: action.country,
+			};
 		break;
 		default:
 			return state;

@@ -24,6 +24,7 @@ export type TReducer = (state: IState, action: IAction) => IState;
  * @type {IActionTypes}
  */
 export const ActionTypes: IActionTypes = {
+	CLAIM_SET: 'CLAIM_SET',
 	LOCALE_SET: 'LOCALE_SET',
 };
 
