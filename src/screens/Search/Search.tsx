@@ -8,13 +8,21 @@ import {
 	MOCK_DEFAULT_LOCATION,
 } from '../../mocks';
 import api from '../../api';
-import { withGoogleMapServices } from '../../utils/hocs';
+import { useStore } from '../../store';
 import { InfoCard, BlankCard, Pagination, GoogleMap } from '../../components';
 import { setWrapperClassName, setListingWrapperClassName } from './Search.controller';
 
-const GOOGLE_MAP_API_KEY = null; // ENTER_YOUR_GOOGLE_MAP_API_KEY_HERE
+const parseAccomodationInfo = (data = {}) => ({
+	...data, 
+	images: MOCK_IMAGES,
+	isAccomodation: true, 
+	description: MOCK_DESCRIPTION,
+	id: (data?.id || '').toString(),
+});
 
 const SearchScreen: React.FC = () => {
+	const { state } = useStore();
+
 	const [ zoom, setZoom ] = React.useState(11);
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
@@ -95,12 +103,20 @@ const SearchScreen: React.FC = () => {
 		}
 	}, [ highlightedAccomodation ]);
 
-	const filteredOptions = options.map((data) => ({
-		...data, 
-		images: MOCK_IMAGES,
-		type: 'ACCOMMODATION', 
-		description: MOCK_DESCRIPTION,
-	}));
+	// TODO: Add support for filtering.
+	const filteredOptions = options.map(parseAccomodationInfo);
+
+	const memoizedMarkers = React.useMemo(() => {
+		const { longitude, latitude } = state?.claim;
+
+		let res = [];
+
+		if (longitude && latitude) {
+			res.push(state?.claim);
+		}
+
+		return res.concat(...filteredOptions);
+	}, [ state?.claim, filteredOptions ]);
 
 	return (
 		<>
@@ -110,8 +126,7 @@ const SearchScreen: React.FC = () => {
 					zoom={zoom}
 					center={center}
 					onIdle={onIdle}
-					markers={filteredOptions}
-					apiKey={GOOGLE_MAP_API_KEY}
+					markers={memoizedMarkers}
 					onMarkerClick={onMarkerClick}
 					highlightedMarkerId={highlightedAccomodation?.id}
 				/>
@@ -187,8 +202,7 @@ const SearchScreen: React.FC = () => {
 						zoom={zoom}
 						center={center}
 						onIdle={onIdle}
-						markers={filteredOptions}
-						apiKey={GOOGLE_MAP_API_KEY}
+						markers={memoizedMarkers}
 						onMarkerClick={onMarkerClick}
 						highlightedMarkerId={highlightedAccomodation?.id}
 					/>
@@ -198,4 +212,5 @@ const SearchScreen: React.FC = () => {
 	);
 }
 
-export default withGoogleMapServices(SearchScreen, GOOGLE_MAP_API_KEY);
+export default SearchScreen;
+
