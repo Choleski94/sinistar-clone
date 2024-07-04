@@ -6,27 +6,22 @@ import { Icons } from './Marker.styled';
 import OverlayView from '../OverlayView';
 
 export type TMarkerProps = {
-	type: string;
 	mapView: boolean;
 	latitude: number;
 	longitude: number;
 	[key: string]: any; 
 	onClick: () => void;
 	highlight?: boolean;
-};
-
-const MARKER_TYPES = {
-	HOUSE: 'HOUSE',
-	ACCOMMODATION: 'ACCOMMODATION',
+	isAccomodation: boolean;
 };
 
 const Marker: React.FC<MarkerProps> = ({
-	type, 
 	mapView, 
 	OnClick, 
 	highlight,
 	latitude: lat, 
 	longitude: lng,
+	isAccomodation, 
 	...rest
 }) => {
 	const cardRef = React.useRef<HTMLDivElement>(null);
@@ -34,9 +29,9 @@ const Marker: React.FC<MarkerProps> = ({
 	const [ showCard, setShowCard ] = React.useState(false);
 
 	const handleClick = React.useCallback(() => {
-		if (type !== MARKER_TYPES.ACCOMMODATION) return;
+		if (!isAccomodation) return;
 		setShowCard((prevShowCard) => !prevShowCard);
-	}, [ type ]);
+	}, [ isAccomodation ]);
 
 	if (!mapView) return null;
 
@@ -68,8 +63,7 @@ const Marker: React.FC<MarkerProps> = ({
 			>
 				<div className="marker" onClick={handleClick}>
 					{showCard && <Card ref={cardRef} {...rest as any} />}
-
-					{type === MARKER_TYPES.ACCOMMODATION ? (
+					{isAccomodation ? (
 						<Icons.Accomodation />
 					) : (
 						<Icons.House />

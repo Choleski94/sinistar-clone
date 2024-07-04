@@ -6,7 +6,6 @@ import Marker, { TMarkerProps } from './Marker';
 
 interface IGoogleMapProps {
 	zoom: number;
-	apiKey: string;
 	onIdle?: () => void;
 	markers?: TMarkerProps[];
 	center: google.maps.LatLngLiteral;
@@ -25,40 +24,45 @@ const render = (status) => {
 
 const GoogleMap: React.FC<GoogleMapProps> = ({
 	zoom,
-	apiKey,
 	onIdle,
 	center,
 	markers,
 	onClick,
 	onMarkerClick,
 	highlightedMarkerId,
-}) => (
-	<MapView
-		zoom={zoom}
-		minZoom={2}
-		maxZoom={18}
-		className="map"
-		onIdle={onIdle}
-		center={center}
-		onClick={onClick}
-		zoomControl={false}
-		mapTypeControl={false}
-		clickableIcons={false}
-		fullscreenControl={false}
-		streetViewControl={false}
-	>
-		{markers?.map((markerProps, markerIdx) => (
-			<Marker
-				zoom={zoom}
-				{...markerProps}
-				key={markerProps.id}
-				onClick={onMarkerClick}
-				markerIdx={markerIdx + 1}
-				// highlight={markerProps.id === highlightedMarkerId}
-			/>
-		))}
-	</MapView>
-);
+}) => {
+	const filteredMarkers = markers.filter(({ latitude, longitude }) => (
+		latitude && longitude
+	));
+
+	return (
+		<MapView
+			zoom={zoom}
+			minZoom={2}
+			maxZoom={18}
+			className="map"
+			onIdle={onIdle}
+			center={center}
+			onClick={onClick}
+			zoomControl={false}
+			mapTypeControl={false}
+			clickableIcons={false}
+			fullscreenControl={false}
+			streetViewControl={false}
+		>
+			{filteredMarkers?.map((markerProps, markerIdx) => (
+				<Marker
+					zoom={zoom}
+					{...markerProps}
+					key={markerProps.id}
+					onClick={onMarkerClick}
+					markerIdx={markerIdx + 1}
+					// highlight={markerProps.id === highlightedMarkerId}
+				/>
+			))}
+		</MapView>
+	);
+}
 
 export default GoogleMap;
 
