@@ -30,9 +30,9 @@ const withGoogleMapServices = (
 		</Wrapper>
 	);
 
-	WithGoogleMapServices.defaultName = 'WithGoogleMapServices';
-
 	return WithGoogleMapServices;
 }
+
+withGoogleMapServices.defaultName = 'withGoogleMapServices';
 
 export default withGoogleMapServices;
