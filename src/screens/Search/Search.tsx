@@ -9,12 +9,13 @@ import {
 	DEFAULT_MAP_ZOOM,
 	MOCK_DEFAULT_LOCATION,
 	DEFAULT_SEARCH_WEIGHTS,
-} from '../../mocks';
-import api from '../../api';
-import { useStore } from '../../store';
-import formatMessage from '../../utils/formatMessage';
-import { useAccomodationFilters } from '../../utils/hooks';
-import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '../../components';
+} from '@mocks';
+import api from '@api';
+import { useStore } from '@store';
+import formatMessage from '@utils/formatMessage';
+import { useAccomodationFilters } from '@utils/hooks';
+import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '@components';
+
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
 interface IPaginationState {

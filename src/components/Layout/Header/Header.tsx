@@ -7,11 +7,9 @@ import {
 	Language as LanguageIcon,
 } from '@mui/icons-material';
 
-import Modal from '../../Modal';
-import Forms from '../../Forms';
-import { useStore } from '../../../store';
-import SearchLocation from '../../SearchLocation';
-import formatMessage from '../../../utils/formatMessage';
+import { useStore } from '@store';
+import formatMessage from '@utils/formatMessage';
+import { Modal, Forms, SearchLocation } from '@components';
 
 interface IHeaderProps {
 	placeholder?: string;

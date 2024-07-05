@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import App from './App.tsx';
-import './styles/index.css';
+import App from '@app';
+import '@styles/index.css';
 
-import { StoreProvider } from './store';
+import { StoreProvider } from '@store';
 
 const root = document.getElementById('root');
 

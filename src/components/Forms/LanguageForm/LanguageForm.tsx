@@ -1,5 +1,9 @@
 import React from 'react';
 
+import { useStore } from '@store';
+import formatMessage from '@utils/formatMessage';
+import { LOCALE_INFO, SUPPORTED_LOCALES, constructLocale, parseLocale } from '@locales';
+
 import {
 	DefaultBox,
 	CountryTitle,
@@ -7,9 +11,6 @@ import {
 	LanguageButton,
 	ButtonsContainer,
 } from './LanguageForm.styled';
-import { useStore } from '../../../store';
-import formatMessage from '../../../utils/formatMessage';
-import { LOCALE_INFO, SUPPORTED_LOCALES, constructLocale, parseLocale } from '../../../locales';
 
 interface ILanguageFormProps {
 	onSubmit?: (locale: string) => void;

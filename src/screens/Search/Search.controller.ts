@@ -1,4 +1,4 @@
-import { MOCK_IMAGES, MOCK_DESCRIPTION } from '../../mocks';
+import { MOCK_IMAGES, MOCK_DESCRIPTION } from '@mocks';
 
 /**
  * Sets the CSS class name for the listing wrapper based on the provided conditions.

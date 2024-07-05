@@ -1,8 +1,9 @@
 import React from 'react';
 import { Slider, Grid, Typography, Button } from '@mui/material';
 
-import formatMessage from '../../../utils/formatMessage';
-import { SEARCH_WEIGHTS, DEFAULT_SEARCH_WEIGHTS, ISearchWeights } from '../../../mocks';
+import formatMessage from '@utils/formatMessage';
+import { SEARCH_WEIGHTS, DEFAULT_SEARCH_WEIGHTS, ISearchWeights } from '@mocks';
+
 import { FilterContainer, SliderContainer, FullWidthButton } from './FilterForm.styled';
 
 interface IFilterFormProps {
