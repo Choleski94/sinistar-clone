@@ -3,12 +3,12 @@ import usePlacesAutocomplete, { getGeocode } from 'use-places-autocomplete';
 
 import Suggestions from './Suggestions';
 import InputWithIcon from './InputWithIcon';
+import formatMessage from '../../utils/formatMessage';
 import { SearchLocationWrapper } from './SearchLocation.styled';
 
 interface ISearchLocationProps {
 	label?: string;
-	resultText?: string;
-	placeholder?: string;
+		placeholder?: string;
 	defaultValue?: string;
 	onSelect?: (geoPayload: google.maps.GeocoderResult[]) => void;
 }
@@ -20,8 +20,6 @@ export const SearchLocation: React.FC<ISearchLocationProps> = ({
 	label = '',
 	defaultValue = '',
 	onSelect = () => null,
-	resultText = 'Address of the claim',
-	placeholder = 'What is the address of the claim?',
 }) => {
 	const {
 		value, setValue, clearSuggestions,
@@ -33,6 +31,11 @@ export const SearchLocation: React.FC<ISearchLocationProps> = ({
 	const [ isApiLoaded, setIsApiLoaded ] = React.useState(false);
 	const [ popoverTop, setPopoverTop ] = React.useState<number | null>(null);
 	const [ popoverWidth, setPopoverWidth ] = React.useState<number | null>(null);
+
+	const messages = {
+		placeholder: formatMessage('header.search.text'),
+		resultText: formatMessage('header.search.result.text'),
+	}
 
 	const open = React.useMemo(() => Boolean(
 		status === 'OK' && options && options?.length
@@ -103,17 +106,17 @@ export const SearchLocation: React.FC<ISearchLocationProps> = ({
 			<InputWithIcon
 				value={value}
 				ref={textFieldRef}
-				placeholder={placeholder}
 				onChange={handleInputChange}
+				placeholder={messages.placeholder}
 			/>
 			<Suggestions
 				open={open}
 				top={popoverTop}
 				options={options}
 				width={popoverWidth}
-				resultText={resultText}
 				handleClose={handleClose}
 				handleSelect={handleSelect}
+				resultText={messages.resultText}
 				anchorEl={textFieldRef?.current}
 			/>
 		</SearchLocationWrapper>
