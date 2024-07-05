@@ -11,6 +11,7 @@ import {
 } from '../../mocks';
 import api from '../../api';
 import { useStore } from '../../store';
+import formatMessage from '../../utils/formatMessage';
 import { useAccomodationFilters } from '../../utils/hooks';
 import { InfoCard, BlankCard, Pagination, GoogleMap } from '../../components';
 import { setWrapperClassName, setListingWrapperClassName } from './Search.controller';
@@ -79,6 +80,14 @@ const SearchScreen: React.FC = () => {
 		});
 	}
 
+	const messages = {
+		searchTitle: formatMessage('screen.search.title'),
+		searchSubtitle: formatMessage('screen.search.subtitle'),
+		searchFilterCta: formatMessage('screen.search.filter.cta'),
+		noResultTitle1: formatMessage('screen.search.no-result.title1'),
+		noResultTitle2: formatMessage('screen.search.no-result.title2'),
+	}
+
 	React.useEffect(() => {
 		listListing(pagination?.page);
 	}, [ pagination?.page ]);
@@ -114,13 +123,13 @@ const SearchScreen: React.FC = () => {
 		});
 	}, [ pagination ]);
 
-        const onIdle = (map = { getZoom: () => null, getCenter: () => null }) => {
-                setZoom(map?.getZoom());
-                const nextCenter = map?.getCenter();
-                if (nextCenter) {
-                        setCenter(nextCenter.toJSON());
-                }
-        };
+	const onIdle = (map = { getZoom: () => null, getCenter: () => null }) => {
+		setZoom(map?.getZoom());
+		const nextCenter = map?.getCenter();
+		if (nextCenter) {
+			setCenter(nextCenter.toJSON());
+		}
+	};
 
 	const onMarkerClick = React.useCallback((payload) => {
 		if (highlightedAccomodation === payload) {
@@ -174,17 +183,19 @@ const SearchScreen: React.FC = () => {
 					) : (
 						<>
 							<h6 className="text-1xl font-[400]">
-								{pagination?.totalItems || 0}+ accommodations in this area
+								{pagination?.totalItems || 0}+
+								&nbsp;
+								{messages.searchTitle}
 							</h6>
 							<p className="text-xs overflow-hidden mt-2">
-								Explore 100% furnished and equipped accommodations.
+								{messages.searchSubtitle}
 							</p>
 							<div className="xl:py-5 lg:py-3 lg:pt-4 mt-1 py-1 flex items-center mb-5 sm:space-x-3 text-gray-800 flex-wrap max-h-[150px] overflow-hidden">
 								<p className="button shadow-md">
 									<Stack direction="row" alignItems="center" gap={1}>
 										<TuneIcon />
 										<Typography>
-											Filters
+											{messages.searchFilterCta}
 										</Typography>
 									</Stack>
 								</p>
@@ -208,9 +219,9 @@ const SearchScreen: React.FC = () => {
 								))
 							) : (
 								<div className="mx-auto pt-20 pb-36 text-4xl text-slate-900 font-[400]">
-									It looks like there isn’t any housing in this area just yet. 
+									{messages.noResultTitle1}
 									<br />
-									But why not ask for a quote anyway? You never know!
+									{messages.noResultTitle2}
 								</div>
 							)
 						)}
