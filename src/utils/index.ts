@@ -1,6 +1,6 @@
 import { EARTH_RADIUS_KM } from '../mocks';
 
-interface IAccommodation {
+export interface IAccommodation {
 	latitude: number;
 	longitude: number;
 	review_score: number;
@@ -8,12 +8,12 @@ interface IAccommodation {
 	extension_flexibility: number;
 }
 
-interface IReferencePoint {
+export interface IReferencePoint {
 	latitude: number;
 	longitude: number;
 }
 
-interface IWeights {
+export interface IWeights {
 	distance: number;
 	review_score: number;
 	host_response_rate: number;
