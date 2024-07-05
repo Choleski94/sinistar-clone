@@ -127,9 +127,9 @@ const withStoreProvider = (Component: React.ComponentType<any>, initialState: Ty
 		</StoreProvider>
 	);
 
-	WithStoreProvider.defaultName = 'WithStoreProvider';
-
 	return WithStoreProvider
 }
+
+withStoreProvider.defaultName = 'withStoreProvider';
 
 export default withStoreProvider;
