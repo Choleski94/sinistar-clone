@@ -1,13 +1,14 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 
+import config from './config';
 import { Search } from './screens';
 import { useStore } from './store';
 import { Layout } from './components';
-import { withGoogleMapServices } from './utils/hocs';
+import { withGoogleMapServices, withErrorHandling } from './utils/hocs';
 import { getLocale, constructLocale, SUPPORTED_LOCALES } from './locales';
 
-const GOOGLE_MAP_API_KEY = 'PUT_YOUR_API_TOKEN';
+const isDev = config.app.env === 'development';
 
 const App = () => {
 	const { state, dispatch } = useStore();
@@ -29,4 +30,4 @@ const App = () => {
 	);
 }
 
-export default withGoogleMapServices(App, GOOGLE_MAP_API_KEY);
+export default withErrorHandling(withGoogleMapServices(App, config.services.googleMap), { isDev });
