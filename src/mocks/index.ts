@@ -19,8 +19,10 @@ export interface ISearchWeights {
 	};
 }
 
+export const DEFAULT_MAP_ZOOM: number = 11;
+
 // Constants for search and calculations.
-export const MAX_DISTANCE_KM:number = 100;
+export const MAX_DISTANCE_KM: number = 100;
 export const EARTH_RADIUS_KM: number = 6371;
 
 // Search filters.
