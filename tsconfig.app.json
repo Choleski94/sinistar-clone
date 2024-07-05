@@ -21,7 +21,26 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+
+		/* Custom paths */
+		"baseUrl": "./",
+		"paths": {
+			"@src": ["src"],
+			"@app": ["src/App"],
+			"@api": ["src/api"],
+			"@store": ["src/store"],
+			"@utils": ["src/utils"],
+			"@mocks": ["src/mocks"],
+			"@config": ["src/config"],
+			"@styles": ["src/styles"],
+			"@locales": ["src/locales"],
+			"@screens": ["src/screens"],
+			"@components": ["src/components"],
+			"@utils/hocs": ["src/utils/hocs"],
+			"@utils/hooks": ["src/utils/hooks"],
+			"@utils/formatMessage": ["src/utils/formatMessage"]
+		}
 	},
 	"include": ["src"]
 }

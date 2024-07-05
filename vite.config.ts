@@ -3,9 +3,11 @@ import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
-export default ({ mode }) => {
+export default ({ mode }: { mode: string }) => {
 	// Load app-level environment variables to node-level environment variables.
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
+	const __dirname = new URL('.', import.meta.url).pathname;
 
 	return defineConfig({
 		plugins: [react()],

@@ -11,7 +11,7 @@ import { getLocale, constructLocale, SUPPORTED_LOCALES } from '@locales';
 const isDev = config.app.env === 'development';
 
 const App = () => {
-	const { state, dispatch } = useStore();
+	const { state } = useStore();
 
 	const localeISO = constructLocale(state.locale);
 	const localeMessage = getLocale(localeISO);
