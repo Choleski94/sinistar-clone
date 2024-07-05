@@ -2,8 +2,11 @@ import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
 
-import { 
+import {
+	ILocation,
+	ISearchWeights,
 	MAX_DISTANCE_KM,
+	DEFAULT_MAP_ZOOM,
 	MOCK_DEFAULT_LOCATION,
 	DEFAULT_SEARCH_WEIGHTS,
 } from '../../mocks';
@@ -14,19 +17,26 @@ import { useAccomodationFilters } from '../../utils/hooks';
 import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '../../components';
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
+interface IPaginationState {
+	page: number;
+	limit: number;
+	totalItems: number;
+	totalPages: number;
+}
+
 const SearchScreen: React.FC = () => {
 	const { state } = useStore();
 
-	const [ zoom, setZoom ] = React.useState(11);
 	const [ options, setOptions ] = React.useState([]);
-	const [ loading, setLoading ] = React.useState(false);
-	const [ pagination, setPagination ] = React.useState({
+	const [ loading, setLoading ] = React.useState<boolean>(false);
+	const [ zoom, setZoom ] = React.useState<number>(DEFAULT_MAP_ZOOM);
+	const [ pagination, setPagination ] = React.useState<IPaginationState>({
 		page: 1, limit: 15, totalItems: 0, totalPages: 0,
 	});
-	const [ center, setCenter ] = React.useState(MOCK_DEFAULT_LOCATION);
-	const [ showFilterModal, setShowFilterModal ] = React.useState(false);
-	const [ filterWeights, setFilterWeights ] = React.useState(DEFAULT_SEARCH_WEIGHTS);
+	const [ showFilterModal, setShowFilterModal ] = React.useState<boolean>(false);
+	const [ center, setCenter ] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
 	const [ highlightedAccomodation, setHighlightedAccomodation ] = React.useState(null);
+	const [ filterWeights, setFilterWeights ] = React.useState<ISearchWeights>(DEFAULT_SEARCH_WEIGHTS);
 
 	const messages = {
 		filterTitle: formatMessage('form.filter.title'),
@@ -44,7 +54,7 @@ const SearchScreen: React.FC = () => {
 		maxDistance: MAX_DISTANCE_KM,
 	});
 
-	const listListing = (page: number = 1) => {
+	const listListing = React.useCallback((page: number = 1) => {
 		setLoading(true);
 
 		api.listing.list({
@@ -61,16 +71,14 @@ const SearchScreen: React.FC = () => {
 		}).catch(() => {
 			setLoading(false);
 		});
-	}
+	}, [ pagination ]);
 
-	const getListing = (listingId?: number) => {
+	const getListing = React.useCallback((listingId?: number) => {
 		if (!listingId) return;
 
 		setLoading(true);
 
 		api.listing.get(listingId).then(({ data }) => {
-			// setPagination(data?.pagination);
-
 			if (data?.result && data?.result.length) {
 				setOptions(data?.result.map(parseAccomodationInfo));
 			}
@@ -79,7 +87,7 @@ const SearchScreen: React.FC = () => {
 		}).catch(() => {
 			setLoading(false);
 		});
-	}
+	}, []);
 
 	React.useEffect(() => {
 		listListing(pagination?.page);
@@ -95,7 +103,7 @@ const SearchScreen: React.FC = () => {
 		}
 	}, [ state?.claim, center ]);
 
-	const handlePageClick = React.useCallback((event, newPage) => {
+	const handlePageClick = React.useCallback((event: React.MouseEvent<unknown>, newPage: number) => {
 		setPagination((prevPagination) => {
 			// Prevent fetching same page.
 			if (prevPagination.page === newPage) {
@@ -116,14 +124,15 @@ const SearchScreen: React.FC = () => {
 		});
 	}, [ pagination ]);
 
-	const onIdle = (map = { getZoom: () => null, getCenter: () => null }) => {
-		setZoom(map?.getZoom());
+	const onIdle = React.useCallback((map = { getZoom: () => null, getCenter: () => null }) => {
+		setZoom(map?.getZoom() || DEFAULT_MAP_ZOOM);
 		const nextCenter = map?.getCenter();
 		if (nextCenter) {
 			setCenter(nextCenter.toJSON());
 		}
-	};
+	}, []);
 
+	// TODO: Implement location hilight.
 	const onMarkerClick = React.useCallback((payload) => {
 		if (highlightedAccomodation === payload) {
 			setHighlightedAccomodation(null);
@@ -134,7 +143,7 @@ const SearchScreen: React.FC = () => {
 	}, [ highlightedAccomodation ]);
 
 	const memoizedMarkers = React.useMemo(() => {
-		const { longitude, latitude } = state?.claim;
+		const { longitude, latitude } = state?.claim || {};
 
 		let res = [];
 
@@ -145,12 +154,14 @@ const SearchScreen: React.FC = () => {
 		return res.concat(...filteredOptions);
 	}, [ state?.claim, filteredOptions ]);
 
-	const toggleFilterModal = () => setShowFilterModal(!showFilterModal);
+	const toggleFilterModal = React.useCallback(() => (
+		setShowFilterModal((prevFilterValue) => !prevFilterValue)
+	), []);
 
-	const handleFilterSet = (filterData) => {
+	const handleFilterSet = React.useCallback((filterData: ISearchWeights) => {
 		setFilterWeights(filterData);
 		toggleFilterModal();
-	}
+	}, [ toggleFilterModal ]);
 
 	return (
 		<>
