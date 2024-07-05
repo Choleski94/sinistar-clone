@@ -7,8 +7,9 @@ import {
 	Language as LanguageIcon,
 } from '@mui/icons-material';
 
+import Modal from '../../Modal';
+import Forms from '../../Forms';
 import { useStore } from '../../../store';
-import LanguageModal from './LanguageModal';
 import SearchLocation from '../../SearchLocation';
 import formatMessage from '../../../utils/formatMessage';
 
@@ -30,12 +31,20 @@ const Header: React.FC<IHeaderProps> = () => {
 
 	const messages = {
 		hostingCta: formatMessage('header.hositng.cta'),
+		languageTitle: formatMessage('modal.language.title'),
 	}
 
-	const handlLanguageSelectionClick = () => setShowLanguageModal(!showLanguageModal);
+	const toggleLanguageModal = () => {
+		setShowLanguageModal(!showLanguageModal);
+	};
 
-	const handleLocationSet = (locationData) => {
+	const handleLocationSet = (locationData: any) => {
 		dispatch(actions.setClaim(parseLocation(locationData)));
+	}
+
+	const handleLanguageSet = (parsedLocaleISO: string) => {
+		dispatch(actions.setLocale(parsedLocaleISO));
+		toggleLanguageModal();
 	}
 
 	return (
@@ -74,8 +83,8 @@ const Header: React.FC<IHeaderProps> = () => {
 						<div className="hover:bg-[#f7f7f7] cursor-pointer lg:p-2 rounded-full md:px-2 lg:px-4">
 							<p className="hidden md:inline text-[#222222] font-[500]">
 								<LanguageIcon 
+									onClick={toggleLanguageModal}
 									className="h-6 cursor-pointer text-[#222222]" 
-									onClick={handlLanguageSelectionClick}
 								/>
 							</p>
 						</div>
@@ -91,11 +100,16 @@ const Header: React.FC<IHeaderProps> = () => {
 					</div>
 				</header>
 			</div>
-			{showLanguageModal && (
-				<LanguageModal 
-					onClose={handlLanguageSelectionClick}
+			<Modal />
+			<Modal 
+				open={showLanguageModal}
+				onClose={toggleLanguageModal}
+				title={messages.languageTitle}
+			>
+				<Forms.Language 
+					onSubmit={handleLanguageSet}
 				/>
-			)}
+			</Modal>
 		</>
 	);
 }
