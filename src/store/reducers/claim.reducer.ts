@@ -1,11 +1,22 @@
 import types from '../types';
 import states from '../states';
 
-interface IClaimAction {
-	type: string;
-	geometry: any;
-	place_id: string;
-	formatted_address: string;
+export interface IClaimAction {
+	id?: string;
+	type?: string;
+	city?: string;
+	name?: string;
+	geometry?: any;
+	address?: string;
+	place_id?: string;
+	images?: string[];
+	latitude?: number;
+	longitude?: number;
+	description?: string;
+	review_score?: string;
+	formatted_address?: string;
+	host_response_rate?: string;
+	extension_flexibility?: string;
 }
 
 /**
