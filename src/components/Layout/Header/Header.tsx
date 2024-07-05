@@ -100,7 +100,6 @@ const Header: React.FC<IHeaderProps> = () => {
 					</div>
 				</header>
 			</div>
-			<Modal />
 			<Modal 
 				open={showLanguageModal}
 				onClose={toggleLanguageModal}
