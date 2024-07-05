@@ -6,10 +6,12 @@ import { SEARCH_WEIGHTS, DEFAULT_SEARCH_WEIGHTS, ISearchWeights } from '../../..
 import { FilterContainer, SliderContainer, FullWidthButton } from './FilterForm.styled';
 
 interface IFilterFormProps {
+	data?: ISearchWeights;
 	onSubmit: (filters: ISearchWeights) => void;
 }
 
 const FilterForm: React.FC<IFilterFormProps> = ({
+	data,
 	onSubmit,
 }) => {
 	const [ filters, setFilters ] = React.useState<ISearchWeights>(DEFAULT_SEARCH_WEIGHTS);
@@ -21,6 +23,10 @@ const FilterForm: React.FC<IFilterFormProps> = ({
 		host_response_rate: formatMessage('form.filter.host_response_rate.text'),
 		extension_flexibility: formatMessage('form.filter.extension_flexibility.text'),
 	}
+
+	React.useEffect(() => {
+		setFilters({ ...filters, ...data });
+	}, [ data ]);
 
 	const handleSliderChange = (event: Event, newValue: number | number[], key: string) => {
 		setFilters({
