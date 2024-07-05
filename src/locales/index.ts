@@ -1,7 +1,7 @@
 'use strict';
 
 import enUS from './lang/en/US.json';
-import frFR from './lang/fr/FR.json';
+import frCA from './lang/fr/CA.json';
 import esES from './lang/es/ES.json';
 
 interface ILocaleObject {
@@ -20,7 +20,7 @@ export const localesObj: ILocaleObject = {
 		US: enUS,
 	},
 	fr: {
-		FR: frFR
+		CA: frCA
 	},
 	es: {
 		ES: esES
@@ -52,7 +52,7 @@ export const LOCALE_INFO: Record<string, IConstructLocaleObject> = {
 		lang: 'English',
 		country: 'United States',
 	},
-	'fr-FR': {
+	'fr-CA': {
 		lang: 'Français',
 		country: 'Canada',
 	},
@@ -64,13 +64,13 @@ export const LOCALE_INFO: Record<string, IConstructLocaleObject> = {
 
 export const SUPPORTED_LOCALES: Record<string, string> = {
 	en: 'en-US',
-	fr: 'fr-FR',
+	fr: 'fr-CA',
 	es: 'es-ES',
 };
 
 export const FALLBACK_LOCALES: Record<string, string> = {
 	en: 'US',
-	fr: 'FR',
+	fr: 'CA',
 	es: 'ES',
 };
 

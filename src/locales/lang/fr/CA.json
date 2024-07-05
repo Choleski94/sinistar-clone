@@ -1,0 +1,19 @@
+{
+	"meta.title.text": "Sinistar - Logement Temporaire Meublé – Réclamation d'Assurance",
+	"meta.description.text": "Solution de logement entièrement meublée et tout compris pour une réclamation d'assurance. Nous vous trouverons un logement temporaire dans votre région, couvert par votre assurance.",
+
+	"header.hositng.cta": "Essayez l'hébergement",
+	"header.search.text": "Quelle est l'adresse de la réclamation?",
+	"header.search.result.text": "Adresse de la réclamation",
+
+	"pagination.prev.text": "Précédent",
+	"pagination.next.text": "Suivant",
+
+	"modal.language.title": "Sélectionnez votre langue préférée",
+
+	"screen.search.title": "hébergements dans cette zone",
+	"screen.search.subtitle": "Explorez des hébergements 100% meublés et équipés.",
+	"screen.search.filter.cta": "Filtres",
+	"screen.search.no-result.title1": "Il semble qu'il n'y ait pas encore de logement dans cette zone.",
+	"screen.search.no-result.title2": "Mais pourquoi ne pas demander un devis quand même ? On ne sait jamais !"
+}

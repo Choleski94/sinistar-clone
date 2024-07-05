@@ -1,4 +1,19 @@
 {
-	"meta.title.text": "Sinistar - Furnished Temporary Housing – Insurance Claim",
-	"meta.description.text": "Fully furnished, all-inclusive housing solution for insurance claim. We’ll find you a temporary home in your area, covered by your insurance."
+	"meta.title.text": "Sinistar - Vivienda Temporal Amueblada – Reclamación de Seguro",
+	"meta.description.text": "Solución de vivienda totalmente amueblada y todo incluido para reclamaciones de seguro. Te encontraremos un hogar temporal en tu área, cubierto por tu seguro.",
+
+	"header.hositng.cta": "Intenta ser anfitrión",
+	"header.search.text": "¿Cuál es la dirección de la reclamación?",
+	"header.search.result.text": "Dirección de la reclamación",
+
+	"pagination.prev.text": "Anterior",
+	"pagination.next.text": "Siguiente",
+
+	"modal.language.title": "Selecciona tu idioma preferido",
+
+	"screen.search.title": "alojamientos en esta área",
+	"screen.search.subtitle": "Explora alojamientos 100% amueblados y equipados.",
+	"screen.search.filter.cta": "Filtros",
+	"screen.search.no-result.title1": "Parece que no hay viviendas en esta área todavía.",
+	"screen.search.no-result.title2": "Pero, ¿por qué no pedir una cotización de todas formas? ¡Nunca se sabe!"
 }

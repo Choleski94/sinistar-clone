@@ -1,4 +1,19 @@
 {
 	"meta.title.text": "Sinistar - Furnished Temporary Housing – Insurance Claim",
-	"meta.description.text": "Fully furnished, all-inclusive housing solution for insurance claim. We’ll find you a temporary home in your area, covered by your insurance."
+	"meta.description.text": "Fully furnished, all-inclusive housing solution for insurance claim. We’ll find you a temporary home in your area, covered by your insurance.",
+
+	"header.hositng.cta": "Try hosting",
+	"header.search.text": "What is the address of the claim?",
+	"header.search.result.text": "Address of the claim",
+
+	"pagination.prev.text": "Previous",
+	"pagination.next.text": "Next",
+
+	"modal.language.title": "Select your preferred language",
+
+	"screen.search.title": "accommodations in this area",
+	"screen.search.subtitle": "Explore 100% furnished and equipped accommodations.",
+	"screen.search.filter.cta": "Filters",
+	"screen.search.no-result.title1": "It looks like there isn’t any housing in this area just yet.",
+	"screen.search.no-result.title2": "But why not ask for a quote anyway? You never know!"
 }
