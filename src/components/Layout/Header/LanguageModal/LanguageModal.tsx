@@ -37,7 +37,7 @@ const LanguageModal = ({
 
 	return (
 		<Container tabIndex={-1} onClick={onClose}>
-			<InnerContainer>
+			<InnerContainer onClick={(e) => e.stopPropagation()}>
 				<CloseButton onClick={onClose}>
 					<svg width="20" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#101828">
 						<path d="M18 6L6 18M6 6L18 18" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -53,7 +53,7 @@ const LanguageModal = ({
 								key={localeISO}
 								hreflang={localeISO} 
 								selected={localeISO === activeLocale}
-								onClick={() => handleLanguageSet(localeISO)}
+								onClick={(e) => handleLanguageSet(e, localeISO)}
 							>
 								<LanguageTitle>
 									{LOCALE_INFO[localeISO]?.lang}
