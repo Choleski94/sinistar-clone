@@ -1,3 +1,5 @@
+import { MOCK_IMAGES, MOCK_DESCRIPTION } from '../../mocks';
+
 /**
  * Sets the CSS class name for the listing wrapper based on the provided conditions.
  * @param {boolean} [isReady=false] - Whether the listing is ready.
@@ -28,4 +30,17 @@ export const setListingWrapperClassName = (isReady?: boolean = false): string =>
 	(isReady ? 'gap-5' : 'max-w-full'), 
 	'pb-28',
 ].join(' ').trim());
+
+/**
+ * Parses accommodation information and returns a structured object.
+ * @param {Partial<AccommodationInfo>} [data={}] - Partial data to parse into AccommodationInfo.
+ * @returns {AccommodationInfo} The parsed accommodation information.
+ */
+export const parseAccomodationInfo = (data: any) => ({
+	...data,
+	images: MOCK_IMAGES,
+	isAccomodation: true,
+	description: MOCK_DESCRIPTION,
+	id: (data?.id || '').toString(),
+});
 

@@ -3,9 +3,7 @@ import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
 
 import { 
-	MOCK_IMAGES,
 	MAX_DISTANCE_KM,
-	MOCK_DESCRIPTION,
 	MOCK_DEFAULT_LOCATION,
 	DEFAULT_SEARCH_WEIGHTS,
 } from '../../mocks';
@@ -13,16 +11,8 @@ import api from '../../api';
 import { useStore } from '../../store';
 import formatMessage from '../../utils/formatMessage';
 import { useAccomodationFilters } from '../../utils/hooks';
-import { InfoCard, BlankCard, Pagination, GoogleMap } from '../../components';
-import { setWrapperClassName, setListingWrapperClassName } from './Search.controller';
-
-const parseAccomodationInfo = (data = {}) => ({
-	...data, 
-	images: MOCK_IMAGES,
-	isAccomodation: true, 
-	description: MOCK_DESCRIPTION,
-	id: (data?.id || '').toString(),
-});
+import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '../../components';
+import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
 const SearchScreen: React.FC = () => {
 	const { state } = useStore();
@@ -31,16 +21,27 @@ const SearchScreen: React.FC = () => {
 	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState(false);
 	const [ pagination, setPagination ] = React.useState({
-		page: 1, limit: 5, totalItems: 0, totalPages: 0,
+		page: 1, limit: 15, totalItems: 0, totalPages: 0,
 	});
 	const [ center, setCenter ] = React.useState(MOCK_DEFAULT_LOCATION);
+	const [ showFilterModal, setShowFilterModal ] = React.useState(false);
+	const [ filterWeights, setFilterWeights ] = React.useState(DEFAULT_SEARCH_WEIGHTS);
 	const [ highlightedAccomodation, setHighlightedAccomodation ] = React.useState(null);
 
+	const messages = {
+		filterTitle: formatMessage('form.filter.title'),
+		searchTitle: formatMessage('screen.search.title'),
+		searchSubtitle: formatMessage('screen.search.subtitle'),
+		searchFilterCta: formatMessage('screen.search.filter.cta'),
+		noResultTitle1: formatMessage('screen.search.no-result.title1'),
+		noResultTitle2: formatMessage('screen.search.no-result.title2'),
+	}
+
 	const filteredOptions = useAccomodationFilters({
+		weights: filterWeights,
 		referencePoint: center, 
 		accommodations: options, 
 		maxDistance: MAX_DISTANCE_KM,
-		weights: DEFAULT_SEARCH_WEIGHTS,
 	});
 
 	const listListing = (page: number = 1) => {
@@ -78,14 +79,6 @@ const SearchScreen: React.FC = () => {
 		}).catch(() => {
 			setLoading(false);
 		});
-	}
-
-	const messages = {
-		searchTitle: formatMessage('screen.search.title'),
-		searchSubtitle: formatMessage('screen.search.subtitle'),
-		searchFilterCta: formatMessage('screen.search.filter.cta'),
-		noResultTitle1: formatMessage('screen.search.no-result.title1'),
-		noResultTitle2: formatMessage('screen.search.no-result.title2'),
 	}
 
 	React.useEffect(() => {
@@ -152,6 +145,13 @@ const SearchScreen: React.FC = () => {
 		return res.concat(...filteredOptions);
 	}, [ state?.claim, filteredOptions ]);
 
+	const toggleFilterModal = () => setShowFilterModal(!showFilterModal);
+
+	const handleFilterSet = (filterData) => {
+		setFilterWeights(filterData);
+		toggleFilterModal();
+	}
+
 	return (
 		<>
 			{/* Section: Mobile map */}
@@ -192,7 +192,7 @@ const SearchScreen: React.FC = () => {
 							</p>
 							<div className="xl:py-5 lg:py-3 lg:pt-4 mt-1 py-1 flex items-center mb-5 sm:space-x-3 text-gray-800 flex-wrap max-h-[150px] overflow-hidden">
 								<p className="button shadow-md">
-									<Stack direction="row" alignItems="center" gap={1}>
+									<Stack direction="row" alignItems="center" gap={1} onClick={toggleFilterModal}>
 										<TuneIcon />
 										<Typography>
 											{messages.searchFilterCta}
@@ -243,6 +243,16 @@ const SearchScreen: React.FC = () => {
 						highlightedMarkerId={highlightedAccomodation?.id}
 					/>
 				</section>
+				<Modal
+					open={showFilterModal}
+					onClose={toggleFilterModal}
+					title={messages.filterTitle}
+				>
+					<Forms.Filter
+						data={filterWeights}
+						onSubmit={handleFilterSet}
+					/>
+				</Modal>
 			</main>
 		</>
 	);
