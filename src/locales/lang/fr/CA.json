@@ -1,8 +1,8 @@
 {
 	"meta.title.text": "Sinistar - Logement Temporaire Meublé – Réclamation d'Assurance",
-	"meta.description.text": "Solution de logement entièrement meublée et tout compris pour une réclamation d'assurance. Nous vous trouverons un logement temporaire dans votre région, couvert par votre assurance.",
+	"meta.description.text": "Solution de logement entièrement meublé et tout compris pour réclamation d'assurance. Nous vous trouverons une maison temporaire dans votre région, couverte par votre assurance.",
 
-	"header.hositng.cta": "Essayez l'hébergement",
+	"header.hositng.cta": "Essayer l'hébergement",
 	"header.search.text": "Quelle est l'adresse de la réclamation?",
 	"header.search.result.text": "Adresse de la réclamation",
 
@@ -11,9 +11,17 @@
 
 	"modal.language.title": "Sélectionnez votre langue préférée",
 
-	"screen.search.title": "hébergements dans cette zone",
-	"screen.search.subtitle": "Explorez des hébergements 100% meublés et équipés.",
+	"form.filter.title": "Sélectionnez vos filtres préférés",
+	"form.filter.distance.text": "Distance",
+	"form.filter.review_score.text": "Score de revue",
+	"form.filter.host_response_rate.text": "Taux de réponse de l'hôte",
+	"form.filter.extension_flexibility.text": "Flexibilité de l'extension",
+	"form.filter.apply.cta": "Appliquer les filtres",
+
+	"screen.search.title": "logements dans cette région",
+	"screen.search.subtitle": "Explorez des logements 100% meublés et équipés.",
 	"screen.search.filter.cta": "Filtres",
-	"screen.search.no-result.title1": "Il semble qu'il n'y ait pas encore de logement dans cette zone.",
+	"screen.search.no-result.title1": "Il semble qu'il n'y ait pas encore de logement dans cette région.",
 	"screen.search.no-result.title2": "Mais pourquoi ne pas demander un devis quand même ? On ne sait jamais !"
 }
+

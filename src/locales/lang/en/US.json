@@ -11,6 +11,13 @@
 
 	"modal.language.title": "Select your preferred language",
 
+	"form.filter.title": "Select your prefered filters",
+	"form.filter.distance.text": "Distance",
+	"form.filter.review_score.text": "Review score",
+	"form.filter.host_response_rate.text": "Host response rate",
+	"form.filter.extension_flexibility.text": "Extension flexibility",
+	"form.filter.apply.cta": "Apply filters",
+
 	"screen.search.title": "accommodations in this area",
 	"screen.search.subtitle": "Explore 100% furnished and equipped accommodations.",
 	"screen.search.filter.cta": "Filters",

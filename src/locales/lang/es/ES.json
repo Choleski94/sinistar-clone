@@ -1,8 +1,8 @@
 {
-	"meta.title.text": "Sinistar - Vivienda Temporal Amueblada – Reclamación de Seguro",
-	"meta.description.text": "Solución de vivienda totalmente amueblada y todo incluido para reclamaciones de seguro. Te encontraremos un hogar temporal en tu área, cubierto por tu seguro.",
+	"meta.title.text": "Sinistar - Alojamiento Temporal Amueblado – Reclamación de Seguros",
+	"meta.description.text": "Solución de alojamiento totalmente amueblado y todo incluido para reclamaciones de seguros. Encontraremos una casa temporal cerca de ti, cubierta por tu seguro.",
 
-	"header.hositng.cta": "Intenta ser anfitrión",
+	"header.hositng.cta": "Probar alojamiento",
 	"header.search.text": "¿Cuál es la dirección de la reclamación?",
 	"header.search.result.text": "Dirección de la reclamación",
 
@@ -11,9 +11,16 @@
 
 	"modal.language.title": "Selecciona tu idioma preferido",
 
+	"form.filter.title": "Selecciona tus filtros preferidos",
+	"form.filter.distance.text": "Distancia",
+	"form.filter.review_score.text": "Puntuación de la reseña",
+	"form.filter.host_response_rate.text": "Tasa de respuesta del anfitrión",
+	"form.filter.extension_flexibility.text": "Flexibilidad de extensión",
+	"form.filter.apply.cta": "Aplicar filtros",
+
 	"screen.search.title": "alojamientos en esta área",
 	"screen.search.subtitle": "Explora alojamientos 100% amueblados y equipados.",
 	"screen.search.filter.cta": "Filtros",
-	"screen.search.no-result.title1": "Parece que no hay viviendas en esta área todavía.",
-	"screen.search.no-result.title2": "Pero, ¿por qué no pedir una cotización de todas formas? ¡Nunca se sabe!"
+	"screen.search.no-result.title1": "Parece que aún no hay alojamientos en esta área.",
+	"screen.search.no-result.title2": "¡Pero, ¿por qué no solicitar un presupuesto de todos modos? Nunca se sabe!"
 }
