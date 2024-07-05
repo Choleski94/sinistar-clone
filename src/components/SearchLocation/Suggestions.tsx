@@ -8,7 +8,6 @@ import {
 	StyledMutedTypography,
 	StyledHeaderTypography,
 } from './SearchLocation.styled';
-import InputWithIcon from './InputWithIcon';
 
 interface IPlacePayload {
 	place_id: string;

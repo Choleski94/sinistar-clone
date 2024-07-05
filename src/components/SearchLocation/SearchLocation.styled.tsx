@@ -1,4 +1,3 @@
-import React from 'react';
 import {
 	List, 
 	Popover, 
@@ -19,7 +18,7 @@ export const SearchLocationWrapper = styled('div')`
 	position: relative;
 `;
 
-export const StyledPopover = styled(Popover)<StyledPopoverProps>(({ $top, $left, $width }) => ({
+export const StyledPopover = styled(Popover)<IStyledPopoverProps>(({ $top, $width }) => ({
 	left: 0,
 	top: $top ? $top + 15 : 'unset',
 	'& .MuiPaper-root': {
