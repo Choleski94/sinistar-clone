@@ -4,6 +4,21 @@ import imgThree from '../../public/assets/img/rooms/pexels-photo-5178080.jpeg';
 import imgFour from '../../public/assets/img/rooms/pexels-photo-7195857.jpeg';
 import imgFive from '../../public/assets/img/rooms/pexels-photo-14715846.jpeg';
 
+export type TSearchWeightsKey = 'distance' | 'review_score' | 'host_response_rate' | 'extension_flexibility';
+
+export interface ILocation {
+	latitude: number;
+	longitude: number;
+}
+
+export interface ISearchWeights {
+	[key in TSearchWeightsKey]: {
+		min: number;
+		max: number;
+		isFloating: boolean;
+	};
+}
+
 // Constants for search and calculations.
 export const MAX_DISTANCE_KM:number = 100;
 export const EARTH_RADIUS_KM: number = 6371;
@@ -20,7 +35,7 @@ export const MAX_HOST_RESPONSE_RATE: number = 1;
 export const MAX_EXTENSION_FLEXIBILITY: number = 1;
 
 // Search weights configuration.
-export const SEARCH_WEIGHTS = {
+export const SEARCH_WEIGHTS: ISearchWeights = {
 	distance: {
 		isFloating: false,
 		min: MIN_DISTANCE,
@@ -56,7 +71,10 @@ export const DEFAULT_SEARCH_WEIGHTS: {
 	extension_flexibility: 0.1,
 };
 // Default location (Montréal).
-export const MOCK_DEFAULT_LOCATION: { latitude: number, longitude: number } = { latitude: 45.508888, longitude: -73.561668 };
+export const MOCK_DEFAULT_LOCATION: ILocation = {
+	latitude: 45.508888, 
+	longitude: -73.561668,
+};
 
 // Mock images for testing/display.
 export const MOCK_IMAGES: string[] = [ imgOne, imgTwo, imgThree, imgFour, imgFive ];
