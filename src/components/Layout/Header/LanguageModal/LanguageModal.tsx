@@ -12,6 +12,7 @@ import {
 	ButtonsContainer,
 } from './LanguageModal.styled';
 import { useStore } from '../../../../store';
+import formatMessage from '../../../../utils/formatMessage';
 import { LOCALE_INFO, SUPPORTED_LOCALES, constructLocale, parseLocale } from '../../../../locales';
 
 const LanguageModal = ({
@@ -20,6 +21,10 @@ const LanguageModal = ({
 	const { state, dispatch, actions } = useStore();
 
 	const [ activeLocale, setActiveLocate ] = React.useState();
+
+	const messages = {
+		languageTitle: formatMessage('modal.language.title'),
+	};
 
 	const currentLocale = React.useMemo(() => (
 		constructLocale(state?.locale)
@@ -45,7 +50,7 @@ const LanguageModal = ({
 				</CloseButton>
 				<DefaultBox>
 					<Title variant="subtitle1">
-						Select your preferred language
+						{messages.languageTitle}
 					</Title>
 					<ButtonsContainer>
 						{Object.values(SUPPORTED_LOCALES).map((localeISO) => (

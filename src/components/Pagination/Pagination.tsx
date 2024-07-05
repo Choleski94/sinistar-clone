@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import { Stack, Typography, Pagination as PaginationWrapper } from '@mui/material';
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from '@mui/icons-material';
 
+import formatMessage from '../../utils/formatMessage';
 import { CenteredStack, StyledPaginationItem } from './Pagination.styled';
 
 interface IPaginationProps {
@@ -14,6 +15,11 @@ const Pagination: React.FC<IPaginationProps> = ({
 	count = 0, 
 	onPageClick = () => null,
 }) => {
+	const messages = {
+		prev: formatMessage('pagination.prev.text'),
+		next: formatMessage('pagination.next.text')
+	};
+
 	if (!count) return null;
 
 	return (
@@ -33,7 +39,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 								>
 									<ChevronLeftIcon />
 									<Typography>
-										Previous
+										{messages.prev}
 									</Typography>
 								</Stack>
 							),
@@ -44,7 +50,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 									alignItems="center"
 								>
 									<Typography>
-										Next
+										{messages.next}
 									</Typography>
 									<ChevronRightIcon />
 								</Stack>

@@ -10,6 +10,7 @@ import {
 import { useStore } from '../../../store';
 import LanguageModal from './LanguageModal';
 import SearchLocation from '../../SearchLocation';
+import formatMessage from '../../../utils/formatMessage';
 
 interface IHeaderProps {
 	placeholder?: string;
@@ -26,6 +27,10 @@ const Header: React.FC<IHeaderProps> = () => {
 	const { state, dispatch, actions } = useStore();
 
 	const [ showLanguageModal, setShowLanguageModal ] = React.useState(false);
+
+	const messages = {
+		hostingCta: formatMessage('header.hositng.cta'),
+	}
 
 	const handlLanguageSelectionClick = () => setShowLanguageModal(!showLanguageModal);
 
@@ -63,7 +68,7 @@ const Header: React.FC<IHeaderProps> = () => {
 					<div className="flex items-center justify-end space-x-1 md:space-x-3 text-gray-500">
 						<div className="hover:bg-[#f7f7f7] cursor-pointer lg:p-2 rounded-full md:px-2 lg:px-4">
 							<p className="hidden md:inline text-[#222222] font-[500]">
-								Try hosting
+								{messages.hostingCta}
 							</p>
 						</div>
 						<div className="hover:bg-[#f7f7f7] cursor-pointer lg:p-2 rounded-full md:px-2 lg:px-4">
