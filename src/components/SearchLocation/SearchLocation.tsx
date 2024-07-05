@@ -7,17 +7,14 @@ import formatMessage from '../../utils/formatMessage';
 import { SearchLocationWrapper } from './SearchLocation.styled';
 
 interface ISearchLocationProps {
-	label?: string;
-		placeholder?: string;
 	defaultValue?: string;
-	onSelect?: (geoPayload: google.maps.GeocoderResult[]) => void;
+	onSelect?: (geoPayload: google.maps.GeocoderResult) => void;
 }
 
 /**
  * A search location input component that integrates with Google Places Autocomplete.
  */
 export const SearchLocation: React.FC<ISearchLocationProps> = ({
-	label = '',
 	defaultValue = '',
 	onSelect = () => null,
 }) => {

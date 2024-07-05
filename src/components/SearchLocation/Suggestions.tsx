@@ -18,14 +18,14 @@ interface IPlacePayload {
 }
 
 interface ISuggestionsProps {
-	top?: number;
-	width?: number;
 	open?: boolean;
 	resultText?: string;
+	top?: number | null;
+	width?: number | null;
 	handleClose?: () => void;
 	options?: IPlacePayload[];
 	anchorEl?: HTMLElement | null;
-	handleSelect?: (placePayload: IPlacePayload) => void;
+	handleSelect?: (placePayload: google.maps.places.AutocompletePrediction) => Promise<void>;
 }
 
 /**
@@ -60,7 +60,7 @@ export const Suggestions: React.FC<ISuggestionsProps> = ({
 				{options.map((placePayload) => (
 					<StyledListItem
 						button key={placePayload?.place_id} 
-						onClick={() => handleSelect(placePayload)}
+						onClick={() => handleSelect(placePayload as google.maps.places.AutocompletePrediction)}
 					>
 						<StyledTypography variant="body1" component="span">
 							{placePayload?.structured_formatting?.main_text}
