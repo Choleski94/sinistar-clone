@@ -1,17 +1,19 @@
 import types from './../types';
 
-interface IClaimObject {
-	review_score: null;
-	city: string | null;
-	name: string | null;
-	images: string[] | [];
-	address: string | null;
-	latitude: string | null;
-	longitude: string | null;
-	id: number | string | null;
-	description: string | null;
-	host_response_rate: number | null;
-	extension_flexibility: number | null;
+import { IListingItem } from '@api/types';
+
+export interface IClaimObject {
+	review_score?: null;
+	city?: string | null;
+	name?: string | null;
+	images?: string[] | [];
+	address?: string | null;
+	latitude?: number | null;
+	longitude?: number | null;
+	id?: number | string | null;
+	description?: string | null;
+	host_response_rate?: number | null;
+	extension_flexibility?: number | null;
 }
 
 /**
@@ -21,7 +23,7 @@ interface IClaimObject {
  * @param {string} claimObj.country - The country code.
  * @returns {Object} Action object for setting claim.
  */
-const claimSet = (claimObj: IClaimObject) => ({
+const claimSet = (claimObj: IListingItem) => ({
 	type: types.CLAIM_SET,
 	...claimObj
 });
@@ -31,7 +33,7 @@ const claimSet = (claimObj: IClaimObject) => ({
  * @param {Object} claimObj - Object containing lang and country properties.
  * @returns {Object} Action object for setting claim.
  */
-const setClaim = (claimObj: IClaimObject) => claimSet(claimObj);
+const setClaim = (claimObj: IListingItem) => claimSet(claimObj);
 
 export default {
 	setClaim,

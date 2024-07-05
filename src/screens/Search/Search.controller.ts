@@ -1,3 +1,4 @@
+import { IListingItem } from '@api/types';
 import { MOCK_IMAGES, MOCK_DESCRIPTION } from '@mocks';
 
 /**
@@ -5,7 +6,7 @@ import { MOCK_IMAGES, MOCK_DESCRIPTION } from '@mocks';
  * @param {boolean} [isReady=false] - Whether the listing is ready.
  * @returns {string} The computed CSS class name.
  */
-export const setWrapperClassName = (isReady?: boolean = false): string => ([
+export const setWrapperClassName = (isReady: boolean = false): string => ([
 	'flex-grow', 
 	(isReady ? 'w-full' : 'absolute'), 
 	'lg:pt-10', 
@@ -23,7 +24,7 @@ export const setWrapperClassName = (isReady?: boolean = false): string => ([
  * @param {boolean} [isReady=false] - Whether the listing card is ready.
  * @returns {string} The computed CSS class name.
  */
-export const setListingWrapperClassName = (isReady?: boolean = false): string => ([
+export const setListingWrapperClassName = (isReady: boolean = false): string => ([
 	(isReady ? 'py-3' : ''),
 	'flex', 
 	'flex-col',
@@ -36,7 +37,7 @@ export const setListingWrapperClassName = (isReady?: boolean = false): string =>
  * @param {Partial<AccommodationInfo>} [data={}] - Partial data to parse into AccommodationInfo.
  * @returns {AccommodationInfo} The parsed accommodation information.
  */
-export const parseAccomodationInfo = (data: any) => ({
+export const parseAccomodationInfo = (data: IListingItem) => ({
 	...data,
 	images: MOCK_IMAGES,
 	isAccomodation: true,

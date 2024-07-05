@@ -36,6 +36,7 @@
 			"@styles": ["src/styles"],
 			"@locales": ["src/locales"],
 			"@screens": ["src/screens"],
+			"@api/types": ["src/api/types"],
 			"@components": ["src/components"],
 			"@utils/hocs": ["src/utils/hocs"],
 			"@utils/hooks": ["src/utils/hooks"],

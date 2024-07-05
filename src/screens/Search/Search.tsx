@@ -14,29 +14,22 @@ import api from '@api';
 import { useStore } from '@store';
 import formatMessage from '@utils/formatMessage';
 import { useAccomodationFilters } from '@utils/hooks';
+import { IPagination, IListingItem, IListingListResponse } from '@api/types';
 import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '@components';
 
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
-interface IPaginationState {
-	page: number;
-	limit: number;
-	totalItems: number;
-	totalPages: number;
-}
-
 const SearchScreen: React.FC = () => {
 	const { state } = useStore();
 
-	const [ options, setOptions ] = React.useState([]);
 	const [ loading, setLoading ] = React.useState<boolean>(false);
+	const [ options, setOptions ] = React.useState<IListingItem[]>([]);
 	const [ zoom, setZoom ] = React.useState<number>(DEFAULT_MAP_ZOOM);
-	const [ pagination, setPagination ] = React.useState<IPaginationState>({
+	const [ pagination, setPagination ] = React.useState<IPagination>({
 		page: 1, limit: 15, totalItems: 0, totalPages: 0,
 	});
 	const [ showFilterModal, setShowFilterModal ] = React.useState<boolean>(false);
 	const [ center, setCenter ] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
-	const [ highlightedAccomodation, setHighlightedAccomodation ] = React.useState(null);
 	const [ filterWeights, setFilterWeights ] = React.useState<ISearchWeights>(DEFAULT_SEARCH_WEIGHTS);
 
 	const messages = {
@@ -55,16 +48,16 @@ const SearchScreen: React.FC = () => {
 		maxDistance: MAX_DISTANCE_KM,
 	});
 
-	const listListing = React.useCallback((page: number = 1) => {
+	const listListing = React.useCallback(() => {
 		setLoading(true);
 
 		api.listing.list({
 			page: pagination.page, 
 			limit: pagination.limit,
-		}).then(({ data }) => {
-			setPagination(data?.pagination);
+		}).then(({ data }: IListingListResponse) => {
+			setPagination(data?.pagination as IPagination);
 
-			if (data?.result && data?.result.length) {
+			if (data?.result && data?.result?.length) {
 				setOptions(data?.result.map(parseAccomodationInfo));
 			}
 
@@ -74,24 +67,8 @@ const SearchScreen: React.FC = () => {
 		});
 	}, [ pagination ]);
 
-	const getListing = React.useCallback((listingId?: number) => {
-		if (!listingId) return;
-
-		setLoading(true);
-
-		api.listing.get(listingId).then(({ data }) => {
-			if (data?.result && data?.result.length) {
-				setOptions(data?.result.map(parseAccomodationInfo));
-			}
-
-			setLoading(false);
-		}).catch(() => {
-			setLoading(false);
-		});
-	}, []);
-
 	React.useEffect(() => {
-		listListing(pagination?.page);
+		listListing();
 	}, [ pagination?.page ]);
 
 	// Update center on claim search.
@@ -133,16 +110,6 @@ const SearchScreen: React.FC = () => {
 		}
 	}, []);
 
-	// TODO: Implement location hilight.
-	const onMarkerClick = React.useCallback((payload) => {
-		if (highlightedAccomodation === payload) {
-			setHighlightedAccomodation(null);
-		} else {
-			setHighlightedAccomodation(payload);
-			getListing(payload?.id);
-		}
-	}, [ highlightedAccomodation ]);
-
 	const memoizedMarkers = React.useMemo(() => {
 		const { longitude, latitude } = state?.claim || {};
 
@@ -173,8 +140,6 @@ const SearchScreen: React.FC = () => {
 					center={center}
 					onIdle={onIdle}
 					markers={memoizedMarkers}
-					onMarkerClick={onMarkerClick}
-					highlightedMarkerId={highlightedAccomodation?.id}
 				/>
 			</section>
 
@@ -251,8 +216,6 @@ const SearchScreen: React.FC = () => {
 						center={center}
 						onIdle={onIdle}
 						markers={memoizedMarkers}
-						onMarkerClick={onMarkerClick}
-						highlightedMarkerId={highlightedAccomodation?.id}
 					/>
 				</section>
 				<Modal

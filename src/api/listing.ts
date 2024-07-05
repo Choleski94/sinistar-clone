@@ -3,35 +3,9 @@
 import { delayRandom } from '../utils';
 import listingDB from '../mocks/database.json';
 
-interface IListingItem {
-	id: string;
-	name: string;
-	city: string;
-	address: string;
-	latitude: number;
-	longitude: number;
-	review_score: number;
-	host_response_rate: number;
-	extension_flexibility: number;
-}
+import { IListingItem, IListingResponse, IListingListResponse } from './types';
 
-interface IListingResponse {
-	data: IListingItem | {};
-}
-
-interface IListingListResponse {
-	data: {
-		result: IListingItem[];
-		pagination: {
-			page: number;
-			limit: number;
-			totalPages: number;
-			totalItems: number;
-		};
-	}
-}
-
-const listingDBTyped: IListingItem[] = listingDB as IListingItem[];
+const listingDBTyped: IListingItem[] = listingDB;
 
 const listing = {
 	get: async (id: number): Promise<IListingResponse> => {
@@ -41,7 +15,7 @@ const listing = {
 		}
 
 		try {
-			const targetListing = listingDBTyped.find(({ id }) => item.id === id);
+			const targetListing = listingDBTyped.find((item) => item.id === id);
 
 			await delayRandom();
 
@@ -86,7 +60,7 @@ const listing = {
 			};	
 		}
 	},
-	list: async ({ page, limit }: { page?: number; limit?: number; }): Promise<IListingListResponse> => {
+	list: async ({ page, limit }: { page: number; limit: number; }): Promise<IListingListResponse> => {
 		try {
 			const totalItems = (listingDBTyped || []).length;
 			const totalPages = Math.ceil(totalItems / limit);
