@@ -1,9 +1,6 @@
 import types from './../types';
 
-interface ILocaleObject {
-	lang: string;
-	country: string;
-}
+import { IConstructLocaleObject } from '@locales/types';
 
 /**
  * Action creator for setting locale.
@@ -12,7 +9,7 @@ interface ILocaleObject {
  * @param {string} localeObj.country - The country code.
  * @returns {Object} Action object for setting locale.
  */
-const localeSet = ({ lang, country }: ILocaleObject) => ({
+const localeSet = ({ lang, country }: IConstructLocaleObject) => ({
 	type: types.LOCALE_SET,
 	lang, 
 	country,
@@ -23,7 +20,7 @@ const localeSet = ({ lang, country }: ILocaleObject) => ({
  * @param {Object} localeObj - Object containing lang and country properties.
  * @returns {Object} Action object for setting locale.
  */
-const setLocale = (localeObj: ILocaleObject) => localeSet(localeObj);
+const setLocale = (localeObj: IConstructLocaleObject) => localeSet(localeObj);
 
 export default {
 	setLocale,

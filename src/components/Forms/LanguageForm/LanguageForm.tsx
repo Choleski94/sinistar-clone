@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useStore } from '@store';
 import formatMessage from '@utils/formatMessage';
+import { IConstructLocaleObject } from '@locales/types';
 import { LOCALE_INFO, SUPPORTED_LOCALES, constructLocale, parseLocale } from '@locales';
 
 import {
@@ -13,7 +14,7 @@ import {
 } from './LanguageForm.styled';
 
 interface ILanguageFormProps {
-	onSubmit?: (locale: string) => void;
+	onSubmit?: (locale: IConstructLocaleObject) => void;
 }
 
 const LanguageForm: React.FC<ILanguageFormProps> = ({

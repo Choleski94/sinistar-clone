@@ -1,31 +1,29 @@
 import React from 'react';
 import { 
 	Menu as MenuIcon, 
-	Close as CloseIcon, 
-	Group as GroupIcon, 
-	Search as SearchIcon,
 	Language as LanguageIcon,
 } from '@mui/icons-material';
 
 import { useStore } from '@store';
 import formatMessage from '@utils/formatMessage';
+import { IConstructLocaleObject } from '@locales/types';
 import { Modal, Forms, SearchLocation } from '@components';
 
 interface IHeaderProps {
 	placeholder?: string;
 }
 
-const parseLocation = (payload = {}) => ({
+const parseLocation = (payload: google.maps.GeocoderResult) => ({
 	id: payload?.place_id,
 	address: payload?.formatted_address,
-	latitude: payload?.geometry?.viewport?.Wh?.hi,
-	longitude: payload?.geometry?.viewport?.Gh?.hi,
+	latitude: payload?.geometry?.viewport?.getNorthEast()?.lat(),
+	longitude: payload?.geometry?.viewport?.getNorthEast()?.lng(),
 });
 
 const Header: React.FC<IHeaderProps> = () => {
-	const { state, dispatch, actions } = useStore();
+	const { dispatch, actions } = useStore();
 
-	const [ showLanguageModal, setShowLanguageModal ] = React.useState(false);
+	const [ showLanguageModal, setShowLanguageModal ] = React.useState<boolean>(false);
 
 	const messages = {
 		hostingCta: formatMessage('header.hositng.cta'),
@@ -36,11 +34,11 @@ const Header: React.FC<IHeaderProps> = () => {
 		setShowLanguageModal(!showLanguageModal);
 	};
 
-	const handleLocationSet = (locationData: any) => {
+	const handleLocationSet = (locationData: google.maps.GeocoderResult) => {
 		dispatch(actions.setClaim(parseLocation(locationData)));
 	}
 
-	const handleLanguageSet = (parsedLocaleISO: string) => {
+	const handleLanguageSet = (parsedLocaleISO: IConstructLocaleObject) => {
 		dispatch(actions.setLocale(parsedLocaleISO));
 		toggleLanguageModal();
 	}

@@ -4,16 +4,7 @@ import enUS from './lang/en/US.json';
 import frCA from './lang/fr/CA.json';
 import esES from './lang/es/ES.json';
 
-interface ILocaleObject {
-	[key: string]: {
-		[key: string]: Record<string, string>;
-	};
-}
-
-interface IConstructLocaleObject {
-	lang?: string; 
-	country?: string
-}
+import { ILocaleObject, IConstructLocaleObject } from './types';
 
 export const localesObj: ILocaleObject = {
 	en: {
@@ -74,13 +65,13 @@ export const FALLBACK_LOCALES: Record<string, string> = {
 	es: 'ES',
 };
 
-export const constructLocale = ({ lang = '', country = '' }: IConstructLocaleObject, withUnderscore?: boolean = false) => [
+export const constructLocale = ({ lang = '', country = '' }: IConstructLocaleObject, withUnderscore: boolean = false) => [
 	(lang || '').toLowerCase(), 
 	(country || '').toUpperCase()
 ].join(withUnderscore ? '_' : '-');
 
-export const parseLocale = (locale: string = '', construct?: boolean = false): string | null => {
-	let res = null;
+export const parseLocale = (locale: string = '', construct: boolean = false): string | IConstructLocaleObject | null => {
+	let res = '' as string | IConstructLocaleObject;
 
 	if (locale && locale.length) {
 		const parsedLocale = (locale || '').replace('_', '-');
@@ -98,7 +89,7 @@ export const parseLocale = (locale: string = '', construct?: boolean = false): s
 };
 
 export const getLocale = (locale: string = ''): Record<string, string> => {
-	const { lang, country } = parseLocale(locale, true);
+	const { lang, country } = parseLocale(locale, true) as IConstructLocaleObject;
 
 	let res = localesObj[DEFAULT_LANG][DEFAULT_COUNTRY];
 
