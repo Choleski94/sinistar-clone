@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as Types from './types';
+import { IState, TReducer, IAction } from '../types';
 
 /**
  * Returns the current time formatted as HH:mm:ss.SSS.
@@ -20,8 +20,8 @@ const getCurrentTimeFormatted = (): string => {
  * @param {Types.Reducer} reducer - The original reducer function.
  * @returns {Types.Reducer} A new reducer function with logging.
  */
-const useLogger = (reducer: Types.Reducer): Types.Reducer => {
-	const reducerWithLogger = React.useCallback((state: Types.State, action: Types.Action) => {
+const useLogger = (reducer: TReducer): TReducer => {
+	const reducerWithLogger = React.useCallback((state: IState, action: IAction) => {
 		const next = reducer(state, action);
 		console.group(
 			`%cAction: %c${action.type} %cat ${getCurrentTimeFormatted()}`,

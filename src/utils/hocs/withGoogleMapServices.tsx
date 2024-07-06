@@ -26,7 +26,7 @@ const withGoogleMapServices = (
 		...rest
 	}) => (
 		<Wrapper apiKey={apiKey} libraries={libraries} render={render}>
-			<Component {...rest} />
+			{Component && <Component {...rest} />}
 		</Wrapper>
 	);
 

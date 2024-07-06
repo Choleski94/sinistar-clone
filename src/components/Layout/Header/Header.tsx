@@ -5,6 +5,7 @@ import {
 } from '@mui/icons-material';
 
 import { useStore } from '@store';
+import { IListingItem } from '@api/types';
 import formatMessage from '@utils/formatMessage';
 import { IConstructLocaleObject } from '@locales/types';
 import { Modal, Forms, SearchLocation } from '@components';
@@ -35,7 +36,8 @@ const Header: React.FC<IHeaderProps> = () => {
 	};
 
 	const handleLocationSet = (locationData: google.maps.GeocoderResult) => {
-		dispatch(actions.setClaim(parseLocation(locationData)));
+		const claimData = parseLocation(locationData) as IListingItem;
+		dispatch(actions.setClaim(claimData));
 	}
 
 	const handleLanguageSet = (parsedLocaleISO: IConstructLocaleObject) => {

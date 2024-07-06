@@ -15,7 +15,7 @@ export type TStoreProviderProps = {
 };
 
 
-let store: IStore | undefined;
+let store: IStore;
 
 /**
  * Context for holding the application state.
@@ -87,9 +87,9 @@ export const initializeStore = (preloadedState: IState) => {
 		_store = initStore({
 			...store,
 			...preloadedState
-		});
+		}) as IStore;
 		// Reset the current store.
-		store = undefined;
+		store = {} as IStore;
 	}
 	// Create the store
 	if (!store) store = _store;

@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { ILocation } from '@mocks/types';
-
 import { configMapView, StyledMapViewContainer } from './MapView.styled';
 import { useDeepCompareEffectForMaps } from './useDeepCompareEffectForMaps';
 
@@ -14,6 +12,11 @@ interface IMapViewProps {
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 
+interface IChildProps {
+	[key: string]: any; 
+    mapView: google.maps.Map | null;
+}
+
 const MapView: React.FC<IMapViewProps> = ({
 	center,
 	className = '', 
@@ -23,7 +26,6 @@ const MapView: React.FC<IMapViewProps> = ({
 	...rest
 }) => {
 	const ref = React.useRef<HTMLDivElement>(null);
-
 	const [ mapView, setMapView ] = React.useState<google.maps.Map | null>(null);
 
 	React.useEffect(() => {
@@ -38,13 +40,13 @@ const MapView: React.FC<IMapViewProps> = ({
 
 			setMapView(googleMap);
 		}
-	}, [ ref, mapView, center ]);
+	}, [ref, mapView, center]);
 
 	useDeepCompareEffectForMaps(() => {
 		if (mapView) {
 			mapView.setOptions(rest);
 		}
-	}, [ mapView, rest ]);
+	}, [mapView, rest]);
 
 	React.useEffect(() => {
 		if (mapView) {
@@ -62,17 +64,25 @@ const MapView: React.FC<IMapViewProps> = ({
 		}
 	}, [ mapView, onClick, onIdle ]);
 
+	// Handle single child element directly
+	let mappedChildren: React.ReactNode  | null = null;
+	if (React.isValidElement(children)) {
+		mappedChildren = React.cloneElement(children, { mapView } as IChildProps);
+	} else if (Array.isArray(children)) {
+		// Handle arrays of children if needed
+		mappedChildren = React.Children.map(children, (child) => {
+			if (React.isValidElement(child)) {
+				return React.cloneElement(child, { mapView } as IChildProps);
+			}
+			return child;
+		});
+	}
+
 	return (
 		<StyledMapViewContainer ref={ref} className={className}>
-			{React.Children.map(children, (child) => {
-				if (React.isValidElement(child)) {
-					return React.cloneElement(child, { mapView });
-				}
-				return null;
-			})}
+			{mappedChildren}
 		</StyledMapViewContainer>
 	);
 }
 
 export default MapView;
-

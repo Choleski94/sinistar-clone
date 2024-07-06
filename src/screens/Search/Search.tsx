@@ -1,6 +1,8 @@
 import React from 'react';
 import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
+import { Grid } from '@mui/material';
+
 
 import {
 	MAX_DISTANCE_KM,
@@ -104,9 +106,17 @@ const SearchScreen: React.FC = () => {
 	const onIdle = React.useCallback((map = { getZoom: () => null, getCenter: () => null }) => {
 		setZoom(map?.getZoom() || DEFAULT_MAP_ZOOM);
 		const nextCenter = map?.getCenter();
+	
 		if (nextCenter) {
-			setCenter(nextCenter.toJSON());
-		}
+			const { lng, lat } = nextCenter as { lng: () => 0; lat: () => 0 };
+
+			const longitude: number = lng();
+			const latitude: number = lat();
+
+			if (longitude !== center.longitude || latitude !== center.latitude) {
+			  setCenter({ longitude, latitude });
+			}
+		  }
 	}, []);
 
 	const memoizedMarkers = React.useMemo(() => {
@@ -187,12 +197,13 @@ const SearchScreen: React.FC = () => {
 							))
 						) : (
 							(filteredOptions && filteredOptions?.length) ? (
-								filteredOptions?.map((item: IListingItem) => (
-									<InfoCard 
-										key={item?.id} 
-										{...item}
-									/>
-								))
+								<Grid container spacing={2}>
+									{filteredOptions?.map((item: IListingItem) => (
+										<Grid key={item?.id}  item xs={12} md={6}>
+											<InfoCard {...item} />
+										</Grid>
+									))}
+								</Grid>
 							) : (
 								<div className="mx-auto pt-20 pb-36 text-4xl text-slate-900 font-[400]">
 									{messages.noResultTitle1}

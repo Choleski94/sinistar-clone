@@ -2,7 +2,7 @@ import types from '../types';
 import states from '../states';
 
 interface ILocaleAction {
-	type: string;
+	type?: string;
 	lang?: string;
 	country?: string;
 }

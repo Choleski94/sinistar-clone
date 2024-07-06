@@ -33,13 +33,13 @@ const LanguageForm: React.FC<ILanguageFormProps> = ({
 	}, [ currentLocale ]);
 
 	const handleLanguageSet = (localeISO: string) => {
-		onSubmit(parseLocale(localeISO, true));
+		onSubmit(parseLocale(localeISO, true) as IConstructLocaleObject);
 	}
 
 	return (
 		<DefaultBox>
 			<ButtonsContainer>
-				{Object.values(SUPPORTED_LOCALES).map((localeISO: string) => (
+				{Object.values(SUPPORTED_LOCALES as { [key: string]: string; }).map((localeISO) => (
 					<LanguageButton 
 						key={localeISO}
 						hrefLang={localeISO} 

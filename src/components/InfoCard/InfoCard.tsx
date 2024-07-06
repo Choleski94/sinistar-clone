@@ -37,4 +37,4 @@ const InfoCard = ({ name, address, review_score }: IListingItem) => (
 	</Card>
 );
 
-export default InfoCard;
+export default React.memo(InfoCard);
