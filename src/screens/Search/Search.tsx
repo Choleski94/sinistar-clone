@@ -3,8 +3,6 @@ import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
 
 import {
-	ILocation,
-	ISearchWeights,
 	MAX_DISTANCE_KM,
 	DEFAULT_MAP_ZOOM,
 	MOCK_DEFAULT_LOCATION,
@@ -13,6 +11,7 @@ import {
 import api from '@api';
 import { useStore } from '@store';
 import formatMessage from '@utils/formatMessage';
+import { ILocation, IWeights } from '@mocks/types';
 import { useAccomodationFilters } from '@utils/hooks';
 import { IPagination, IListingItem, IListingListResponse } from '@api/types';
 import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '@components';
@@ -30,7 +29,7 @@ const SearchScreen: React.FC = () => {
 	});
 	const [ showFilterModal, setShowFilterModal ] = React.useState<boolean>(false);
 	const [ center, setCenter ] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
-	const [ filterWeights, setFilterWeights ] = React.useState<ISearchWeights>(DEFAULT_SEARCH_WEIGHTS);
+	const [ filterWeights, setFilterWeights ] = React.useState<IWeights>(DEFAULT_SEARCH_WEIGHTS);
 
 	const messages = {
 		filterTitle: formatMessage('form.filter.title'),
@@ -126,7 +125,7 @@ const SearchScreen: React.FC = () => {
 		setShowFilterModal((prevFilterValue) => !prevFilterValue)
 	), []);
 
-	const handleFilterSet = React.useCallback((filterData: ISearchWeights) => {
+	const handleFilterSet = React.useCallback((filterData: IWeights) => {
 		setFilterWeights(filterData);
 		toggleFilterModal();
 	}, [ toggleFilterModal ]);

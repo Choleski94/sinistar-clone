@@ -1,13 +1,15 @@
 import React from 'react';
 
+import { ILocation } from '@mocks/types';
+
 import MapView from './MapView';
 import Marker, { TMarkerProps } from './Marker';
 
 interface IGoogleMapProps {
 	zoom: number;
+	center: ILocation;
 	onIdle?: () => void;
 	markers?: TMarkerProps[];
-	center: google.maps.LatLngLiteral;
 	highlightedMarkerId?: string | null;
 	onMarkerClick?: (markerId: string) => void;
 	onClick?: (event: google.maps.MouseEvent) => void;
@@ -21,8 +23,8 @@ const GoogleMap: React.FC<IGoogleMapProps> = ({
 	onClick,
 	onMarkerClick,
 }) => {
-	const filteredMarkers = (markers || []).filter(({ latitude, longitude }) => (
-		latitude && longitude
+	const filteredMarkers = (markers || []).filter((pos: TMarkerProps) => (
+		pos.latitude && pos.longitude
 	));
 
 	return (

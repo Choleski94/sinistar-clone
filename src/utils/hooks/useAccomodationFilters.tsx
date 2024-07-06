@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { calculateScore, IAccommodation, IReferencePoint, IWeights } from '../';
+import { IListingItem } from '@api/types';
+import { IWeights, ILocation } from '@mocks/types';
+
+import { calculateScore } from '../';
 
 interface IuseAccomodationFiltersProps {
 	weights: IWeights;
 	maxDistance: number;
-	referencePoint: IReferencePoint;
-	accommodations: IAccommodation[];
+	referencePoint: ILocation;
+	accommodations: IListingItem[];
 }
 
 const useAccomodationFilters = ({

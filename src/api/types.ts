@@ -14,10 +14,10 @@ export interface IListingItem {
     images?: string[];          // Added for better UI/UX
 	description?: string;       // Added for better UI/UX
     id?: string | number;
-	review_score?: number;
+	review_score: number;
     isAccomodation?: boolean;   // Added for better UI/UX
-	host_response_rate?: number;
-	extension_flexibility?: number;
+	host_response_rate: number;
+	extension_flexibility: number;
 }
 
 export interface IListingResponse {

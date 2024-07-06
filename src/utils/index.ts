@@ -1,24 +1,6 @@
-import { EARTH_RADIUS_KM } from '../mocks';
-
-export interface IAccommodation {
-	latitude: number;
-	longitude: number;
-	review_score: number;
-	host_response_rate: number;
-	extension_flexibility: number;
-}
-
-export interface IReferencePoint {
-	latitude: number;
-	longitude: number;
-}
-
-export interface IWeights {
-	distance: number;
-	review_score: number;
-	host_response_rate: number;
-	extension_flexibility: number;
-}
+import { EARTH_RADIUS_KM } from '@mocks';
+import { IListingItem } from '@api/types';
+import { ILocation, IWeights } from '@mocks/types';
 
 /**
  * Delays execution for a random duration between 0 to 1 second.
@@ -72,8 +54,8 @@ export const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2
  * @returns {number} The calculated weighted score.
  */
 export const calculateScore = (
-	accommodation: IAccommodation, 
-	referencePoint: IReferencePoint, 
+	accommodation: IListingItem, 
+	referencePoint: ILocation, 
 	weights: IWeights, 
 	maxDistance: number = 100
 ): number => {

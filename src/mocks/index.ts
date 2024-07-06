@@ -1,23 +1,10 @@
+import { ILocation, TSearchWeightsKey, ISearchWeight } from './types';
+
 import imgOne from '../../public/assets/img/rooms/pexels-photo-1428348.jpeg';
 import imgTwo from '../../public/assets/img/rooms/pexels-photo-280239.jpeg';
 import imgThree from '../../public/assets/img/rooms/pexels-photo-5178080.jpeg';
 import imgFour from '../../public/assets/img/rooms/pexels-photo-7195857.jpeg';
 import imgFive from '../../public/assets/img/rooms/pexels-photo-14715846.jpeg';
-
-export type TSearchWeightsKey = 'distance' | 'review_score' | 'host_response_rate' | 'extension_flexibility';
-
-export interface ILocation {
-	latitude: number;
-	longitude: number;
-}
-
-export interface ISearchWeights {
-	[key in TSearchWeightsKey]: {
-		min: number;
-		max: number;
-		isFloating: boolean;
-	};
-}
 
 export const DEFAULT_MAP_ZOOM: number = 11;
 
@@ -37,7 +24,7 @@ export const MAX_HOST_RESPONSE_RATE: number = 1;
 export const MAX_EXTENSION_FLEXIBILITY: number = 1;
 
 // Search weights configuration.
-export const SEARCH_WEIGHTS: ISearchWeights = {
+export const SEARCH_WEIGHTS: { [key in TSearchWeightsKey]: ISearchWeight } = {
 	distance: {
 		isFloating: false,
 		min: MIN_DISTANCE,

@@ -40,6 +40,7 @@
 			"@components": ["src/components"],
 			"@utils/hocs": ["src/utils/hocs"],
 			"@utils/hooks": ["src/utils/hooks"],
+			"@mocks/types": ["src/mocks/types"],
 			"@locales/types": ["src/locales/types"],
 			"@utils/formatMessage": ["src/utils/formatMessage"]
 		}

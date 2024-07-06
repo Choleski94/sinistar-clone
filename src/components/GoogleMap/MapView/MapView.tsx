@@ -1,14 +1,16 @@
 import React from 'react';
 
+import { ILocation } from '@mocks/types';
+
 import { configMapView, StyledMapViewContainer } from './MapView.styled';
 import { useDeepCompareEffectForMaps } from './useDeepCompareEffectForMaps';
 
 interface IMapViewProps {
 	className?: string;
 	[key: string]: any;
+	center?: ILocation;
 	children?: React.ReactNode;
 	onIdle?: (map: google.maps.Map) => void;
-	center?: { latitude: number; longitude: number };
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 

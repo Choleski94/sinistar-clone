@@ -2,20 +2,21 @@ import React from 'react';
 import { Slider, Grid, Typography, Button } from '@mui/material';
 
 import formatMessage from '@utils/formatMessage';
-import { SEARCH_WEIGHTS, DEFAULT_SEARCH_WEIGHTS, ISearchWeights } from '@mocks';
+import { IWeights, TSearchWeightsKey } from '@mocks/types';
+import { SEARCH_WEIGHTS, DEFAULT_SEARCH_WEIGHTS } from '@mocks';
 
 import { FilterContainer, SliderContainer, FullWidthButton } from './FilterForm.styled';
 
 interface IFilterFormProps {
-	data?: ISearchWeights;
-	onSubmit: (filters: ISearchWeights) => void;
+	data?: IWeights;
+	onSubmit: (filters: IWeights) => void;
 }
 
 const FilterForm: React.FC<IFilterFormProps> = ({
 	data,
 	onSubmit,
 }) => {
-	const [ filters, setFilters ] = React.useState<ISearchWeights>(DEFAULT_SEARCH_WEIGHTS);
+	const [ filters, setFilters ] = React.useState<IWeights>(DEFAULT_SEARCH_WEIGHTS);
 
 	const messages = {
 		filterCta: formatMessage('form.filter.apply.cta'),
@@ -29,7 +30,7 @@ const FilterForm: React.FC<IFilterFormProps> = ({
 		setFilters({ ...filters, ...data });
 	}, [ data ]);
 
-	const handleSliderChange = (event: Event, newValue: number | number[], key: string) => {
+	const handleSliderChange = (event: Event, newValue: number | number[], key: TSearchWeightsKey) => {
 		setFilters({
 			...filters,
 			[key]: newValue,
@@ -43,24 +44,27 @@ const FilterForm: React.FC<IFilterFormProps> = ({
 	return (
 		<FilterContainer>
 			<Grid container spacing={3}>
-				{Object.keys(SEARCH_WEIGHTS).map((weightKey) => (
-					<Grid key={weightKey} item xs={12} component={SliderContainer}>
-						<Typography id={`${weightKey}-slider`} gutterBottom>
-							{messages[weightKey]}
-						</Typography>
-						<Slider
-							onChange={(event, newValue) =>
-								handleSliderChange(event, newValue as number, weightKey)
-							}
-							step={SEARCH_WEIGHTS[weightKey].isFloating ? 0.1 : 1}
-							aria-labelledby={`${weightKey}-slider`}
-							min={SEARCH_WEIGHTS[weightKey].min}
-							max={SEARCH_WEIGHTS[weightKey].max}
-							value={filters[weightKey]}
-							valueLabelDisplay="auto"
-						/>
-					</Grid>
-				))}
+				{Object.keys(SEARCH_WEIGHTS).map((key) => {
+					const weightKey = key as TSearchWeightsKey;
+					return (
+						<Grid key={weightKey} item xs={12} component={SliderContainer}>
+							<Typography id={`${weightKey}-slider`} gutterBottom>
+								{messages[weightKey]}
+							</Typography>
+							<Slider
+								onChange={(event, newValue) =>
+									handleSliderChange(event, newValue as number, weightKey)
+								}
+								step={SEARCH_WEIGHTS[weightKey].isFloating ? 0.1 : 1}
+								aria-labelledby={`${weightKey}-slider`}
+								min={SEARCH_WEIGHTS[weightKey].min}
+								max={SEARCH_WEIGHTS[weightKey].max}
+								value={filters[weightKey]}
+								valueLabelDisplay="auto"
+							/>
+						</Grid>
+					);
+				})}
 			</Grid>
 			<FullWidthButton
 				onClick={handleSubmit}
