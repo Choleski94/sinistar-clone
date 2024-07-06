@@ -1,10 +1,15 @@
 import { useIntl } from 'react-intl';
 
-import enUS from '../locales/lang/en/US.json'
+import enUS from '../locales/lang/en/US.json';
 
-const formatMessage = (id = '', values = {}) => {
+interface IMessages {
+	[key: string]: string;
+}
+  
+const formatMessage = (id: string = '', values: {[key: string]: string} = {}) => {
 	const intl = useIntl();
-	return intl.formatMessage({ id, defaultMessage: enUS[id] }, values);
+	const defaultMessage = (enUS as IMessages)[id] || '';
+	return intl.formatMessage({ id, defaultMessage }, values);
 }
 
 export default formatMessage

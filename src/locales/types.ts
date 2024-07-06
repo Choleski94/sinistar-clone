@@ -1,6 +1,6 @@
 export interface ILocaleObject {
 	[key: string]: {
-		[key: string]: Record<string, string>;
+		[key: string]: { [key: string]: string; };
 	};
 }
 

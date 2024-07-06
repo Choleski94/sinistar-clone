@@ -18,27 +18,27 @@ export const localesObj: ILocaleObject = {
 	},
 };
 
-export const DEFAULT_LANG = 'en';
+export const DEFAULT_LANG: string = 'en';
 
-export const DEFAULT_COUNTRY = 'US';
+export const DEFAULT_COUNTRY: string = 'US';
 
-export const LOCALE_QUERY = 'locale.x';
+export const LOCALE_QUERY: string = 'locale.x';
 
-export const LOCALE_KEY = 'sinistar_locale';
+export const LOCALE_KEY: string = 'sinistar_locale';
 
 export const DEFAULT_LOCALE = [
 	DEFAULT_LANG, 
 	DEFAULT_COUNTRY
 ].join('-');
 
-export const DEFAULT_LOCALE_OBJ = {
+export const DEFAULT_LOCALE_OBJ: { [key: string]: IConstructLocaleObject; } = {
 	locale: {
 		lang: DEFAULT_LANG, 
 		country: DEFAULT_COUNTRY
 	}
 };
 
-export const LOCALE_INFO: Record<string, IConstructLocaleObject> = {
+export const LOCALE_INFO: { [key: string]: IConstructLocaleObject; } = {
 	'en-US': {
 		lang: 'English',
 		country: 'United States',
@@ -53,31 +53,31 @@ export const LOCALE_INFO: Record<string, IConstructLocaleObject> = {
 	},
 };
 
-export const SUPPORTED_LOCALES: Record<string, string> = {
+export const SUPPORTED_LOCALES: { [key: string]: string; } = {
 	en: 'en-US',
 	fr: 'fr-CA',
 	es: 'es-ES',
 };
 
-export const FALLBACK_LOCALES: Record<string, string> = {
+export const FALLBACK_LOCALES: { [key: string]: string; } = {
 	en: 'US',
 	fr: 'CA',
 	es: 'ES',
 };
 
-export const constructLocale = ({ lang = '', country = '' }: IConstructLocaleObject, withUnderscore: boolean = false) => [
+export const constructLocale = ({ lang = '', country = '' }: IConstructLocaleObject, withUnderscore: boolean = false): string => [
 	(lang || '').toLowerCase(), 
 	(country || '').toUpperCase()
 ].join(withUnderscore ? '_' : '-');
 
-export const parseLocale = (locale: string = '', construct: boolean = false): string | IConstructLocaleObject | null => {
-	let res = '' as string | IConstructLocaleObject;
+export const parseLocale = (locale: string = '', construct: boolean = false): string | IConstructLocaleObject => {
+	let res: string | IConstructLocaleObject = '';
 
 	if (locale && locale.length) {
 		const parsedLocale = (locale || '').replace('_', '-');
 		const [ lang, country ] = parsedLocale.split('-');
 
-		const payload = {
+		const payload: IConstructLocaleObject = {
 			lang: (lang || '').toLowerCase(), 
 			country: (country || '').toUpperCase(),
 		};
@@ -88,7 +88,7 @@ export const parseLocale = (locale: string = '', construct: boolean = false): st
 	return res;
 };
 
-export const getLocale = (locale: string = ''): Record<string, string> => {
+export const getLocale = (locale: string = ''): { [key: string]: string } => {
 	const { lang, country } = parseLocale(locale, true) as IConstructLocaleObject;
 
 	let res = localesObj[DEFAULT_LANG][DEFAULT_COUNTRY];
