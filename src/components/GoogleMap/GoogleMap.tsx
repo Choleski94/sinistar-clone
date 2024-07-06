@@ -1,5 +1,4 @@
 import React from 'react';
-import { Status } from '@googlemaps/react-wrapper';
 
 import MapView from './MapView';
 import Marker, { TMarkerProps } from './Marker';
@@ -14,24 +13,15 @@ interface IGoogleMapProps {
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 
-
-const render = (status) => {
-	if (status === Status.FAILURE) {
-		return <p>failed</p>;
-	}
-	return <p>loading...</p>;
-};
-
-const GoogleMap: React.FC<GoogleMapProps> = ({
+const GoogleMap: React.FC<IGoogleMapProps> = ({
 	zoom,
 	onIdle,
 	center,
 	markers,
 	onClick,
 	onMarkerClick,
-	highlightedMarkerId,
 }) => {
-	const filteredMarkers = markers.filter(({ latitude, longitude }) => (
+	const filteredMarkers = (markers || []).filter(({ latitude, longitude }) => (
 		latitude && longitude
 	));
 
@@ -57,7 +47,6 @@ const GoogleMap: React.FC<GoogleMapProps> = ({
 					key={markerProps.id}
 					onClick={onMarkerClick}
 					markerIdx={markerIdx + 1}
-					// highlight={markerProps.id === highlightedMarkerId}
 				/>
 			))}
 		</MapView>

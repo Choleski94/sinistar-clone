@@ -7,15 +7,9 @@ import {
 	StyledCardMedia,
 	StyledCardContent,
 } from './InfoCard.styled';
+import { IListingItem } from '@api/types';
 
-interface IInfoCardProps {
-	id: string;
-	name: string;
-	address: string;
-	review_score: number;
-}
-
-const InfoCard: React.FC<IInfoCardProps> = ({ id, name, address, review_score }) => (
+const InfoCard = ({ id, name, address, review_score }: IListingItem) => (
 	<Link href={`/rooms?roomId=${id}`} target="_blank" rel="noreferrer" underline="none">
 		<StyledCard>
 			<StyledCardMedia

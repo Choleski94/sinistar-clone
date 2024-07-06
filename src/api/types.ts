@@ -6,18 +6,18 @@ export interface IPagination {
 }
 
 export interface IListingItem {
-	name: string;
-	city: string;
-	address: string;
-	latitude: number;
-	longitude: number;
+	name?: string;
+	city?: string;
+	address?: string;
+	latitude?: number;
+	longitude?: number;
     images?: string[];          // Added for better UI/UX
-    id: string | number;
-	review_score: number;
-    description?: string;       // Added for better UI/UX
+	description?: string;       // Added for better UI/UX
+    id?: string | number;
+	review_score?: number;
     isAccomodation?: boolean;   // Added for better UI/UX
-	host_response_rate: number;
-	extension_flexibility: number;
+	host_response_rate?: number;
+	extension_flexibility?: number;
 }
 
 export interface IListingResponse {

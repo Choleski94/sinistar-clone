@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useStore } from '@store';
-import formatMessage from '@utils/formatMessage';
 import { IConstructLocaleObject } from '@locales/types';
 import { LOCALE_INFO, SUPPORTED_LOCALES, constructLocale, parseLocale } from '@locales';
 
@@ -23,10 +22,6 @@ const LanguageForm: React.FC<ILanguageFormProps> = ({
 	const { state } = useStore();
 
 	const [ activeLocale, setActiveLocate ] = React.useState<string>('');
-
-	const messages = {
-		languageTitle: formatMessage('modal.language.title'),
-	};
 
 	const currentLocale = React.useMemo(() => (
 		constructLocale(state?.locale)

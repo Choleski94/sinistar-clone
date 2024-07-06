@@ -183,12 +183,12 @@ const SearchScreen: React.FC = () => {
 					{/* Section: Listing */}
 					<div className={setListingWrapperClassName(loading)}>
 						{loading ? (
-							new Array(9).fill(null).map((item, listingIdx) => (
+							Array.from({ length: 9 }, (_, listingIdx: number) => (
 								<BlankCard key={listingIdx} />
 							))
 						) : (
-							(filteredOptions && filteredOptions.length) ? (
-								filteredOptions?.map((item) => (
+							(filteredOptions && filteredOptions?.length) ? (
+								filteredOptions?.map((item: IListingItem) => (
 									<InfoCard 
 										key={item?.id} 
 										{...item}

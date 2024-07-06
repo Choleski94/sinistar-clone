@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-import { getResponsiveSize } from './Modal.controller';
 import { StyledBox, Header, ContentBox } from './Modal.styled';
 
 interface IModalProps {
