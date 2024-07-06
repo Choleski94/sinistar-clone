@@ -7,6 +7,7 @@ import { IListingItem } from '@api/types';
 import {
 	StyledInfoBox,
 	StyledCardMedia,
+	StyledTypography,
 } from './InfoCard.styled';
 
 // TODO: Use `id` props to create a link.
@@ -29,9 +30,9 @@ const InfoCard = ({ name, address, review_score }: IListingItem) => (
 				</Stack>
 			</StyledInfoBox>
 			<Box display="flex" justifyContent="space-between" alignItems="center">
-				<Typography variant="h6" color="textSecondary">
+				<StyledTypography>
 					{address}
-				</Typography>
+				</StyledTypography>
 			</Box>
 		</CardContent>
 	</Card>
