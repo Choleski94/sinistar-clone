@@ -27,7 +27,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 			<PaginationWrapper
 				count={count}
 				shape="rounded"
-				onChange={onPageClick}
+				onChange={(_event: React.ChangeEvent<unknown>, page: number) => onPageClick(page)}
 				renderItem={(item) => (
 					<StyledPaginationItem
 						slots={{

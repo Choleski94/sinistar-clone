@@ -80,7 +80,7 @@ const SearchScreen: React.FC = () => {
 		}
 	}, [ state?.claim, center ]);
 
-	const handlePageClick = React.useCallback((_event: React.MouseEvent<unknown>, newPage: number) => {
+	const handlePageClick = React.useCallback((newPage: number) => {
 		setPagination((prevPagination) => {
 			// Prevent fetching same page.
 			if (prevPagination.page === newPage) {
