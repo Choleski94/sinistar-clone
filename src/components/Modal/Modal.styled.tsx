@@ -1,11 +1,12 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import { TModalSizeKey } from './types';
 import { getResponsiveSize } from './Modal.controller';
 
 interface IStyledBoxProps {
 	isMobile: boolean;
-	size: keyof typeof DEFAULT_MODAL_SIZES;
+	size: TModalSizeKey;
 }
 
 export const StyledBox = styled(Box)<IStyledBoxProps>(({ size, $isMobile }) => ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider, Grid, Typography, Button } from '@mui/material';
+import { Slider, Grid, Typography } from '@mui/material';
 
 import formatMessage from '@utils/formatMessage';
 import { IWeights, TSearchWeightsKey } from '@mocks/types';

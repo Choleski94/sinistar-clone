@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import { Close as CloseIcon } from '@mui/icons-material';
 
+import { TModalSizeKey } from './types';
 import { StyledBox, Header, ContentBox } from './Modal.styled';
 
 interface IModalProps {
@@ -16,7 +17,7 @@ interface IModalProps {
 	open?: boolean;
 	onClose?: () => void;
 	children?: React.ReactNode;
-	size?: Record<string, number>;
+	size?: string | TModalSizeKey;
 }
 
 const Modal: React.FC<IModalProps> = ({
