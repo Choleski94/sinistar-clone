@@ -5,17 +5,9 @@ import Card from '../Card';
 import { Icons } from './Marker.styled';
 import OverlayView from '../OverlayView';
 
-export type TMarkerProps = {
-	mapView: boolean;
-	latitude: number;
-	longitude: number;
-	[key: string]: any; 
-	onClick: () => void;
-	highlight?: boolean;
-	isAccomodation: boolean;
-};
+import { TMarkerProps } from './types';
 
-const Marker: React.FC<MarkerProps> = ({
+const Marker: React.FC<TMarkerProps> = ({
 	mapView, 
 	OnClick, 
 	highlight,

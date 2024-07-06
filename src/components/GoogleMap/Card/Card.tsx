@@ -7,16 +7,10 @@ import {
 import React from 'react';
 
 import Carousel from '../Carousel';
+import { ICardProps } from './types';
 import { Container, RatingContainer, Rating } from './Card.styled';
 
-interface ICardProps {
-	name?: string;
-	address?: string;
-	description?: string;
-	review_score?: number | null;
-}
-
-const Card = React.forwardRef<HTMLDivElement, CardProps>((props, ref) => {
+const Card = React.forwardRef<HTMLDivElement, ICardProps>((props, ref) => {
         const preventEventPropagation = (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
                 e.stopPropagation();
                 e.preventDefault();

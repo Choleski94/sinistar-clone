@@ -1,4 +1,3 @@
-import React from 'react';
 import { Star as StarIcon } from '@mui/icons-material';
 import { Typography, Stack, Box, Link } from '@mui/material';
 

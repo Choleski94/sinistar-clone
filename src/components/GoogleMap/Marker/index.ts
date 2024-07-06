@@ -1,2 +1,2 @@
 export { default } from './Marker';
-export type { TMarkerProps } from './Marker';
+export type { TMarkerProps } from './types';

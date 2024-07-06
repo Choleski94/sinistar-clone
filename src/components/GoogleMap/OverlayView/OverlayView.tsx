@@ -2,14 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { createOverlay } from './Overlay';
-
-interface IOverlayViewProps {
-	pane?: string;
-	zIndex: number;
-	mapView: google.maps.Map;
-	children: React.ReactNode;
-	position: google.maps.LatLng | google.maps.LatLngLiteral;
-}
+import { IOverlayViewProps } from './types';
 
 /**
  * OverlayView component renders children within a positioned overlay container on a map view.
@@ -21,7 +14,7 @@ interface IOverlayViewProps {
  * @param {string} [props.pane='floatPane'] - Pane to attach the overlay to.
  * @returns {React.ReactPortal} Rendered overlay portal.
  */
-const OverlayView: React.FC<OverlayViewProps> = ({ mapView, zIndex, children, position, pane = 'floatPane' }) => {
+const OverlayView: React.FC<IOverlayViewProps> = ({ mapView, zIndex, children, position, pane = 'floatPane' }) => {
 	const container = React.useMemo(() => {
 		const div = document.createElement('div');
 		div.style.position = 'absolute';
