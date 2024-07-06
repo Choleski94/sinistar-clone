@@ -9,8 +9,6 @@ import { TMarkerProps } from './types';
 
 const Marker: React.FC<TMarkerProps> = ({
 	mapView, 
-	OnClick, 
-	highlight,
 	latitude: lat, 
 	longitude: lng,
 	isAccomodation, 
@@ -45,7 +43,6 @@ const Marker: React.FC<TMarkerProps> = ({
 		<OverlayView
 			mapView={mapView}
 			position={{ lat, lng }}
-			// zIndex={highlight ? 99 : 0}
 		>
 			<motion.div
 				exit={{ opacity: 0 }}

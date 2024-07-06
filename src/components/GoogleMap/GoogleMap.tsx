@@ -10,8 +10,6 @@ interface IGoogleMapProps {
 	center: ILocation;
 	onIdle?: () => void;
 	markers?: TMarkerProps[];
-	highlightedMarkerId?: string | null;
-	onMarkerClick?: (markerId: string) => void;
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 
@@ -21,7 +19,6 @@ const GoogleMap: React.FC<IGoogleMapProps> = ({
 	center,
 	markers,
 	onClick,
-	onMarkerClick,
 }) => {
 	const filteredMarkers = (markers || []).filter((pos: TMarkerProps) => (
 		pos.latitude && pos.longitude
@@ -47,7 +44,6 @@ const GoogleMap: React.FC<IGoogleMapProps> = ({
 					zoom={zoom}
 					{...markerProps}
 					key={markerProps.id}
-					onClick={onMarkerClick}
 					markerIdx={markerIdx + 1}
 				/>
 			))}
