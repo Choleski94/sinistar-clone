@@ -9,8 +9,8 @@ export interface IListingItem {
 	name?: string;
 	city?: string;
 	address?: string;
-	latitude?: number;
-	longitude?: number;
+	latitude: number;
+	longitude: number;
     images?: string[];          // Added for better UI/UX
 	description?: string;       // Added for better UI/UX
     id?: string | number;

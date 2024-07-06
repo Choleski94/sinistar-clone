@@ -1,22 +1,31 @@
 import React from 'react';
 
-import * as Types from './types';
+import { IStore, IState, IAction, TReducer } from './types';
 import { useLogger } from './hooks';
 
 import actions from './actions';
 import reducers from './reducers';
 
-let store: Types.IStore | undefined;
+/**
+ * Props for the StoreProvider component.
+ */
+export type TStoreProviderProps = {
+	initialState?: IState;
+	children: React.ReactNode;
+};
+
+
+let store: IStore | undefined;
 
 /**
  * Context for holding the application state.
  */
-export const StateCTX = React.createContext<Types.IState | undefined>(undefined);
+export const StateCTX = React.createContext<IState | undefined>(undefined);
 
 /**
  * Context for dispatching actions to update the state.
  */
-export const DispatchCTX = React.createContext<React.Dispatch<Types.IAction> | undefined>(undefined);
+export const DispatchCTX = React.createContext<React.Dispatch<IAction> | undefined>(undefined);
 
 /**
  * Hook to access the global store's actions, state, and dispatch function.
@@ -33,8 +42,8 @@ export const useStore = () => ({
  * @param slices An object containing individual reducers.
  * @returns A combined reducer function.
  */
-const combineReducers = (slices: { [key: string]: Types.TReducer }) => 
-	(state: Types.IState, action: Types.IAction) => 
+const combineReducers = (slices: { [key: string]: TReducer }) => 
+	(state: IState, action: IAction) => 
 		Object.keys(slices).reduce((acc, prop) => ({
 			...acc, [prop]: slices[prop](acc[prop], action)
 		}), state);
@@ -44,35 +53,33 @@ const combineReducers = (slices: { [key: string]: Types.TReducer }) =>
  * @param initialState The initial state of the store.
  * @returns An object representing the initialized store.
  */
-const createStore = (slices: { [key: string]: () => Types.IState}, initialState: Types.IState = {}) => ({
+const createStore = (slices: { [key: string]: () => IState }, initialState: IState = {}) => ({
 	...Object.keys(slices).reduce((acc, prop) => ({
-		...acc, 
-		// TODO: Consider removing deconstruction.
-		...{
-			[prop]: slices[prop]() || {} 
-		}
-	}), null),
+	  ...acc, 
+	  [prop]: slices[prop]() || {} 
+	}), {} as { [key: string]: IState }),
 	...initialState
-});
+  });
+  
 
 /**
  * Root reducer function created by combining all application reducers.
  */
-export const rootReducer = combineReducers(reducers);
+export const rootReducer = combineReducers(reducers as { [key: string]: () => IState });
 
 /**
  * Initializes the global store instance.
  * @param initialState The initial state of the store.
  * @returns The initialized store instance.
  */
-export const initStore = (initialState: Types.IState) => createStore(reducers, initialState);
+export const initStore = (initialState: IState) => createStore(reducers, initialState);
 
 /**
  * Initializes the global store with optional preloaded state.
  * @param preloadedState Optional preloaded state to initialize the store.
  * @returns The initialized store instance.
  */
-export const initializeStore = (preloadedState?: Types.IState) => {
+export const initializeStore = (preloadedState: IState) => {
 	let _store = store ?? initStore(preloadedState);
 	// Reinitialiaze store. Merge that state with the
 	// current state in the store and create a new one.
@@ -90,17 +97,9 @@ export const initializeStore = (preloadedState?: Types.IState) => {
 };
 
 /**
- * Props for the StoreProvider component.
- */
-type StoreProviderProps = {
-	initialState: Types.IState;
-	children: React.ReactNode;
-};
-
-/**
  * Provider component that wraps the entire application with the global store.
  */
-export const StoreProvider: React.FC<StoreProviderProps> = ({ initialState, children }) => {
+export const StoreProvider: React.FC<TStoreProviderProps> = ({ initialState = {}, children }) => {
 	const reducers = useLogger(rootReducer);
 
 	const [ state, dispatch ] = React.useReducer(reducers, initializeStore(initialState));
@@ -120,10 +119,10 @@ export const StoreProvider: React.FC<StoreProviderProps> = ({ initialState, chil
  * @param initialState The initial state for the store.
  * @returns A component wrapped with StoreProvider.
  */
-const withStoreProvider = (Component: React.ComponentType<any>, initialState: Types.IState = {}) => {
+const withStoreProvider = (Component: React.ComponentType<any>, initialState: IState = {}) => {
 	const WithStoreProvider: React.FC<any> = (props) => (
 		<StoreProvider initialState={initialState}>
-			<Component {...props} />
+			{Component && <Component {...props} />}
 		</StoreProvider>
 	);
 
