@@ -30,7 +30,7 @@ const FilterForm: React.FC<IFilterFormProps> = ({
 		setFilters({ ...filters, ...data });
 	}, [ data ]);
 
-	const handleSliderChange = (event: Event, newValue: number | number[], key: TSearchWeightsKey) => {
+	const handleSliderChange = (_event: Event, newValue: number | number[], key: TSearchWeightsKey) => {
 		setFilters({
 			...filters,
 			[key]: newValue,

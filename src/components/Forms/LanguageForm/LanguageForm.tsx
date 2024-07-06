@@ -32,8 +32,7 @@ const LanguageForm: React.FC<ILanguageFormProps> = ({
 		setActiveLocate(currentLocale);	
 	}, [ currentLocale ]);
 
-	const handleLanguageSet = (e: React.MouseEvent<HTMLButtonElement>, localeISO: string) => {
-		e.stopPropagation();
+	const handleLanguageSet = (localeISO: string) => {
 		onSubmit(parseLocale(localeISO, true));
 	}
 
@@ -45,7 +44,7 @@ const LanguageForm: React.FC<ILanguageFormProps> = ({
 						key={localeISO}
 						hrefLang={localeISO} 
 						selected={localeISO === activeLocale}
-						onClick={(e) => handleLanguageSet(e, localeISO)}
+						onClick={() => handleLanguageSet(localeISO)}
 					>
 						<LanguageTitle>
 							{LOCALE_INFO[localeISO]?.lang}
