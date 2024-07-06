@@ -1,8 +1,6 @@
 import React from 'react';
-import { Stack, Typography } from '@mui/material';
 import { Tune as TuneIcon } from '@mui/icons-material';
-import { Grid } from '@mui/material';
-
+import { Stack, Typography, Grid, useMediaQuery } from '@mui/material';
 
 import {
 	MAX_DISTANCE_KM,
@@ -16,7 +14,7 @@ import formatMessage from '@utils/formatMessage';
 import { ILocation, IWeights } from '@mocks/types';
 import { useAccomodationFilters } from '@utils/hooks';
 import { IPagination, IListingItem, IListingListResponse } from '@api/types';
-import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms } from '@components';
+import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms, Scrollbar } from '@components';
 
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
@@ -32,6 +30,8 @@ const SearchScreen: React.FC = () => {
 	const [ showFilterModal, setShowFilterModal ] = React.useState<boolean>(false);
 	const [ center, setCenter ] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
 	const [ filterWeights, setFilterWeights ] = React.useState<IWeights>(DEFAULT_SEARCH_WEIGHTS);
+
+	const withoutScroll = useMediaQuery('(max-width:1023px)');
 
 	const messages = {
 		filterTitle: formatMessage('form.filter.title'),
@@ -197,13 +197,15 @@ const SearchScreen: React.FC = () => {
 							))
 						) : (
 							(filteredOptions && filteredOptions?.length) ? (
-								<Grid container spacing={2}>
-									{filteredOptions?.map((item: IListingItem) => (
-										<Grid key={item?.id}  item xs={12} md={6}>
-											<InfoCard {...item} />
-										</Grid>
-									))}
-								</Grid>
+								<Scrollbar withoutScroll={withoutScroll}>
+									<Grid className="height-search-listing" container spacing={2}>
+										{filteredOptions?.map((item: IListingItem) => (
+											<Grid key={item?.id}  item xs={12} md={6}>
+												<InfoCard {...item} />
+											</Grid>
+										))}
+									</Grid>
+								</Scrollbar>
 							) : (
 								<div className="mx-auto pt-20 pb-36 text-4xl text-slate-900 font-[400]">
 									{messages.noResultTitle1}

@@ -3,8 +3,8 @@ import {
 	Backdrop,
 	Typography,
 	IconButton,
-	Modal as MuiModal,
 	useMediaQuery,
+	Modal as MuiModal,
 } from '@mui/material';
 import React from 'react';
 import { Close as CloseIcon } from '@mui/icons-material';
