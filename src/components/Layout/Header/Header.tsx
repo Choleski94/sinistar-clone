@@ -5,7 +5,7 @@ import {
 } from '@mui/icons-material';
 
 import { useStore } from '@store';
-import { IListingItem } from '@api/types';
+import { IListingItem } from '@mocks/types';
 import formatMessage from '@utils/formatMessage';
 import { IConstructLocaleObject } from '@locales/types';
 import { Modal, Forms, SearchLocation } from '@components';

@@ -1,4 +1,4 @@
-import { IListingItem } from '@api/types';
+import { IListingItem } from '@mocks/types';
 import { MOCK_IMAGES, MOCK_DESCRIPTION } from '@mocks';
 
 /**

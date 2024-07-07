@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { IListingItem } from '@api/types';
-import { IWeights, ILocation } from '@mocks/types';
+import { IWeights, IListingItem, ILocation } from '@mocks/types';
 
 import { calculateScore } from '../';
 

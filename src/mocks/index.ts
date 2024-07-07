@@ -1,10 +1,14 @@
 import { ILocation, TSearchWeightsKey, ISearchWeight } from './types';
 
+import listingDB from './database.json';
+
 import imgOne from '../../public/assets/img/rooms/pexels-photo-1428348.jpeg';
 import imgTwo from '../../public/assets/img/rooms/pexels-photo-280239.jpeg';
 import imgThree from '../../public/assets/img/rooms/pexels-photo-5178080.jpeg';
 import imgFour from '../../public/assets/img/rooms/pexels-photo-7195857.jpeg';
 import imgFive from '../../public/assets/img/rooms/pexels-photo-14715846.jpeg';
+
+export const MOCK_DATABASE = listingDB;
 
 export const DEFAULT_MAP_ZOOM: number = 11;
 

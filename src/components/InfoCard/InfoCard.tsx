@@ -2,7 +2,7 @@ import React from 'react';
 import { Star as StarIcon } from '@mui/icons-material';
 import { Card, CardContent, Typography, Stack, Box } from '@mui/material';
 
-import { IListingItem } from '@api/types';
+import { IListingItem } from '@mocks/types';
 
 import {
 	StyledHeader,

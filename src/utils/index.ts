@@ -1,6 +1,5 @@
 import { EARTH_RADIUS_KM } from '@mocks';
-import { IListingItem } from '@api/types';
-import { ILocation, IWeights } from '@mocks/types';
+import { ILocation, IListingItem, IWeights } from '@mocks/types';
 
 /**
  * Delays execution for a random duration between 0 to 1 second.

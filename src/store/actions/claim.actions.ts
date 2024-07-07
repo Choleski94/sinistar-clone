@@ -1,6 +1,6 @@
 import types from './../types';
 
-import { IListingItem } from '@api/types';
+import { IListingItem } from '@mocks/types';
 
 export interface IClaimObject {
 	review_score?: null;

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { ILocation } from '@mocks/types';
+
 import { configMapView, StyledMapViewContainer } from './MapView.styled';
 import { useDeepCompareEffectForMaps } from './useDeepCompareEffectForMaps';
 
