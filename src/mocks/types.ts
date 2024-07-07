@@ -41,3 +41,8 @@ export interface ICriterion {
 	host_response_rate: number;
 	extension_flexibility: number;
 }
+
+export type TCriterionFilter = {
+	[key in TCriterionKey]: ISearchWeight
+}
+

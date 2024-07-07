@@ -29,6 +29,7 @@
 		"paths": {
 			"@src": ["src"],
 			"@app": ["src/App"],
+			"@api": ["src/api"],
 			"@store": ["src/store"],
 			"@utils": ["src/utils"],
 			"@mocks": ["src/mocks"],
@@ -36,6 +37,7 @@
 			"@styles": ["src/styles"],
 			"@locales": ["src/locales"],
 			"@screens": ["src/screens"],
+			"@api/types": ["src/api/types"],
 			"@components": ["src/components"],
 			"@utils/hocs": ["src/utils/hocs"],
 			"@utils/hooks": ["src/utils/hooks"],

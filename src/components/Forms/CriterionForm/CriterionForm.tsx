@@ -3,14 +3,14 @@ import { Slider, Grid, Typography } from '@mui/material';
 
 import { hasKeys } from '@utils';
 import formatMessage from '@utils/formatMessage';
-import { ICriterion, TCriterionKey } from '@mocks/types';
-import { FILTER_CONFIG, MAX_WEIGHT, MIN_WEIGHT, DEFAULT_CRITERION_FILTERS, DEFAULT_CRITERION_WEIGHTS } from '@mocks';
+import { ICriterion, TCriterionKey, TCriterionFilter } from '@mocks/types';
+import { MAX_WEIGHT, MIN_WEIGHT, DEFAULT_CRITERION_FILTERS, DEFAULT_CRITERION_WEIGHTS } from '@mocks';
 
 import { CriterionContainer, SliderContainer, SliderHeader, StyledTextField, StyledErrorText, FullWidthButton } from './CriterionForm.styled';
 
 interface ICriterionPayload {
-	filters: ICriterion;
 	weights: ICriterion;
+	filters: TCriterionFilter;
 }
 
 interface IFilterFormProps {
@@ -48,7 +48,10 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 			...prevPayload,
 			filters: {
 				...prevPayload.filters,
-				[key]: newValue,
+				[key]: {
+					min: Array.isArray(newValue) ? newValue[0] : newValue,
+					max: Array.isArray(newValue) ? newValue[1] : newValue,
+				},
 			},
 		}));
 	};
@@ -65,9 +68,10 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 		}));
 	};
 
+	// Validate weights
 	const validate = () => {
 		const errs: { [key: string]: boolean } = {};
-		Object.keys(FILTER_CONFIG).forEach((key) => {
+		Object.keys(DEFAULT_CRITERION_FILTERS).forEach((key) => {
 			const criterionKey = key as TCriterionKey;
 			if (
 				payload.weights[criterionKey] < MIN_WEIGHT ||
@@ -97,7 +101,7 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 						{messages.errorRange}
 					</StyledErrorText>
 				) : null}
-				{Object.keys(FILTER_CONFIG).map((key) => {
+				{Object.keys(DEFAULT_CRITERION_FILTERS).map((key) => {
 					const criterionKey = key as TCriterionKey;
 					return (
 						<Grid key={criterionKey} item xs={12} component={SliderContainer}>
@@ -108,13 +112,16 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 									</SliderHeader>
 									<Slider
 										onChange={(_event, newValue) =>
-											handleFilterChange(newValue as number, criterionKey)
+											handleFilterChange(newValue as number[], criterionKey)
 										}
-										step={FILTER_CONFIG[criterionKey].isFloating ? 0.1 : 1}
+										step={DEFAULT_CRITERION_FILTERS[criterionKey].isFloating ? 0.1 : 1}
+										min={DEFAULT_CRITERION_FILTERS[criterionKey].min}
+										max={DEFAULT_CRITERION_FILTERS[criterionKey].max}
 										aria-labelledby={`${criterionKey}-slider`}
-										min={FILTER_CONFIG[criterionKey].min}
-										max={FILTER_CONFIG[criterionKey].max}
-										value={payload.filters[criterionKey]}
+										value={[
+											payload.filters[criterionKey].min,
+											payload.filters[criterionKey].max
+										]}
 										valueLabelDisplay="auto"
 									/>
 								</Grid>

@@ -4,18 +4,17 @@ import { Stack, Typography, Grid, useMediaQuery } from '@mui/material';
 
 import {
 	MOCK_DATABASE,
-	MAX_DISTANCE_KM,
 	DEFAULT_MAP_ZOOM,
 	MOCK_DEFAULT_LOCATION,
 	DEFAULT_CRITERION_FILTERS,
 	DEFAULT_CRITERION_WEIGHTS,
 } from '@mocks';
 import { useStore } from '@store';
-import { delayRandom } from '@utils';
+import { useOptionsFilters } from '@utils/hooks';
 import formatMessage from '@utils/formatMessage';
-import { useAccomodationFilters } from '@utils/hooks';
-import { IPagination, IListingItem, ICriterion, ILocation } from '@mocks/types';
+import { delayRandom, calculateScore } from '@utils';
 import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms, Scrollbar } from '@components';
+import { IPagination, IListingItem, ICriterion, ILocation, TCriterionFilter } from '@mocks/types';
 
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
 
@@ -26,14 +25,12 @@ const SearchScreen: React.FC = () => {
 	const [options, setOptions] = React.useState<IListingItem[]>([]);
 	const [zoom, setZoom] = React.useState<number>(DEFAULT_MAP_ZOOM);
 	const [pagination, setPagination] = React.useState<IPagination>({
-		page: 1, limit: 10, totalItems: 0, totalPages: 0,
+		page: 1, limit: 40, totalItems: 0, totalPages: 0,
 	});
 	const [showFilterModal, setShowFilterModal] = React.useState<boolean>(false);
 	const [center, setCenter] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
-	const [filters, setFilters] = React.useState<ICriterion>(DEFAULT_CRITERION_FILTERS);
 	const [weights, setWeights] = React.useState<ICriterion>(DEFAULT_CRITERION_WEIGHTS);
-
-	const withoutScroll = useMediaQuery('(max-width:1023px)');
+	const [filters, setFilters] = React.useState<TCriterionFilter>(DEFAULT_CRITERION_FILTERS);
 
 	const messages = {
 		searchTitle: formatMessage('screen.search.title'),
@@ -44,13 +41,40 @@ const SearchScreen: React.FC = () => {
 		noResultTitle2: formatMessage('screen.search.no-result.title2'),
 	}
 
-	const filteredOptions = useAccomodationFilters({
-		filters, weights,
-		referencePoint: center,
-		accommodations: options,
-		maxDistance: MAX_DISTANCE_KM,
-	});
+	const withoutScroll = useMediaQuery('(max-width:1023px)');
 
+	const filteredOptions = useOptionsFilters({ options, filters });
+
+	const rankedOptions = React.useMemo(() => {
+		const rankedAccommodations = filteredOptions.map((tmpAccommodation) => {
+			const score = calculateScore(tmpAccommodation, center, weights);
+			return { ...tmpAccommodation, score };
+		}).sort((a, b) => b.score - a.score);
+
+		return rankedAccommodations;
+	}, [filteredOptions, center, weights]);
+
+	const paginatedOptions = React.useMemo(() => {
+		const startIndex = (pagination?.page - 1) * pagination?.limit;
+		const endIndex = startIndex + pagination?.limit;
+
+		return rankedOptions.slice(startIndex, endIndex);
+	}, [rankedOptions, pagination.page]);
+
+	const memoizedMarkers = React.useMemo(() => {
+		const { longitude, latitude } = state?.claim || {};
+		const markers: IListingItem[] = [];
+
+		if (longitude && latitude) {
+			markers.push(state?.claim);
+		}
+
+		markers.push(...paginatedOptions);
+
+		return markers;
+	}, [state?.claim, paginatedOptions]);
+
+	// Load database.json file.
 	React.useEffect(() => {
 		setLoading(true);
 
@@ -72,14 +96,7 @@ const SearchScreen: React.FC = () => {
 		}).catch(() => {
 			setLoading(false);
 		})
-	}, [])
-
-	const paginatedOptions = React.useMemo(() => {
-		const startIndex = (pagination?.page - 1) * pagination?.limit;
-		const endIndex = startIndex + pagination?.limit;
-
-		return filteredOptions.slice(startIndex, endIndex);
-	}, [filteredOptions, pagination.page]);
+	}, []);
 
 	// Update center on claim search.
 	React.useEffect(() => {
@@ -128,23 +145,11 @@ const SearchScreen: React.FC = () => {
 		}
 	}, [center]);
 
-	const memoizedMarkers = React.useMemo(() => {
-		const { longitude, latitude } = state?.claim || {};
-
-		let res = [];
-
-		if (longitude && latitude) {
-			res.push(state?.claim);
-		}
-
-		return res.concat(...paginatedOptions);
-	}, [state?.claim, paginatedOptions]);
-
 	const toggleFilterModal = React.useCallback(() => (
 		setShowFilterModal((prevFilterValue) => !prevFilterValue)
 	), []);
 
-	const handleCriterionSet = React.useCallback((criterion: { filters: ICriterion; weights: ICriterion }) => {
+	const handleCriterionSet = React.useCallback((criterion: { filters: TCriterionFilter; weights: ICriterion }) => {
 		setFilters(criterion?.filters);
 		setWeights(criterion?.weights);
 

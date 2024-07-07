@@ -1,5 +1,5 @@
+import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE } from '@mocks';
 import { ILocation, IListingItem, ICriterion } from '@mocks/types';
-import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE, MAX_DISTANCE } from '@mocks';
 
 /**
  * Checks if the given object has any keys.

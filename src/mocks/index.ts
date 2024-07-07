@@ -32,7 +32,7 @@ export const MAX_HOST_RESPONSE_RATE: number = 1;
 export const MAX_EXTENSION_FLEXIBILITY: number = 1;
 
 // Search filter configuration.
-export const FILTER_CONFIG: { [key in TCriterionKey]: ISearchWeight } = {
+export const DEFAULT_CRITERION_FILTERS: { [key in TCriterionKey]: ISearchWeight } = {
 	distance: {
 		isFloating: false,
 		min: MIN_DISTANCE,
@@ -53,14 +53,6 @@ export const FILTER_CONFIG: { [key in TCriterionKey]: ISearchWeight } = {
 		min: MIN_EXTENSION_FLEXIBILITY,
 		max: MAX_EXTENSION_FLEXIBILITY,
 	},
-};
-
-// Default search weights.
-export const DEFAULT_CRITERION_FILTERS: ICriterion = {
-	distance: 20,
-	review_score: 0.4,
-	host_response_rate: 0.2,
-	extension_flexibility: 0.1,
 };
 
 export const DEFAULT_CRITERION_WEIGHTS: ICriterion = {

@@ -1,1 +1,1 @@
-export { default as useAccomodationFilters } from './useAccomodationFilters';
+export { default as useOptionsFilters } from './useOptionsFilters';

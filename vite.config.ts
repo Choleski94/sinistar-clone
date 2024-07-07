@@ -18,6 +18,8 @@ export default ({ mode }: { mode: string }) => {
 				// Custom path aliases for various directories
 				'@src': path.resolve(__dirname, 'src'),
 				'@app': path.resolve(__dirname, 'src/App'),
+				'@api': path.resolve(__dirname, 'src/api'),
+				'@api/*': path.resolve(__dirname, 'src/api/*'),
 				'@store': path.resolve(__dirname, 'src/store'),
 				'@utils': path.resolve(__dirname, 'src/utils'),
 				'@mocks': path.resolve(__dirname, 'src/mocks'),
