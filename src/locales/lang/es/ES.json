@@ -18,6 +18,7 @@
 	"form.criterion.host_response_rate.text": "Tasa de respuesta del anfitrión",
 	"form.criterion.extension_flexibility.text": "Flexibilidad de extensión",
 	"form.criterion.apply.cta": "Aplicar criterions",
+	"form.criterion.error.range.text": "Asegúrese de que su poderación esté dentro del rango de 0 a 100",
 
 	"screen.search.title": "alojamientos en esta área",
 	"screen.search.subtitle": "Explora alojamientos 100% amueblados y equipados.",

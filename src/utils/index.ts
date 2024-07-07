@@ -1,5 +1,15 @@
-import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE } from '@mocks';
 import { ILocation, IListingItem, ICriterion } from '@mocks/types';
+import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE, MAX_DISTANCE } from '@mocks';
+
+/**
+ * Checks if the given object has any keys.
+ * 
+ * @param {Record<string, any>} [payload={}] - The object to check for keys.
+ * @returns {boolean} - Returns true if the object has keys, false otherwise.
+ */
+export const hasKeys = (payload: Record<string, any> = {}): number => {
+    return Object.keys(payload).length;
+};
 
 /**
  * Delays execution for a random duration between 0 to 1 second.
@@ -48,35 +58,6 @@ export const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2
  * Calculates a weighted score for an accommodation based on specified criteria.
  * @param {Object} accommodation - The accommodation object containing latitude, longitude, review score, host response rate, and extension flexibility.
  * @param {Object} referencePoint - The reference point object containing latitude and longitude for distance calculation.
- * @param {Object} weights - Object containing weights for distance, review score, host response rate, and extension flexibility.
- * @param {number} maxDistance - Maximum distance in kilometers considered for normalization.
- * @returns {number} The calculated weighted score.
- */
-// export const calculateScore = (
-// 	accommodation: IListingItem, 
-// 	referencePoint: ILocation, 
-// 	filters: ICriterion, 
-// 	maxDistance: number = 100
-// ): number => {
-// 	const distance = haversineDistance(
-// 		accommodation.latitude, accommodation.longitude, 
-// 		referencePoint.latitude, referencePoint.longitude
-// 	);
-
-// 	const normalizedDistance = Math.min(distance / maxDistance, 1) * 100;
-
-// 	return (
-// 		normalizedDistance * filters.distance +
-// 		accommodation.review_score * filters.review_score +
-// 		accommodation.host_response_rate * filters.host_response_rate +
-// 		accommodation.extension_flexibility * filters.extension_flexibility
-// 	);
-// };
-
-/**
- * Calculates a weighted score for an accommodation based on specified criteria.
- * @param {Object} accommodation - The accommodation object containing latitude, longitude, review score, host response rate, and extension flexibility.
- * @param {Object} referencePoint - The reference point object containing latitude and longitude for distance calculation.
  * @param {Object} filters - Object containing weights for distance, review score, host response rate, and extension flexibility.
  * @param {number} maxDistance - Maximum distance in kilometers considered for normalization.
  * @returns {number} The calculated weighted score.
@@ -86,7 +67,7 @@ export const calculateScore = (
 	referencePoint: ILocation, 
 	filters: ICriterion, 
 	weights: ICriterion,
-	maxDistance: number = 100
+	maxDistance: number = MAX_DISTANCE
 ): number => {
 	const distance = haversineDistance(
 		accommodation.latitude, accommodation.longitude, 

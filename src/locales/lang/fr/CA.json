@@ -18,6 +18,7 @@
 	"form.criterion.host_response_rate.text": "Taux de réponse de l'hôte",
 	"form.criterion.extension_flexibility.text": "Flexibilité de l'extension",
 	"form.criterion.apply.cta": "Appliquer les criterions",
+	"form.criterion.error.range.text": "Veuillez vous assurer que votre pondération est compris entre 0 et 100.",
 
 	"screen.search.title": "logements dans cette région",
 	"screen.search.subtitle": "Explorez des logements 100% meublés et équipés.",

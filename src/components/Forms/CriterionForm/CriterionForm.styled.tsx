@@ -19,6 +19,11 @@ export const SliderHeader = styled(Typography)({
 	paddingBottom: 12
 });
 
+export const StyledErrorText = styled(Typography)({
+	padding: 9,
+	color: '#f64f64',
+});
+
 export const FullWidthButton = styled(Button)({
 	width: '100%',
 	color: '#000',
@@ -34,6 +39,6 @@ export const FullWidthButton = styled(Button)({
 export const StyledTextField = styled(TextField)(({ error }) => ({
 	'& input': {
 		padding: '10px 14px',
-		borderColor: error ? 'red' : 'inherit',
+		borderColor: error ? '#f64f64' : 'inherit',
 	}
 }))

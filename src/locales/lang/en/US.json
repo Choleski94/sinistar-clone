@@ -18,6 +18,7 @@
 	"form.criterion.host_response_rate.text": "Host response rate",
 	"form.criterion.extension_flexibility.text": "Extension flexibility",
 	"form.criterion.apply.cta": "Apply criterions",
+	"form.criterion.error.range.text": "Please ensure your weight is within the range of 0 to 100",
 
 	"screen.search.title": "accommodations in this area",
 	"screen.search.subtitle": "Explore 100% furnished and equipped accommodations.",

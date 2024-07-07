@@ -1,11 +1,12 @@
 import React from 'react';
 import { Slider, Grid, Typography } from '@mui/material';
 
+import { hasKeys } from '@utils';
 import formatMessage from '@utils/formatMessage';
 import { ICriterion, TCriterionKey } from '@mocks/types';
 import { FILTER_CONFIG, MAX_WEIGHT, MIN_WEIGHT, DEFAULT_CRITERION_FILTERS, DEFAULT_CRITERION_WEIGHTS } from '@mocks';
 
-import { CriterionContainer, SliderContainer, SliderHeader, StyledTextField, FullWidthButton } from './CriterionForm.styled';
+import { CriterionContainer, SliderContainer, SliderHeader, StyledTextField, StyledErrorText, FullWidthButton } from './CriterionForm.styled';
 
 interface ICriterionPayload {
 	filters: ICriterion;
@@ -31,6 +32,7 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 		criterionCta: formatMessage('form.criterion.apply.cta'),
 		distance: formatMessage('form.criterion.distance.text'),
 		weightTitle: formatMessage('form.criterion.weight.text'),
+		errorRange: formatMessage('form.criterion.error.range.text'),
 		review_score: formatMessage('form.criterion.review_score.text'),
 		host_response_rate: formatMessage('form.criterion.host_response_rate.text'),
 		extension_flexibility: formatMessage('form.criterion.extension_flexibility.text'),
@@ -41,6 +43,7 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 	}, [data]);
 
 	const handleFilterChange = (newValue: number | number[], key: TCriterionKey) => {
+		setErrors({});
 		setPayload((prevPayload) => ({
 			...prevPayload,
 			filters: {
@@ -52,6 +55,7 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 
 	const handleWeightChange = (event: React.ChangeEvent<HTMLInputElement>, key: TCriterionKey) => {
 		const newValue = parseFloat(event.target.value);
+		setErrors({});
 		setPayload((prevPayload) => ({
 			...prevPayload,
 			weights: {
@@ -76,11 +80,9 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 	};
 
 	const handleSubmit = () => {
-		setErrors({});
-
 		const hasErrors = validate();
 
-		if (Object.keys(hasErrors).length) {
+		if (hasKeys(hasErrors)) {
 			return setErrors(hasErrors);
 		}
 
@@ -90,6 +92,11 @@ const CriterionForm: React.FC<IFilterFormProps> = ({
 	return (
 		<CriterionContainer>
 			<Grid container spacing={3}>
+				{hasKeys(errors) ? (
+					<StyledErrorText variant="body1" gutterBottom>
+						{messages.errorRange}
+					</StyledErrorText>
+				) : null}
 				{Object.keys(FILTER_CONFIG).map((key) => {
 					const criterionKey = key as TCriterionKey;
 					return (
