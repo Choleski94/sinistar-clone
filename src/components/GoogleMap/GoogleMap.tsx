@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ILocation } from '@mocks/types';
+import { MOCK_DEFAULT_LOCATION } from '@mocks';
 
 import MapView from './MapView';
 import Marker, { TMarkerProps } from './Marker';
@@ -9,7 +10,7 @@ interface IGoogleMapProps {
 	zoom: number;
 	center: ILocation;
 	onIdle?: () => void;
-	markers?: TMarkerProps[];
+	markers: TMarkerProps[];
 	onClick?: (event: google.maps.MouseEvent) => void;
 }
 
@@ -20,9 +21,19 @@ const GoogleMap: React.FC<IGoogleMapProps> = ({
 	markers,
 	onClick,
 }) => {
-	const filteredMarkers = (markers || []).filter((pos: TMarkerProps) => (
-		pos.latitude && pos.longitude
+	const [activeCenter, setActiveCenter] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
+
+	const filteredMarkers = markers.filter((pos: TMarkerProps) => (
+		pos.latitude !== undefined && pos.longitude !== undefined
 	));
+
+	React.useEffect(() => {
+		const hasCenter = center.longitude && center.latitude;
+		if (hasCenter && (activeCenter.longitude !== center.longitude || activeCenter.latitude !== center.latitude)) {
+			setActiveCenter(center);
+		}
+	}, [center, activeCenter]);
+
 
 	return (
 		<MapView
@@ -31,9 +42,9 @@ const GoogleMap: React.FC<IGoogleMapProps> = ({
 			maxZoom={18}
 			className="map"
 			onIdle={onIdle}
-			center={center}
 			onClick={onClick}
 			zoomControl={false}
+			center={activeCenter}
 			mapTypeControl={false}
 			clickableIcons={false}
 			fullscreenControl={false}

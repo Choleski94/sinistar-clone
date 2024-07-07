@@ -1,7 +1,5 @@
 import React from 'react';
-
 import { ILocation } from '@mocks/types';
-
 import { configMapView, StyledMapViewContainer } from './MapView.styled';
 import { useDeepCompareEffectForMaps } from './useDeepCompareEffectForMaps';
 
@@ -15,20 +13,20 @@ interface IMapViewProps {
 }
 
 interface IChildProps {
-	[key: string]: any; 
-    mapView: google.maps.Map | null;
+	[key: string]: any;
+	mapView: google.maps.Map | null;
 }
 
 const MapView: React.FC<IMapViewProps> = ({
 	center,
-	className = '', 
-	children = null, 
-	onIdle = () => null, 
-	onClick = () => null, 
+	className = '',
+	children = null,
+	onIdle = () => null,
+	onClick = () => null,
 	...rest
 }) => {
 	const ref = React.useRef<HTMLDivElement>(null);
-	const [ mapView, setMapView ] = React.useState<google.maps.Map | null>(null);
+	const [mapView, setMapView] = React.useState<google.maps.Map | null>(null);
 
 	React.useEffect(() => {
 		if (ref.current && !mapView) {
@@ -41,6 +39,10 @@ const MapView: React.FC<IMapViewProps> = ({
 			});
 
 			setMapView(googleMap);
+		} else if (mapView && center) {
+			const { longitude, latitude } = center;
+			const newCenter = new window.google.maps.LatLng(latitude, longitude);
+			mapView.setCenter(newCenter);
 		}
 	}, [ref, mapView, center]);
 
@@ -64,10 +66,10 @@ const MapView: React.FC<IMapViewProps> = ({
 				mapView.addListener('idle', () => onIdle(mapView));
 			}
 		}
-	}, [ mapView, onClick, onIdle ]);
+	}, [mapView, onClick, onIdle]);
 
 	// Handle single child element directly
-	let mappedChildren: React.ReactNode  | null = null;
+	let mappedChildren: React.ReactNode | null = null;
 	if (React.isValidElement(children)) {
 		mappedChildren = React.cloneElement(children, { mapView } as IChildProps);
 	} else if (Array.isArray(children)) {
@@ -85,6 +87,6 @@ const MapView: React.FC<IMapViewProps> = ({
 			{mappedChildren}
 		</StyledMapViewContainer>
 	);
-}
+};
 
 export default MapView;
