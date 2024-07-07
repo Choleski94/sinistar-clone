@@ -59,13 +59,13 @@ const SearchScreen: React.FC = () => {
 
 			const totalItems = (parsedDB || []).length;
 			const totalPages = Math.ceil(totalItems / pagination?.limit);
-	
+
 			setPagination({
 				totalPages, totalItems,
 				page: pagination?.page,
 				limit: pagination?.limit,
 			});
-	
+
 			setOptions(parsedDB);
 
 			setLoading(false);
@@ -79,7 +79,7 @@ const SearchScreen: React.FC = () => {
 		const endIndex = startIndex + pagination?.limit;
 
 		return filteredOptions.slice(startIndex, endIndex);
-	}, [options, pagination?.page]);
+	}, [filteredOptions, pagination.page]);
 
 	// Update center on claim search.
 	React.useEffect(() => {
@@ -110,7 +110,7 @@ const SearchScreen: React.FC = () => {
 
 			return { ...prevPagination, page: newPage };
 		});
-	}, [pagination]);
+	}, []);
 
 	const onIdle = React.useCallback((map = { getZoom: () => null, getCenter: () => null }) => {
 		setZoom(map?.getZoom() || DEFAULT_MAP_ZOOM);
@@ -126,7 +126,7 @@ const SearchScreen: React.FC = () => {
 				setCenter({ longitude, latitude });
 			}
 		}
-	}, []);
+	}, [center]);
 
 	const memoizedMarkers = React.useMemo(() => {
 		const { longitude, latitude } = state?.claim || {};
