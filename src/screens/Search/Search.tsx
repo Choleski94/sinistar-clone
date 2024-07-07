@@ -25,7 +25,7 @@ const SearchScreen: React.FC = () => {
 	const [options, setOptions] = React.useState<IListingItem[]>([]);
 	const [zoom, setZoom] = React.useState<number>(DEFAULT_MAP_ZOOM);
 	const [pagination, setPagination] = React.useState<IPagination>({
-		page: 1, limit: 40, totalItems: 0, totalPages: 0,
+		page: 1, limit: 8, totalItems: 0, totalPages: 0,
 	});
 	const [showFilterModal, setShowFilterModal] = React.useState<boolean>(false);
 	const [center, setCenter] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
@@ -47,8 +47,8 @@ const SearchScreen: React.FC = () => {
 
 	const rankedOptions = React.useMemo(() => {
 		const rankedAccommodations = filteredOptions.map((tmpAccommodation) => {
-			const score = calculateScore(tmpAccommodation, center, weights);
-			return { ...tmpAccommodation, score };
+			const { score, distance } = calculateScore(tmpAccommodation, center, weights);
+			return { ...tmpAccommodation, score, distance };
 		}).sort((a, b) => b.score - a.score);
 
 		return rankedAccommodations;

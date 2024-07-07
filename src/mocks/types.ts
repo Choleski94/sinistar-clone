@@ -34,6 +34,7 @@ export interface ISearchWeight {
 }
 
 export interface ICriterion {
+	score?: number;
 	distance: number;
 	latitude?: number;
 	longitude?: number;

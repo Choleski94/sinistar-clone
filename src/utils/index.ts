@@ -64,7 +64,7 @@ export const calculateScore = (
 	accommodation: IListingItem,
 	referencePoint: ILocation,
 	weights: ICriterion,
-): number => {
+): { distance: number; score: number; } => {
 	const distance = haversineDistance(
 		accommodation.latitude, accommodation.longitude,
 		referencePoint.latitude, referencePoint.longitude
@@ -101,5 +101,5 @@ export const calculateScore = (
 	// Step 5: Scale the weighted score to a range of 0-100
 	const scoreOutOf100 = (weightedScore / 1) * 100; 								// Here, 1 is the total weight (scaled to 1).
 
-	return scoreOutOf100;
+	return { distance, score: scoreOutOf100 };
 };

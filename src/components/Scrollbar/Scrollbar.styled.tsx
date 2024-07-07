@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 
-export const ScrollbarDiv = styled('div')<{ withoutScroll: boolean }>(({ $withoutScroll }) => ({
+export const ScrollbarDiv = styled('div')<{ $withoutScroll: boolean }>(({ $withoutScroll }) => ({
 	width: '100%',
 	height: $withoutScroll ? '100%' : 'calc(60vh + 45px)',
 	overflowY: 'auto',

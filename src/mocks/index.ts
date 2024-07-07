@@ -21,7 +21,7 @@ export const MAX_DISTANCE_KM: number = 100;
 export const EARTH_RADIUS_KM: number = 6371;
 
 // Search filters.
-export const MIN_DISTANCE: number = 1; 		// Threshold distance.
+export const MIN_DISTANCE: number = 0;
 export const MIN_REVIEW_SCORE: number = 0;
 export const MIN_HOST_RESPONSE_RATE: number = 0;
 export const MIN_EXTENSION_FLEXIBILITY: number = 0;
