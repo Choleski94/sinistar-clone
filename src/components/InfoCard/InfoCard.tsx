@@ -5,6 +5,7 @@ import { Card, CardContent, Typography, Stack, Box } from '@mui/material';
 import { IListingItem } from '@api/types';
 
 import {
+	StyledHeader,
 	StyledInfoBox,
 	StyledCardMedia,
 	StyledTypography,
@@ -19,9 +20,9 @@ const InfoCard = ({ name, address, review_score }: IListingItem) => (
 		/>
 		<CardContent>
 			<StyledInfoBox>
-				<Typography variant="h6" component="div">
+				<StyledHeader variant="h6" component="div">
 					{name}
-				</Typography>
+				</StyledHeader>
 				<Stack direction="row" alignItems="center" spacing={1}>
 					<StarIcon />
 					<Typography variant="body2">

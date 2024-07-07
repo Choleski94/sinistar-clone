@@ -7,11 +7,13 @@ import formatMessage from '@utils/formatMessage';
 import { CenteredStack, StyledPaginationItem } from './Pagination.styled';
 
 interface IPaginationProps {
+	page?: number;
 	count?: number;
 	onPageClick?: (page: number) => void;
 }
 
 const Pagination: React.FC<IPaginationProps> = ({
+	page = 1,
 	count = 0, 
 	onPageClick = () => null,
 }) => {
@@ -25,6 +27,7 @@ const Pagination: React.FC<IPaginationProps> = ({
 	return (
 		<CenteredStack spacing={2}>
 			<PaginationWrapper
+				page={page}
 				count={count}
 				shape="rounded"
 				onChange={(_event: React.ChangeEvent<unknown>, page: number) => onPageClick(page)}

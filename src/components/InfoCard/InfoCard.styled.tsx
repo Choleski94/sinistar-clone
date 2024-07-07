@@ -14,6 +14,11 @@ export const StyledInfoBox = styled(Box)({
 	justifyContent: 'space-between',
 });
 
+export const StyledHeader = styled(Typography)({
+	fontSize: '1.2rem',
+});
+
 export const StyledTypography = styled(Typography)({
-	fontSize: '0.9rem',
+	fontSize: '0.65rem',
+	paddingTop: '10px',
 });
