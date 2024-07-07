@@ -221,7 +221,7 @@ const SearchScreen: React.FC = () => {
 							))
 						) : (
 							(paginatedOptions && paginatedOptions?.length) ? (
-								<Scrollbar withoutScroll={withoutScroll}>
+								<Scrollbar $withoutScroll={withoutScroll}>
 									<Grid className="height-search-listing" container spacing={2}>
 										{paginatedOptions?.map((item: IListingItem) => (
 											<Grid key={item?.id} item xs={12} md={6}>

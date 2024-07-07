@@ -5,9 +5,9 @@ import { ScrollbarDiv, ScrollbarContent } from './Scrollbar.styled';
 
 const Scrollbar: React.FC<IScrollbarProps> = ({
 	children, 
-	withoutScroll = false,
+	$withoutScroll = false,
 }) => (
-	<ScrollbarDiv withoutScroll={withoutScroll}>
+	<ScrollbarDiv $withoutScroll={$withoutScroll}>
 		<ScrollbarContent>
 			{children}
 		</ScrollbarContent>

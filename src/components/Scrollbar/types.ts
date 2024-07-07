@@ -1,5 +1,5 @@
 export interface IScrollbarProps {
-	withoutScroll?: boolean;
+	$withoutScroll?: boolean;
 	children: React.ReactNode;
 }
 
