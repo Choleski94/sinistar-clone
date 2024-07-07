@@ -7,13 +7,14 @@ import {
 	MAX_DISTANCE_KM,
 	DEFAULT_MAP_ZOOM,
 	MOCK_DEFAULT_LOCATION,
-	DEFAULT_SEARCH_WEIGHTS,
+	DEFAULT_CRITERION_FILTERS,
+	DEFAULT_CRITERION_WEIGHTS,
 } from '@mocks';
 import { useStore } from '@store';
 import { delayRandom } from '@utils';
 import formatMessage from '@utils/formatMessage';
 import { useAccomodationFilters } from '@utils/hooks';
-import { IPagination, IListingItem, IWeights, ILocation } from '@mocks/types';
+import { IPagination, IListingItem, ICriterion, ILocation } from '@mocks/types';
 import { InfoCard, BlankCard, Pagination, GoogleMap, Modal, Forms, Scrollbar } from '@components';
 
 import { setWrapperClassName, setListingWrapperClassName, parseAccomodationInfo } from './Search.controller';
@@ -29,13 +30,14 @@ const SearchScreen: React.FC = () => {
 	});
 	const [showFilterModal, setShowFilterModal] = React.useState<boolean>(false);
 	const [center, setCenter] = React.useState<ILocation>(MOCK_DEFAULT_LOCATION);
-	const [filterWeights, setFilterWeights] = React.useState<IWeights>(DEFAULT_SEARCH_WEIGHTS);
+	const [filters, setFilters] = React.useState<ICriterion>(DEFAULT_CRITERION_FILTERS);
+	const [weights, setWeights] = React.useState<ICriterion>(DEFAULT_CRITERION_WEIGHTS);
 
 	const withoutScroll = useMediaQuery('(max-width:1023px)');
 
 	const messages = {
-		filterTitle: formatMessage('form.filter.title'),
 		searchTitle: formatMessage('screen.search.title'),
+		filterTitle: formatMessage('form.criterion.title'),
 		searchSubtitle: formatMessage('screen.search.subtitle'),
 		searchFilterCta: formatMessage('screen.search.filter.cta'),
 		noResultTitle1: formatMessage('screen.search.no-result.title1'),
@@ -43,7 +45,7 @@ const SearchScreen: React.FC = () => {
 	}
 
 	const filteredOptions = useAccomodationFilters({
-		weights: filterWeights,
+		filters, weights,
 		referencePoint: center,
 		accommodations: options,
 		maxDistance: MAX_DISTANCE_KM,
@@ -142,8 +144,10 @@ const SearchScreen: React.FC = () => {
 		setShowFilterModal((prevFilterValue) => !prevFilterValue)
 	), []);
 
-	const handleFilterSet = React.useCallback((filterData: IWeights) => {
-		setFilterWeights(filterData);
+	const handleCriterionSet = React.useCallback((criterion: { filters: ICriterion; weights: ICriterion }) => {
+		setFilters(criterion?.filters);
+		setWeights(criterion?.weights);
+
 		toggleFilterModal();
 
 		// Reset pagination page index.
@@ -251,9 +255,9 @@ const SearchScreen: React.FC = () => {
 					onClose={toggleFilterModal}
 					title={messages.filterTitle}
 				>
-					<Forms.Filter
-						data={filterWeights}
-						onSubmit={handleFilterSet}
+					<Forms.Criterion
+						onSubmit={handleCriterionSet}
+						data={{ filters, weights }}
 					/>
 				</Modal>
 			</main>

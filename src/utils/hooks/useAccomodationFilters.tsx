@@ -1,17 +1,19 @@
 import React from 'react';
 
-import { IWeights, IListingItem, ILocation } from '@mocks/types';
+import { ICriterion, IListingItem, ILocation } from '@mocks/types';
 
 import { calculateScore } from '../';
 
 interface IuseAccomodationFiltersProps {
-	weights: IWeights;
+	filters: ICriterion;
+	weights: ICriterion;
 	maxDistance: number;
 	referencePoint: ILocation;
 	accommodations: IListingItem[];
 }
 
 const useAccomodationFilters = ({
+	filters,
 	weights,
 	maxDistance,
 	accommodations,
@@ -19,10 +21,10 @@ const useAccomodationFilters = ({
 }: IuseAccomodationFiltersProps) => {
 	const rankedAccommodations = React.useMemo(() =>
 		accommodations.map((tmpAccommodation) => {
-			const score = calculateScore(tmpAccommodation, referencePoint, weights, maxDistance);
+			const score = calculateScore(tmpAccommodation, referencePoint, filters, weights, maxDistance);
 			return { ...tmpAccommodation, score };
 		}).sort((a, b) => b.score - a.score),
-		[ accommodations, referencePoint, weights, maxDistance ]
+		[ accommodations, referencePoint, filters, weights, maxDistance ]
 	);
 
 	return rankedAccommodations;

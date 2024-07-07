@@ -11,12 +11,13 @@
 
 	"modal.language.title": "Select your preferred language",
 
-	"form.filter.title": "Select your prefered filters",
-	"form.filter.distance.text": "Distance",
-	"form.filter.review_score.text": "Review score",
-	"form.filter.host_response_rate.text": "Host response rate",
-	"form.filter.extension_flexibility.text": "Extension flexibility",
-	"form.filter.apply.cta": "Apply filters",
+	"form.criterion.title": "Select your prefered filters",
+	"form.criterion.weight.text": "Weight",
+	"form.criterion.distance.text": "Distance",
+	"form.criterion.review_score.text": "Review score",
+	"form.criterion.host_response_rate.text": "Host response rate",
+	"form.criterion.extension_flexibility.text": "Extension flexibility",
+	"form.criterion.apply.cta": "Apply criterions",
 
 	"screen.search.title": "accommodations in this area",
 	"screen.search.subtitle": "Explore 100% furnished and equipped accommodations.",

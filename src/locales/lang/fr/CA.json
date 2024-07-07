@@ -11,12 +11,13 @@
 
 	"modal.language.title": "Sélectionnez votre langue préférée",
 
-	"form.filter.title": "Sélectionnez vos filtres préférés",
-	"form.filter.distance.text": "Distance",
-	"form.filter.review_score.text": "Score de revue",
-	"form.filter.host_response_rate.text": "Taux de réponse de l'hôte",
-	"form.filter.extension_flexibility.text": "Flexibilité de l'extension",
-	"form.filter.apply.cta": "Appliquer les filtres",
+	"form.criterion.title": "Sélectionnez vos filtres préférés",
+	"form.criterion.weight.text": "Pondération",
+	"form.criterion.distance.text": "Distance",
+	"form.ficriterionlter.review_score.text": "Score de revue",
+	"form.criterion.host_response_rate.text": "Taux de réponse de l'hôte",
+	"form.criterion.extension_flexibility.text": "Flexibilité de l'extension",
+	"form.criterion.apply.cta": "Appliquer les criterions",
 
 	"screen.search.title": "logements dans cette région",
 	"screen.search.subtitle": "Explorez des logements 100% meublés et équipés.",

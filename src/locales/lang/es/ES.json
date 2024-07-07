@@ -11,12 +11,13 @@
 
 	"modal.language.title": "Selecciona tu idioma preferido",
 
-	"form.filter.title": "Selecciona tus filtros preferidos",
-	"form.filter.distance.text": "Distancia",
-	"form.filter.review_score.text": "Puntuación de la reseña",
-	"form.filter.host_response_rate.text": "Tasa de respuesta del anfitrión",
-	"form.filter.extension_flexibility.text": "Flexibilidad de extensión",
-	"form.filter.apply.cta": "Aplicar filtros",
+	"form.criterion.title": "Selecciona tus filtros preferidos",
+	"form.criterion.weight.text": "Poderación",
+	"form.criterion.distance.text": "Distancia",
+	"form.criterion.review_score.text": "Puntuación de la reseña",
+	"form.criterion.host_response_rate.text": "Tasa de respuesta del anfitrión",
+	"form.criterion.extension_flexibility.text": "Flexibilidad de extensión",
+	"form.criterion.apply.cta": "Aplicar criterions",
 
 	"screen.search.title": "alojamientos en esta área",
 	"screen.search.subtitle": "Explora alojamientos 100% amueblados y equipados.",

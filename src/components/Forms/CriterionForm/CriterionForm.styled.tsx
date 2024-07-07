@@ -1,7 +1,7 @@
-import { Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Button, Typography, TextField } from '@mui/material';
 
-export const FilterContainer = styled('div')({
+export const CriterionContainer = styled('div')({
 	padding: '20px',
 });
 
@@ -13,6 +13,10 @@ export const SliderContainer = styled('div')({
 	'& .MuiSlider-thumb': {
 		color: '#edcc1f',
 	},
+});
+
+export const SliderHeader = styled(Typography)({
+	paddingBottom: 12
 });
 
 export const FullWidthButton = styled(Button)({
@@ -27,3 +31,9 @@ export const FullWidthButton = styled(Button)({
 	},
 });
 
+export const StyledTextField = styled(TextField)(({ error }) => ({
+	'& input': {
+		padding: '10px 14px',
+		borderColor: error ? 'red' : 'inherit',
+	}
+}))

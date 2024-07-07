@@ -1,5 +1,5 @@
-import { EARTH_RADIUS_KM } from '@mocks';
-import { ILocation, IListingItem, IWeights } from '@mocks/types';
+import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE } from '@mocks';
+import { ILocation, IListingItem, ICriterion } from '@mocks/types';
 
 /**
  * Delays execution for a random duration between 0 to 1 second.
@@ -52,10 +52,40 @@ export const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2
  * @param {number} maxDistance - Maximum distance in kilometers considered for normalization.
  * @returns {number} The calculated weighted score.
  */
+// export const calculateScore = (
+// 	accommodation: IListingItem, 
+// 	referencePoint: ILocation, 
+// 	filters: ICriterion, 
+// 	maxDistance: number = 100
+// ): number => {
+// 	const distance = haversineDistance(
+// 		accommodation.latitude, accommodation.longitude, 
+// 		referencePoint.latitude, referencePoint.longitude
+// 	);
+
+// 	const normalizedDistance = Math.min(distance / maxDistance, 1) * 100;
+
+// 	return (
+// 		normalizedDistance * filters.distance +
+// 		accommodation.review_score * filters.review_score +
+// 		accommodation.host_response_rate * filters.host_response_rate +
+// 		accommodation.extension_flexibility * filters.extension_flexibility
+// 	);
+// };
+
+/**
+ * Calculates a weighted score for an accommodation based on specified criteria.
+ * @param {Object} accommodation - The accommodation object containing latitude, longitude, review score, host response rate, and extension flexibility.
+ * @param {Object} referencePoint - The reference point object containing latitude and longitude for distance calculation.
+ * @param {Object} filters - Object containing weights for distance, review score, host response rate, and extension flexibility.
+ * @param {number} maxDistance - Maximum distance in kilometers considered for normalization.
+ * @returns {number} The calculated weighted score.
+ */
 export const calculateScore = (
 	accommodation: IListingItem, 
 	referencePoint: ILocation, 
-	weights: IWeights, 
+	filters: ICriterion, 
+	weights: ICriterion,
 	maxDistance: number = 100
 ): number => {
 	const distance = haversineDistance(
@@ -63,15 +93,25 @@ export const calculateScore = (
 		referencePoint.latitude, referencePoint.longitude
 	);
 
-	const normalizedDistance = Math.min(distance / maxDistance, 1) * 100;
+	// Normalize distance to a range of 0-100
+	const normalizedDistance = Math.min(distance / maxDistance, 1) * weights.distance;
 
+	// Normalize review score, host response rate, and extension flexibility to a range of 0-100.
+	const normalizedHostResponseRate = accommodation.host_response_rate * weights.host_response_rate;
+	const normalizedReviewScore = (accommodation.review_score / MAX_REVIEW_SCORE) * weights.host_response_rate;
+	const normalizedExtensionFlexibility = accommodation.extension_flexibility * weights.extension_flexibility;
+
+	// Calculate the weighted score
 	const weightedScore = (
-		normalizedDistance * weights.distance +
-		accommodation.review_score * weights.review_score +
-		accommodation.host_response_rate * weights.host_response_rate +
-		accommodation.extension_flexibility * weights.extension_flexibility
+		normalizedDistance * (filters.distance / 100) +
+		normalizedReviewScore * (filters.review_score / 100) +
+		normalizedHostResponseRate * (filters.host_response_rate / 100) +
+		normalizedExtensionFlexibility * (filters.extension_flexibility / 100)
 	);
 
-	return weightedScore;
-};
+	// Calculate the total weight
+	const totalWeight = filters.distance + filters.review_score + filters.host_response_rate + filters.extension_flexibility;
 
+	// Return the final score out of 100
+	return (weightedScore / totalWeight) * 100;
+};

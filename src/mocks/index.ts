@@ -1,4 +1,4 @@
-import { ILocation, TSearchWeightsKey, ISearchWeight } from './types';
+import { ILocation, TCriterionKey, ISearchWeight, ICriterion } from './types';
 
 import listingDB from './database.json';
 
@@ -11,6 +11,10 @@ import imgFive from '../../public/assets/img/rooms/pexels-photo-14715846.jpeg';
 export const MOCK_DATABASE = listingDB;
 
 export const DEFAULT_MAP_ZOOM: number = 11;
+
+// 
+export const MIN_WEIGHT: number = 0;
+export const MAX_WEIGHT: number = 100;
 
 // Constants for search and calculations.
 export const MAX_DISTANCE_KM: number = 100;
@@ -27,8 +31,8 @@ export const MAX_REVIEW_SCORE: number = 5;
 export const MAX_HOST_RESPONSE_RATE: number = 1;
 export const MAX_EXTENSION_FLEXIBILITY: number = 1;
 
-// Search weights configuration.
-export const SEARCH_WEIGHTS: { [key in TSearchWeightsKey]: ISearchWeight } = {
+// Search filter configuration.
+export const FILTER_CONFIG: { [key in TCriterionKey]: ISearchWeight } = {
 	distance: {
 		isFloating: false,
 		min: MIN_DISTANCE,
@@ -52,17 +56,20 @@ export const SEARCH_WEIGHTS: { [key in TSearchWeightsKey]: ISearchWeight } = {
 };
 
 // Default search weights.
-export const DEFAULT_SEARCH_WEIGHTS: {
-	distance: number,
-	review_score: number,
-	host_response_rate: number,
-	extension_flexibility: number,
-} = {
+export const DEFAULT_CRITERION_FILTERS: ICriterion = {
 	distance: 20,
 	review_score: 0.4,
 	host_response_rate: 0.2,
 	extension_flexibility: 0.1,
 };
+
+export const DEFAULT_CRITERION_WEIGHTS: ICriterion = {
+	distance: 20,
+	review_score: 40,
+	host_response_rate: 60,
+	extension_flexibility: 70,
+}
+
 // Default location (Montréal).
 export const MOCK_DEFAULT_LOCATION: ILocation = {
 	latitude: 45.508888, 

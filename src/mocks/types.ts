@@ -20,7 +20,7 @@ export interface IListingItem {
 	extension_flexibility: number;
 }
 
-export type TSearchWeightsKey = 'distance' | 'review_score' | 'host_response_rate' | 'extension_flexibility';
+export type TCriterionKey = 'distance' | 'review_score' | 'host_response_rate' | 'extension_flexibility';
 
 export interface ILocation {
 	latitude: number;
@@ -33,7 +33,7 @@ export interface ISearchWeight {
 	isFloating?: boolean;
 }
 
-export interface IWeights {
+export interface ICriterion {
 	distance: number;
 	latitude?: number;
 	longitude?: number;
