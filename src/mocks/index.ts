@@ -21,7 +21,7 @@ export const MAX_DISTANCE_KM: number = 100;
 export const EARTH_RADIUS_KM: number = 6371;
 
 // Search filters.
-export const MIN_DISTANCE: number = 0;
+export const MIN_DISTANCE: number = 1; 		// Threshold distance.
 export const MIN_REVIEW_SCORE: number = 0;
 export const MIN_HOST_RESPONSE_RATE: number = 0;
 export const MIN_EXTENSION_FLEXIBILITY: number = 0;
@@ -65,9 +65,9 @@ export const DEFAULT_CRITERION_FILTERS: ICriterion = {
 
 export const DEFAULT_CRITERION_WEIGHTS: ICriterion = {
 	distance: 20,
-	review_score: 40,
-	host_response_rate: 60,
-	extension_flexibility: 70,
+	review_score: 0,
+	host_response_rate: 0,
+	extension_flexibility: 0,
 }
 
 // Default location (Montréal).
