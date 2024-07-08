@@ -55,13 +55,24 @@ const SearchScreen: React.FC = () => {
 	}, [filteredOptions, center, weights]);
 
 	const paginatedOptions = React.useMemo(() => {
+		const filteredRankedOptions = rankedOptions.filter(({ distance }) => (
+			distance >= filters.distance.min && 
+			distance <= filters.distance.max
+		));
+
+		const totalItems = (filteredRankedOptions || []).length;
+		const totalPages = Math.ceil(totalItems / pagination?.limit);
+
+		setPagination((prevPagination) => ({
+			totalPages, totalItems,
+			page: prevPagination?.page,
+			limit: prevPagination?.limit,
+		}));
+
 		const startIndex = (pagination?.page - 1) * pagination?.limit;
 		const endIndex = startIndex + pagination?.limit;
 
-		return rankedOptions.filter(({ distance }) => (
-			distance >= filters.distance.min && 
-			distance <= filters.distance.max
-		)).slice(startIndex, endIndex);
+		return filteredRankedOptions.slice(startIndex, endIndex);
 	}, [rankedOptions, filters, pagination.page]);
 
 	const memoizedMarkers = React.useMemo(() => {
@@ -251,8 +262,10 @@ const SearchScreen: React.FC = () => {
 						)}
 						<Pagination
 							page={pagination?.page}
+							limit={pagination?.limit}
 							onPageClick={handlePageClick}
-							count={pagination?.totalPages}
+							totalItems={pagination?.totalItems}
+							totalPages={pagination?.totalPages}
 						/>
 					</div>
 				</section>

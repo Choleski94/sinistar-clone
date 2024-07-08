@@ -8,13 +8,17 @@ import { CenteredStack, StyledPaginationItem } from './Pagination.styled';
 
 interface IPaginationProps {
 	page?: number;
-	count?: number;
+	limit?: number;
+	totalItems?: number;
+	totalPages?: number;
 	onPageClick?: (page: number) => void;
 }
 
 const Pagination: React.FC<IPaginationProps> = ({
 	page = 1,
-	count = 0, 
+	limit = 0,
+	totalPages = 0, 
+	totalItems = 0,
 	onPageClick = () => null,
 }) => {
 	const messages = {
@@ -22,14 +26,14 @@ const Pagination: React.FC<IPaginationProps> = ({
 		next: formatMessage('pagination.next.text')
 	};
 
-	if (!count) return null;
+	if (!totalPages || totalItems < limit) return null;
 
 	return (
 		<CenteredStack spacing={2}>
 			<PaginationWrapper
 				page={page}
-				count={count}
 				shape="rounded"
+				count={totalPages}
 				onChange={(_event: React.ChangeEvent<unknown>, page: number) => onPageClick(page)}
 				renderItem={(item) => (
 					<StyledPaginationItem
