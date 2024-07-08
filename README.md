@@ -47,6 +47,47 @@ http://localhost:3000/
 # File structure
 ```bash
 .
+├── dist
+│   ├── assets
+│   │   ├── favicon
+│   │   │   ├── apple-touch-icon-114x114.png
+│   │   │   ├── apple-touch-icon-120x120.png
+│   │   │   ├── apple-touch-icon-144x144.png
+│   │   │   ├── apple-touch-icon-152x152.png
+│   │   │   ├── apple-touch-icon-57x57.png
+│   │   │   ├── apple-touch-icon-60x60.png
+│   │   │   ├── apple-touch-icon-72x72.png
+│   │   │   ├── apple-touch-icon-76x76.png
+│   │   │   ├── brand.svg
+│   │   │   ├── favicon-128.png
+│   │   │   ├── favicon-16x16.png
+│   │   │   ├── favicon-196x196.png
+│   │   │   ├── favicon-32x32.png
+│   │   │   ├── favicon-96x96.png
+│   │   │   ├── favicon.ico
+│   │   │   ├── mstile-144x144.png
+│   │   │   ├── mstile-150x150.png
+│   │   │   ├── mstile-310x150.png
+│   │   │   ├── mstile-310x310.png
+│   │   │   └── mstile-70x70.png
+│   │   ├── img
+│   │   │   └── rooms
+│   │   │       ├── pexels-photo-1428348.jpeg
+│   │   │       ├── pexels-photo-14715846.jpeg
+│   │   │       ├── pexels-photo-280239.jpeg
+│   │   │       ├── pexels-photo-3946663.jpeg
+│   │   │       ├── pexels-photo-5178080.jpeg
+│   │   │       ├── pexels-photo-6510974.jpeg
+│   │   │       ├── pexels-photo-7195857.jpeg
+│   │   │       └── pexels-photo-7195864.jpeg
+│   │   ├── index-BSWkY8v4.css
+│   │   ├── index-qa1kBQxV.js
+│   │   ├── pexels-photo-1428348-BbqIGpUC.jpeg
+│   │   ├── pexels-photo-14715846-COc-LHui.jpeg
+│   │   ├── pexels-photo-280239-Boc5r1HN.jpeg
+│   │   ├── pexels-photo-5178080-DBFMZH5O.jpeg
+│   │   └── pexels-photo-7195857-yp_Me7o3.jpeg
+│   └── index.html
 ├── index.html
 ├── LICENSE.md
 ├── package.json
@@ -86,20 +127,22 @@ http://localhost:3000/
 │               └── pexels-photo-7195864.jpeg
 ├── README.md
 ├── src
-│   ├── api
-│   │   ├── index.ts
-│   │   └── listing.ts
 │   ├── App.tsx
 │   ├── components
 │   │   ├── BlankCard
 │   │   │   ├── BlankCard.styled.tsx
 │   │   │   ├── BlankCard.tsx
 │   │   │   └── index.ts
+│   │   ├── ErrorMessage
+│   │   │   ├── ErrorMessage.styled.tsx
+│   │   │   ├── ErrorMessage.tsx
+│   │   │   └── index.ts
 │   │   ├── Forms
-│   │   │   ├── FilterForm
-│   │   │   │   ├── FilterForm.styled.tsx
-│   │   │   │   ├── FilterForm.tsx
-│   │   │   │   └── index.ts
+│   │   │   ├── CriterionForm
+│   │   │   │   ├── CriterionForm.styled.tsx
+│   │   │   │   ├── CriterionForm.tsx
+│   │   │   │   ├── index.ts
+│   │   │   │   └── types.ts
 │   │   │   ├── index.ts
 │   │   │   └── LanguageForm
 │   │   │       ├── index.ts
@@ -109,7 +152,8 @@ http://localhost:3000/
 │   │   │   ├── Card
 │   │   │   │   ├── Card.styled.tsx
 │   │   │   │   ├── Card.tsx
-│   │   │   │   └── index.ts
+│   │   │   │   ├── index.ts
+│   │   │   │   └── types.ts
 │   │   │   ├── Carousel
 │   │   │   │   ├── CarouselControls.tsx
 │   │   │   │   ├── Carousel.styled.tsx
@@ -121,15 +165,17 @@ http://localhost:3000/
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── MapView.styled.tsx
 │   │   │   │   ├── MapView.tsx
-│   │   │   │   └── useDeepCompareEffectForMaps.ts
+│   │   │   │   └── useDeepCompareEffectForMaps.js
 │   │   │   ├── Marker
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── Marker.styled.tsx
-│   │   │   │   └── Marker.tsx
+│   │   │   │   ├── Marker.tsx
+│   │   │   │   └── types.ts
 │   │   │   └── OverlayView
 │   │   │       ├── index.ts
-│   │   │       ├── Overlay.ts
-│   │   │       └── OverlayView.tsx
+│   │   │       ├── Overlay.js
+│   │   │       ├── OverlayView.tsx
+│   │   │       └── types.ts
 │   │   ├── index.ts
 │   │   ├── InfoCard
 │   │   │   ├── index.ts
@@ -145,11 +191,17 @@ http://localhost:3000/
 │   │   │   ├── index.ts
 │   │   │   ├── Modal.controller.ts
 │   │   │   ├── Modal.styled.tsx
-│   │   │   └── Modal.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   └── types.ts
 │   │   ├── Pagination
 │   │   │   ├── index.ts
 │   │   │   ├── Pagination.styled.tsx
 │   │   │   └── Pagination.tsx
+│   │   ├── Scrollbar
+│   │   │   ├── index.ts
+│   │   │   ├── Scrollbar.styled.tsx
+│   │   │   ├── Scrollbar.tsx
+│   │   │   └── types.ts
 │   │   └── SearchLocation
 │   │       ├── index.ts
 │   │       ├── InputWithIcon.tsx
@@ -159,17 +211,19 @@ http://localhost:3000/
 │   ├── config.ts
 │   ├── locales
 │   │   ├── index.ts
-│   │   └── lang
-│   │       ├── en
-│   │       │   └── US.json
-│   │       ├── es
-│   │       │   └── ES.json
-│   │       └── fr
-│   │           └── CA.json
+│   │   ├── lang
+│   │   │   ├── en
+│   │   │   │   └── US.json
+│   │   │   ├── es
+│   │   │   │   └── ES.json
+│   │   │   └── fr
+│   │   │       └── CA.json
+│   │   └── types.ts
 │   ├── main.tsx
 │   ├── mocks
 │   │   ├── database.json
-│   │   └── index.ts
+│   │   ├── index.ts
+│   │   └── types.ts
 │   ├── screens
 │   │   ├── index.ts
 │   │   └── Search
@@ -193,10 +247,10 @@ http://localhost:3000/
 │   │   │   ├── claim.state.ts
 │   │   │   ├── index.ts
 │   │   │   └── locale.state.ts
-│   │   └── types
-│   │       └── index.ts
+│   │   └── types.ts
 │   ├── styles
 │   │   └── index.css
+│   ├── types.d.ts
 │   ├── utils
 │   │   ├── formatMessage.tsx
 │   │   ├── hocs
@@ -205,7 +259,7 @@ http://localhost:3000/
 │   │   │   └── withGoogleMapServices.tsx
 │   │   ├── hooks
 │   │   │   ├── index.ts
-│   │   │   └── useAccomodationFilters.jsx
+│   │   │   └── useOptionsFilters.tsx
 │   │   └── index.ts
 │   └── vite-env.d.ts
 ├── tailwind.config.js
@@ -213,6 +267,9 @@ http://localhost:3000/
 ├── tsconfig.json
 ├── tsconfig.node.json
 ├── vercel.json
-└── vite.config.ts
+├── vite.config.ts
+└── yarn.lock
+
+48 directories, 175 files
 ```
 
