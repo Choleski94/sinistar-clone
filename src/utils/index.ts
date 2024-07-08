@@ -65,32 +65,36 @@ export const calculateScore = (
 	referencePoint: ILocation,
 	weights: ICriterion,
 ): { distance: number; score: number; } => {
+	// Max possible score is equal to the total number of weight criterion.
+	const maxPossibleScore: number = Object.keys(weights || {}).length || 1;
+
+	// Step 0: Calculate distance between accommodation and reference point.
 	const distance = haversineDistance(
 		accommodation.latitude, accommodation.longitude,
 		referencePoint.latitude, referencePoint.longitude
 	);
 
-	// Step 0: Calculate scaled weights to a range of 0 - 1.
+	// Step 1: Normalize weights to a range of 0 - 1.
 	const scaledWeightDistance = weights.distance / 100;
 	const scaledWeightReviewScore = weights.review_score / 100;
 	const scaledWeightHostResponseRate = weights.host_response_rate / 100;
 	const scaledWeightExtensionFlexibility = weights.extension_flexibility / 100;
 
-	// Step 1: Normalize distance to a range of 0 - 1;
+	// Step 2: Normalize distance to a range of 0 - 1;
 	const normalizedDistance = (1 / (distance + 1)); 								// Ensure shorter distances get higher scores.
 
-	// Step 2: Normalize review score, host response rate, and extension flexibility to a range of 0-1.
+	// Step 3: Normalize review score, host response rate, and extension flexibility to a range of 0-1.
 	const normalizedHostResponseRate = accommodation.host_response_rate; 			// Already in a range of 0 - 1/
 	const normalizedExtensionFlexibility = accommodation.extension_flexibility; 	// Already in a range of 0 - 1.
 	const normalizedReviewScore = accommodation.review_score / MAX_REVIEW_SCORE;
 
-	// Step 3: Calculate the weighted score components.
+	// Step 4: Calculate the weighted score components.
     const weightedDistanceComponent = normalizedDistance * scaledWeightDistance;
     const weightedReviewScoreComponent = normalizedReviewScore * scaledWeightReviewScore;
     const weightedHostResponseRateComponent = normalizedHostResponseRate * scaledWeightHostResponseRate;
     const weightedExtensionFlexibilityComponent = normalizedExtensionFlexibility * scaledWeightExtensionFlexibility;
 
-    // Step 4: Sum up the weighted components.
+    // Step 5: Sum up the weighted components.
     const weightedScore = (
         weightedDistanceComponent +
         weightedReviewScoreComponent +
@@ -98,8 +102,8 @@ export const calculateScore = (
         weightedExtensionFlexibilityComponent
     );
 
-	// Step 5: Scale the weighted score to a range of 0-100
-	const scoreOutOf100 = (weightedScore / 1) * 100; 								// Here, 1 is the total weight (scaled to 1).
+	// Step 6: Scale the weighted score to a range of 0-100
+	const scoreOutOf100 = (weightedScore / maxPossibleScore) * 100;
 
 	return { distance, score: scoreOutOf100 };
 };
