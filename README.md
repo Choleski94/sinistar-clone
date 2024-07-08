@@ -1,5 +1,7 @@
 # Sinistar Clone - Accommodation Finder
 
+<img alt="sinistar-clone-demo.gif" src="https://github.com/Choleski94/sinistar-clone/blob/main/public/assets/sinistar-clone-demo.gif?raw=true" />
+
 ## Objective
 
 The primary goal of this project is to assess proficiency in React, Material UI, TypeScript, algorithm development, and integration of third-party APIs (Google Maps JS SDK). The application dynamically sorts and displays accommodation options based on user-defined criteria, demonstrating the ability to build a responsive and user-friendly web application.
