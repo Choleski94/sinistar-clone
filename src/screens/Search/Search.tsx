@@ -58,8 +58,11 @@ const SearchScreen: React.FC = () => {
 		const startIndex = (pagination?.page - 1) * pagination?.limit;
 		const endIndex = startIndex + pagination?.limit;
 
-		return rankedOptions.slice(startIndex, endIndex);
-	}, [rankedOptions, pagination.page]);
+		return rankedOptions.filter(({ distance }) => (
+			distance >= filters.distance.min && 
+			distance <= filters.distance.max
+		)).slice(startIndex, endIndex);
+	}, [rankedOptions, filters, pagination.page]);
 
 	const memoizedMarkers = React.useMemo(() => {
 		const { longitude, latitude } = state?.claim || {};
@@ -102,11 +105,19 @@ const SearchScreen: React.FC = () => {
 	React.useEffect(() => {
 		const { longitude, latitude } = state?.claim || {};
 
-		if (center && (center.longitude !== longitude || center.latitude !== latitude)) {
-			// Update center state with the new coordinates
-			setCenter({ longitude, latitude });
-		}
-	}, [state?.claim, center]);
+		if (!center.longitude || !center.latitude) return;
+
+		// Update center state with the new coordinates
+		setCenter((prevCenter) => {
+			if (
+				(prevCenter?.longitude !== longitude) &&
+				(prevCenter?.latitude !== latitude)
+			) {
+				return { longitude, latitude };
+			}
+			return prevCenter;
+		});
+	}, [state?.claim]);
 
 	const handlePageClick = React.useCallback((newPage: number) => {
 		setPagination((prevPagination) => {
