@@ -1,3 +1,5 @@
+import * as tf from '@tensorflow/tfjs';
+
 import { EARTH_RADIUS_KM, MAX_REVIEW_SCORE } from '@mocks';
 import { ILocation, IListingItem, ICriterion } from '@mocks/types';
 
@@ -43,15 +45,20 @@ export const haversineDistance = (lat1: number, lon1: number, lat2: number, lon2
 	const dLat = toRadians(lat2 - lat1);
 	const dLon = toRadians(lon2 - lon1);
 
-	const a = (
-		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
-		Math.sin(dLon / 2) * Math.sin(dLon / 2)
+	const lat1Rad = toRadians(lat1);
+	const lat2Rad = toRadians(lat2);
+
+	const a = tf.add(
+		tf.sin(tf.div(dLat, 2)).square(),
+		tf.mul(
+			tf.cos(lat1Rad),
+			tf.mul(tf.cos(lat2Rad), tf.sin(tf.div(dLon, 2)).square())
+		)
 	);
 
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	const c = tf.mul(2, tf.atan2(tf.sqrt(a), tf.sqrt(tf.sub(1, a))));
 
-	return EARTH_RADIUS_KM * c;
+	return tf.mul(EARTH_RADIUS_KM, c).arraySync() as number;
 }
 
 /**
@@ -65,8 +72,8 @@ export const calculateScore = (
 	referencePoint: ILocation,
 	weights: ICriterion,
 ): { distance: number; score: number; } => {
-	// Max possible score is equal to the total number of weight criterion.
-	const maxPossibleScore: number = Object.keys(weights || {}).length || 1;
+	// Max possible score is equal to the total number of weight criteria.
+	const maxPossibleScore = Object.keys(weights || {}).length || 1;
 
 	// Step 0: Calculate distance between accommodation and reference point.
 	const distance = haversineDistance(
@@ -81,26 +88,26 @@ export const calculateScore = (
 	const scaledWeightExtensionFlexibility = weights.extension_flexibility / 100;
 
 	// Step 2: Normalize distance to a range of 0 - 1;
-	const normalizedDistance = (1 / (distance + 1)); 								// Ensure shorter distances get higher scores.
+	const normalizedDistance = tf.div(1, tf.add(distance, 1)).arraySync() as number; // Ensure shorter distances get higher scores.
 
 	// Step 3: Normalize review score, host response rate, and extension flexibility to a range of 0-1.
-	const normalizedHostResponseRate = accommodation.host_response_rate; 			// Already in a range of 0 - 1/
-	const normalizedExtensionFlexibility = accommodation.extension_flexibility; 	// Already in a range of 0 - 1.
+	const normalizedHostResponseRate = accommodation.host_response_rate / 100; // Already in a range of 0 - 1/
+	const normalizedExtensionFlexibility = accommodation.extension_flexibility / 10; // Assuming a max value of 10.
 	const normalizedReviewScore = accommodation.review_score / MAX_REVIEW_SCORE;
 
 	// Step 4: Calculate the weighted score components.
-    const weightedDistanceComponent = normalizedDistance * scaledWeightDistance;
-    const weightedReviewScoreComponent = normalizedReviewScore * scaledWeightReviewScore;
-    const weightedHostResponseRateComponent = normalizedHostResponseRate * scaledWeightHostResponseRate;
-    const weightedExtensionFlexibilityComponent = normalizedExtensionFlexibility * scaledWeightExtensionFlexibility;
+	const weightedDistanceComponent = normalizedDistance * scaledWeightDistance;
+	const weightedReviewScoreComponent = normalizedReviewScore * scaledWeightReviewScore;
+	const weightedHostResponseRateComponent = normalizedHostResponseRate * scaledWeightHostResponseRate;
+	const weightedExtensionFlexibilityComponent = normalizedExtensionFlexibility * scaledWeightExtensionFlexibility;
 
-    // Step 5: Sum up the weighted components.
-    const weightedScore = (
-        weightedDistanceComponent +
-        weightedReviewScoreComponent +
-        weightedHostResponseRateComponent +
-        weightedExtensionFlexibilityComponent
-    );
+	// Step 5: Sum up the weighted components.
+	const weightedScore = (
+		weightedDistanceComponent +
+		weightedReviewScoreComponent +
+		weightedHostResponseRateComponent +
+		weightedExtensionFlexibilityComponent
+	);
 
 	// Step 6: Scale the weighted score to a range of 0-100
 	const scoreOutOf100 = (weightedScore / maxPossibleScore) * 100;

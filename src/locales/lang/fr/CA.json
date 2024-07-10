@@ -14,7 +14,7 @@
 	"form.criterion.title": "Sélectionnez vos filtres préférés",
 	"form.criterion.weight.text": "Pondération",
 	"form.criterion.distance.text": "Distance",
-	"form.ficriterionlter.review_score.text": "Score de revue",
+	"form.criterion.review_score.text": "Score de revue",
 	"form.criterion.host_response_rate.text": "Taux de réponse de l'hôte",
 	"form.criterion.extension_flexibility.text": "Flexibilité de l'extension",
 	"form.criterion.apply.cta": "Appliquer les criterions",
